@@ -1,0 +1,29 @@
+# US market configuration.
+# All cost values are UNVERIFIED defaults carried over from the legacy scripts.
+# They MUST be calibrated against real fills/account terms before any live use
+# (handover doc section 5.4, 10).
+market: us
+venue: US_EQUITY
+currency: USD
+timezone: "America/New_York"      # scheduling note only; storage stays session dates
+calendar: sessions_from_data      # v1: sessions inferred from ingested bars
+source_dir: "data/us"             # legacy snapshot location, relative to project root
+provider_start: "2019-01-02"      # update fetch start (matches bundled MSFT history)
+lots: 1                           # whole shares
+allow_fractional: false
+t_plus_1: false
+universe: [AAPL, AMZN, GOOGL, MSFT]
+# NOTE: data/us/MSFT.csv uses a different (Tushare) schema and carries an
+# adj_factor column; AAPL/AMZN/GOOGL use a simple schema without factors.
+# Ingestion normalizes both and records adjustment status per symbol.
+alternate_sources:
+  - path: "data/GOOGL.csv"        # longer-history GOOGL; NOT used in v1 universe
+    reason: "different provenance/schema than data/us/GOOGL.csv; kept as snapshot only"
+costs:
+  commission_bps: 1.5             # UNVERIFIED (0.015%)
+  min_commission: 0.0
+  slippage_bps: 5.0               # UNVERIFIED
+  stamp_tax_sell_bps: 0.0
+participation_cap: 0.05           # max fraction of bar volume per fill
+price_limit_pct: null             # no daily price limit
+stale_session_days: 7             # calendar days before a symbol is considered stale

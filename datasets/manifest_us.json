@@ -1,0 +1,187 @@
+{
+  "market": "us",
+  "generated_for_universe": [
+    "AAPL",
+    "AMZN",
+    "GOOGL",
+    "MSFT"
+  ],
+  "symbols": {
+    "AAPL": {
+      "symbol": "AAPL",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\us\\AAPL.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:16Z",
+      "source_sha256": "9192837aad18548e0cc85f655c1dc259823b3016c7ec6fb31c053c5e7e10ff4e",
+      "schema": "simple",
+      "volume_unit": "shares_assumed_no_amount_check",
+      "amount_unit": "unverified",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1979,
+      "date_start": "2019-01-02",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [
+        {
+          "row_index": 419,
+          "date": "2020-08-31",
+          "close": 129.04,
+          "reasons": [
+            "extreme_daily_move_review"
+          ]
+        }
+      ],
+      "review_flag_count": 1,
+      "normalized_sha256": "83b048985e1d2269d105939f785d6e3bfa25287c69ad28c89c291d1aa479f2a0"
+    },
+    "AMZN": {
+      "symbol": "AMZN",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\us\\AMZN.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:16Z",
+      "source_sha256": "50a64a965cc864cf6ef77ab33b017d1137a1ed96fcdfe1c2a6e06f046d4e258b",
+      "schema": "simple",
+      "volume_unit": "shares_assumed_no_amount_check",
+      "amount_unit": "unverified",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1979,
+      "date_start": "2019-01-02",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [
+        {
+          "row_index": 863,
+          "date": "2022-06-06",
+          "close": 124.79,
+          "reasons": [
+            "extreme_daily_move_review"
+          ]
+        }
+      ],
+      "review_flag_count": 1,
+      "normalized_sha256": "08f5ffa2fa778e04318321373be2d3facdf876d3724a07734f3bae98dde6fd81"
+    },
+    "GOOGL": {
+      "symbol": "GOOGL",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\us\\GOOGL.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:16Z",
+      "source_sha256": "a1d60a92a913a78280fbfb824871dc6ab0ea96ab6500bfbfe32a6c3101ee2f16",
+      "schema": "simple",
+      "volume_unit": "shares_assumed_no_amount_check",
+      "amount_unit": "unverified",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1979,
+      "date_start": "2019-01-02",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [
+        {
+          "row_index": 891,
+          "date": "2022-07-18",
+          "close": 109.03,
+          "reasons": [
+            "extreme_daily_move_review"
+          ]
+        }
+      ],
+      "review_flag_count": 1,
+      "normalized_sha256": "e0164bd5f63255dea42f896c626be7dc3fce098f5253f678262d439d01f2b848"
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\us\\MSFT.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:16Z",
+      "source_sha256": "de6a1c8d4b456356e84b1def6969dc5d95018ee847ca85811496036f997cb26d",
+      "schema": "simple",
+      "volume_unit": "shares_assumed_no_amount_check",
+      "amount_unit": "unverified",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1979,
+      "date_start": "2019-01-02",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [],
+      "review_flag_count": 0,
+      "normalized_sha256": "4c59682085dd2d352a298b8b296016378fb739ce79df2d06e0629689abeb21a1"
+    }
+  },
+  "project_data_inventory": [
+    {
+      "path": "data\\cn\\000001.SZ.csv",
+      "sha256": "5907d174a2c16d575f751a74e183e0291536d59d0f87df8aa66c4874f6dc63b7",
+      "bytes": 187395
+    },
+    {
+      "path": "data\\cn\\300975.SZ.csv",
+      "sha256": "6382652f7cf9988b33b65721a15adf81e5c37e437414c4b79194dd93acca7ea9",
+      "bytes": 123962
+    },
+    {
+      "path": "data\\cn\\600036.SH.csv",
+      "sha256": "d1837025b7741799dff2850fd8eb0c2fba2fc9070058e0cd983efcff3979b947",
+      "bytes": 186733
+    },
+    {
+      "path": "data\\cn\\600519.SH.csv",
+      "sha256": "013eef0a8d5ac09451c197262e612b64200907532e28934c37dd7fc094477494",
+      "bytes": 192451
+    },
+    {
+      "path": "data\\cn\\603773.SH.csv",
+      "sha256": "e8d60d80a70f85f1359922a5c26fdfca98b1de488bf50d7244af71158372f9f6",
+      "bytes": 181304
+    },
+    {
+      "path": "data\\cn\\603986.SH.csv",
+      "sha256": "0f707c4e43ed3e8c2337abb4f7abf1a691b214059fb83fe42061d655b18a825c",
+      "bytes": 189545
+    },
+    {
+      "path": "data\\GOOGL.csv",
+      "sha256": "f2a00d2221e465daf81adbf4084f25f71d347c8902d4c61b0e845fce3dfd41d8",
+      "bytes": 295728
+    },
+    {
+      "path": "data\\us\\AAPL.csv",
+      "sha256": "729bbb49f8c098e340eb202da513a6abdc0f8f7fd75f62114dea3c30953f005b",
+      "bytes": 26989
+    },
+    {
+      "path": "data\\us\\AMZN.csv",
+      "sha256": "2573363dd68aa80b6648bc1438299c4b2c5693dc60453e637760afd21b1f2d91",
+      "bytes": 26974
+    },
+    {
+      "path": "data\\us\\GOOGL.csv",
+      "sha256": "dfe515af52760e49e88809ad27c80fbfa9fe9e32b7d0ef0a3b127c7273cd4722",
+      "bytes": 27474
+    },
+    {
+      "path": "data\\us\\MSFT.csv",
+      "sha256": "d3dd6df4e3121ac745baf53cc399362314b0b5c9d1d52ace359b0b26c5491845",
+      "bytes": 289554
+    }
+  ]
+}

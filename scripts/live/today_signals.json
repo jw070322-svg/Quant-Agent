@@ -1,0 +1,26 @@
+{
+  "AAPL": {
+    "date": "2026-05-27",
+    "close": 310.85,
+    "prob": 0.063,
+    "threshold": 0.6499999999999999,
+    "signal": 0,
+    "action": "持有/空仓"
+  },
+  "AMZN": {
+    "date": "2026-05-27",
+    "close": 271.85,
+    "prob": 0.0721,
+    "threshold": 0.45,
+    "signal": 0,
+    "action": "持有/空仓"
+  },
+  "GOOGL": {
+    "date": "2026-05-27",
+    "close": 388.83,
+    "prob": 0.628,
+    "threshold": 0.5,
+    "signal": 1,
+    "action": "买入"
+  }
+}

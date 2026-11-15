@@ -1,0 +1,220 @@
+{
+  "market": "cn",
+  "generated_for_universe": [
+    "000001.SZ",
+    "300975.SZ",
+    "600036.SH",
+    "600519.SH",
+    "603773.SH",
+    "603986.SH"
+  ],
+  "symbols": {
+    "000001.SZ": {
+      "symbol": "000001.SZ",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\cn\\000001.SZ.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:20Z",
+      "source_sha256": "51e6b32ef5fc920da5df77aabcfbefa5d2f0886109052e68452c3118d1333401",
+      "schema": "simple",
+      "volume_unit": "shares",
+      "amount_unit": "currency",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1907,
+      "date_start": "2019-01-02",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [],
+      "review_flag_count": 0,
+      "normalized_sha256": "8d6eeb0e5e11b8f6a9232a7f9a59a3a6038de11f0c065c7cf1b9ba4794294d24",
+      "age_days_at_ingest": 1,
+      "stale_at_ingest": false
+    },
+    "300975.SZ": {
+      "symbol": "300975.SZ",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\cn\\300975.SZ.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:20Z",
+      "source_sha256": "17de6525d8c67face0cdd1f7f73a54129194af819fd40fe24a9f6c50de66ecf4",
+      "schema": "simple",
+      "volume_unit": "shares",
+      "amount_unit": "currency",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1349,
+      "date_start": "2021-04-21",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [],
+      "review_flag_count": 0,
+      "normalized_sha256": "86231cb55a457d54e87ae7bdeb66aef151c860cd04ca9a417284e8c4569a8a8f",
+      "age_days_at_ingest": 1,
+      "stale_at_ingest": false
+    },
+    "600036.SH": {
+      "symbol": "600036.SH",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\cn\\600036.SH.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:20Z",
+      "source_sha256": "301792f5c0237b98178781a868b3f98a88ff958246fc356f3df8f6730fe71666",
+      "schema": "simple",
+      "volume_unit": "shares",
+      "amount_unit": "currency",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1907,
+      "date_start": "2019-01-02",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [],
+      "review_flag_count": 0,
+      "normalized_sha256": "ef0864df58422eac65ae155d441c4f47cbe866a40ff82a917ea575affabbb131",
+      "age_days_at_ingest": 1,
+      "stale_at_ingest": false
+    },
+    "600519.SH": {
+      "symbol": "600519.SH",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\cn\\600519.SH.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:20Z",
+      "source_sha256": "e7879a496c4a6512ade7074a64d434c32f21534fcc4152c010df710a2efd7adf",
+      "schema": "simple",
+      "volume_unit": "shares",
+      "amount_unit": "currency",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1907,
+      "date_start": "2019-01-02",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [],
+      "review_flag_count": 0,
+      "normalized_sha256": "f1a4134297c6aad1a11dfc048d438af18a9f9d26ca093b8ce48761861463a01f",
+      "age_days_at_ingest": 1,
+      "stale_at_ingest": false
+    },
+    "603773.SH": {
+      "symbol": "603773.SH",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\cn\\603773.SH.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:20Z",
+      "source_sha256": "4aec69a7b53b7d1fbd8e3d22a72e06fda7862711a815064f8f9e62154a4f79fe",
+      "schema": "simple",
+      "volume_unit": "shares",
+      "amount_unit": "currency",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1907,
+      "date_start": "2019-01-02",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [],
+      "review_flag_count": 0,
+      "normalized_sha256": "4834e8b7261ca67f8138b0712b24eb4a7cc6b5f5dea40a6230212df4b7baa526",
+      "age_days_at_ingest": 1,
+      "stale_at_ingest": false
+    },
+    "603986.SH": {
+      "symbol": "603986.SH",
+      "usable": true,
+      "source_kind": "provider_update",
+      "source_path": "datasets\\updates\\cn\\603986.SH.csv",
+      "provider": "akshare",
+      "provider_cn_source": "sina (akshare stock_zh_a_daily)",
+      "provider_us_source": "yahoo via akshare stock_us_daily",
+      "fetched_at_utc": "2026-11-14T11:12:20Z",
+      "source_sha256": "60b90ba2ff96a185239e2e29273f75e98d0d98c579120b67bca0b99c890a7cb4",
+      "schema": "simple",
+      "volume_unit": "shares",
+      "amount_unit": "currency",
+      "adjustment_status": "raw_with_adj_factor",
+      "rows": 1906,
+      "date_start": "2019-01-02",
+      "date_end": "2026-11-13",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "review_flags": [],
+      "review_flag_count": 0,
+      "normalized_sha256": "a0d4a377cbe76f961840192357e6ca8ac8e71af23a186704c1952ae71725890a",
+      "age_days_at_ingest": 1,
+      "stale_at_ingest": false
+    }
+  },
+  "project_data_inventory": [
+    {
+      "path": "data\\cn\\000001.SZ.csv",
+      "sha256": "5907d174a2c16d575f751a74e183e0291536d59d0f87df8aa66c4874f6dc63b7",
+      "bytes": 187395
+    },
+    {
+      "path": "data\\cn\\300975.SZ.csv",
+      "sha256": "6382652f7cf9988b33b65721a15adf81e5c37e437414c4b79194dd93acca7ea9",
+      "bytes": 123962
+    },
+    {
+      "path": "data\\cn\\600036.SH.csv",
+      "sha256": "d1837025b7741799dff2850fd8eb0c2fba2fc9070058e0cd983efcff3979b947",
+      "bytes": 186733
+    },
+    {
+      "path": "data\\cn\\600519.SH.csv",
+      "sha256": "013eef0a8d5ac09451c197262e612b64200907532e28934c37dd7fc094477494",
+      "bytes": 192451
+    },
+    {
+      "path": "data\\cn\\603773.SH.csv",
+      "sha256": "e8d60d80a70f85f1359922a5c26fdfca98b1de488bf50d7244af71158372f9f6",
+      "bytes": 181304
+    },
+    {
+      "path": "data\\cn\\603986.SH.csv",
+      "sha256": "0f707c4e43ed3e8c2337abb4f7abf1a691b214059fb83fe42061d655b18a825c",
+      "bytes": 189545
+    },
+    {
+      "path": "data\\GOOGL.csv",
+      "sha256": "f2a00d2221e465daf81adbf4084f25f71d347c8902d4c61b0e845fce3dfd41d8",
+      "bytes": 295728
+    },
+    {
+      "path": "data\\us\\AAPL.csv",
+      "sha256": "729bbb49f8c098e340eb202da513a6abdc0f8f7fd75f62114dea3c30953f005b",
+      "bytes": 26989
+    },
+    {
+      "path": "data\\us\\AMZN.csv",
+      "sha256": "2573363dd68aa80b6648bc1438299c4b2c5693dc60453e637760afd21b1f2d91",
+      "bytes": 26974
+    },
+    {
+      "path": "data\\us\\GOOGL.csv",
+      "sha256": "dfe515af52760e49e88809ad27c80fbfa9fe9e32b7d0ef0a3b127c7273cd4722",
+      "bytes": 27474
+    },
+    {
+      "path": "data\\us\\MSFT.csv",
+      "sha256": "d3dd6df4e3121ac745baf53cc399362314b0b5c9d1d52ace359b0b26c5491845",
+      "bytes": 289554
+    }
+  ]
+}

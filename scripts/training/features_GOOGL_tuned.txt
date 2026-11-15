@@ -1,0 +1,1 @@
+MA5,MA10,MA20,MACD,MACD_hist,K,D,J,RSI,BB_width,BB_position,volatility_5,volatility_20,close_vs_MA20,volume_ratio,roc_7,roc_14

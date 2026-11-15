@@ -1,0 +1,12 @@
+# Verified working environment: Anaconda Python 3.13.9 (E:/Anaconda/python)
+# All dependencies below are already satisfied by that interpreter.
+# The legacy msys2 python on PATH (3.14.7) has no pip and no scientific stack;
+# use the Anaconda interpreter for all project commands.
+numpy
+pandas
+scipy
+scikit-learn
+PyYAML
+matplotlib
+xgboost
+pytest

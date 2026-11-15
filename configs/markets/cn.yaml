@@ -1,0 +1,26 @@
+# CN (A-share) market configuration.
+# Cost values are UNVERIFIED defaults; verify effective-dated commission, stamp
+# tax, and price-limit rules for the actual account/board before live use
+# (handover doc sections 5.4 and 10).
+market: cn
+venue: CN_SSE_SZSE
+currency: CNY
+timezone: "Asia/Shanghai"
+calendar: sessions_from_data
+source_dir: "data/cn"
+provider_start: "2019-01-02"
+lots: 100                         # board lot: buy orders must be multiples of 100
+allow_fractional: false
+t_plus_1: true                    # shares bought on day t are sellable from t+1
+universe: ["000001.SZ", "300975.SZ", "600036.SH", "600519.SH", "603773.SH", "603986.SH"]
+costs:
+  commission_bps: 2.5             # UNVERIFIED (0.025%)
+  min_commission: 5.0             # UNVERIFIED minimum per trade (CNY)
+  slippage_bps: 5.0               # UNVERIFIED
+  stamp_tax_sell_bps: 5.0         # UNVERIFIED (0.05% on sells); verify effective rate
+participation_cap: 0.05
+price_limit_pct: 10               # main-board default; ChiNext (300xxx) is 20 —
+                                  # monitoring flags only in v1, not a hard block
+board_price_limits:               # per-symbol overrides (monitoring only in v1)
+  "300975.SZ": 20
+stale_session_days: 7

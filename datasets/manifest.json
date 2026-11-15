@@ -1,0 +1,172 @@
+{
+  "market": "cn",
+  "generated_for_universe": [
+    "000001.SZ",
+    "300975.SZ",
+    "600036.SH",
+    "600519.SH",
+    "603773.SH",
+    "603986.SH"
+  ],
+  "symbols": {
+    "000001.SZ": {
+      "symbol": "000001.SZ",
+      "usable": true,
+      "source_path": "data\\cn\\000001.SZ.csv",
+      "source_sha256": "5907d174a2c16d575f751a74e183e0291536d59d0f87df8aa66c4874f6dc63b7",
+      "schema": "tushare",
+      "volume_unit": "lots_x100_converted",
+      "amount_unit": "thousands",
+      "adjustment_status": "unknown_no_factor",
+      "rows": 1792,
+      "date_start": "2019-01-02",
+      "date_end": "2026-05-27",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "normalized_sha256": "6ee21ca4fa983ddd9683155fab1c7747c013543829bbedb8047afeac5eee7b3a",
+      "stale_at_ingest": true
+    },
+    "300975.SZ": {
+      "symbol": "300975.SZ",
+      "usable": true,
+      "source_path": "data\\cn\\300975.SZ.csv",
+      "source_sha256": "6382652f7cf9988b33b65721a15adf81e5c37e437414c4b79194dd93acca7ea9",
+      "schema": "tushare",
+      "volume_unit": "lots_x100_converted",
+      "amount_unit": "thousands",
+      "adjustment_status": "unknown_no_factor",
+      "rows": 1234,
+      "date_start": "2021-04-21",
+      "date_end": "2026-05-27",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "normalized_sha256": "103d6c1caea19ed0486e3ea84c405f3df8a89f06c0a76af30914d08d617ca8a9",
+      "stale_at_ingest": true
+    },
+    "600036.SH": {
+      "symbol": "600036.SH",
+      "usable": true,
+      "source_path": "data\\cn\\600036.SH.csv",
+      "source_sha256": "d1837025b7741799dff2850fd8eb0c2fba2fc9070058e0cd983efcff3979b947",
+      "schema": "tushare",
+      "volume_unit": "lots_x100_converted",
+      "amount_unit": "thousands",
+      "adjustment_status": "unknown_no_factor",
+      "rows": 1792,
+      "date_start": "2019-01-02",
+      "date_end": "2026-05-27",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "normalized_sha256": "b2b1aaa672a5932b346bf39c3ed22e9e4ba8f6a575913ad211d3d5ea56b2d3bf",
+      "stale_at_ingest": true
+    },
+    "600519.SH": {
+      "symbol": "600519.SH",
+      "usable": true,
+      "source_path": "data\\cn\\600519.SH.csv",
+      "source_sha256": "013eef0a8d5ac09451c197262e612b64200907532e28934c37dd7fc094477494",
+      "schema": "tushare",
+      "volume_unit": "lots_x100_converted",
+      "amount_unit": "thousands",
+      "adjustment_status": "unknown_no_factor",
+      "rows": 1792,
+      "date_start": "2019-01-02",
+      "date_end": "2026-05-27",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "normalized_sha256": "9c37d3da80db1aeb373a16bc6e1852409dbc70d76ae634e2bfd9a3e749f591df",
+      "stale_at_ingest": true
+    },
+    "603773.SH": {
+      "symbol": "603773.SH",
+      "usable": true,
+      "source_path": "data\\cn\\603773.SH.csv",
+      "source_sha256": "e8d60d80a70f85f1359922a5c26fdfca98b1de488bf50d7244af71158372f9f6",
+      "schema": "tushare",
+      "volume_unit": "lots_x100_converted",
+      "amount_unit": "thousands",
+      "adjustment_status": "unknown_no_factor",
+      "rows": 1792,
+      "date_start": "2019-01-02",
+      "date_end": "2026-05-27",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "normalized_sha256": "8e4dbdf4bcde93e7a8c4a0d078128fa7d80253ea4bb7939a53618143ff05f89d",
+      "stale_at_ingest": true
+    },
+    "603986.SH": {
+      "symbol": "603986.SH",
+      "usable": true,
+      "source_path": "data\\cn\\603986.SH.csv",
+      "source_sha256": "0f707c4e43ed3e8c2337abb4f7abf1a691b214059fb83fe42061d655b18a825c",
+      "schema": "tushare",
+      "volume_unit": "lots_x100_converted",
+      "amount_unit": "thousands",
+      "adjustment_status": "unknown_no_factor",
+      "rows": 1791,
+      "date_start": "2019-01-02",
+      "date_end": "2026-05-27",
+      "quarantined": [],
+      "hard_quarantine_count": 0,
+      "normalized_sha256": "e30971743806da3afef88f017ccc40df9a5d7b112833bd07fb2b03476dc7c4e1",
+      "stale_at_ingest": true
+    }
+  },
+  "project_data_inventory": [
+    {
+      "path": "data\\cn\\000001.SZ.csv",
+      "sha256": "5907d174a2c16d575f751a74e183e0291536d59d0f87df8aa66c4874f6dc63b7",
+      "bytes": 187395
+    },
+    {
+      "path": "data\\cn\\300975.SZ.csv",
+      "sha256": "6382652f7cf9988b33b65721a15adf81e5c37e437414c4b79194dd93acca7ea9",
+      "bytes": 123962
+    },
+    {
+      "path": "data\\cn\\600036.SH.csv",
+      "sha256": "d1837025b7741799dff2850fd8eb0c2fba2fc9070058e0cd983efcff3979b947",
+      "bytes": 186733
+    },
+    {
+      "path": "data\\cn\\600519.SH.csv",
+      "sha256": "013eef0a8d5ac09451c197262e612b64200907532e28934c37dd7fc094477494",
+      "bytes": 192451
+    },
+    {
+      "path": "data\\cn\\603773.SH.csv",
+      "sha256": "e8d60d80a70f85f1359922a5c26fdfca98b1de488bf50d7244af71158372f9f6",
+      "bytes": 181304
+    },
+    {
+      "path": "data\\cn\\603986.SH.csv",
+      "sha256": "0f707c4e43ed3e8c2337abb4f7abf1a691b214059fb83fe42061d655b18a825c",
+      "bytes": 189545
+    },
+    {
+      "path": "data\\GOOGL.csv",
+      "sha256": "f2a00d2221e465daf81adbf4084f25f71d347c8902d4c61b0e845fce3dfd41d8",
+      "bytes": 295728
+    },
+    {
+      "path": "data\\us\\AAPL.csv",
+      "sha256": "729bbb49f8c098e340eb202da513a6abdc0f8f7fd75f62114dea3c30953f005b",
+      "bytes": 26989
+    },
+    {
+      "path": "data\\us\\AMZN.csv",
+      "sha256": "2573363dd68aa80b6648bc1438299c4b2c5693dc60453e637760afd21b1f2d91",
+      "bytes": 26974
+    },
+    {
+      "path": "data\\us\\GOOGL.csv",
+      "sha256": "dfe515af52760e49e88809ad27c80fbfa9fe9e32b7d0ef0a3b127c7273cd4722",
+      "bytes": 27474
+    },
+    {
+      "path": "data\\us\\MSFT.csv",
+      "sha256": "d3dd6df4e3121ac745baf53cc399362314b0b5c9d1d52ace359b0b26c5491845",
+      "bytes": 289554
+    }
+  ]
+}

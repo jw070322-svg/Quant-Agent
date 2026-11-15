@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-05-29 16:29:42.801001",
+  "quant": {
+    "ticker": "603986.SH",
+    "date": "2026-05-27",
+    "close": 514.18,
+    "indicators": {
+      "MA5": 491.33,
+      "MA20": 388.99,
+      "MACD_DIF": 61.1521,
+      "KDJ_K": 81.36,
+      "RSI": 79.59,
+      "trend_up": true
+    },
+    "buy_signal": 1,
+    "sell_signal": 1,
+    "signal": "SELL",
+    "reason": "卖出信号=1",
+    "allocation": 400000
+  },
+  "subjective": [
+    {
+      "ticker": "603773.SH",
+      "date": "2026-05-27",
+      "close": 99.99,
+      "ma20": 76.74,
+      "trend_up": true,
+      "pullback": false,
+      "action": "HOLD",
+      "reason": "趋势向上, 价格高于MA20",
+      "highest_price": 99.99,
+      "trailing_stop_level": 91.99,
+      "allocation": 300000
+    },
+    {
+      "ticker": "300975.SZ",
+      "date": "2026-05-27",
+      "close": 31.3,
+      "ma20": 23.44,
+      "trend_up": true,
+      "pullback": false,
+      "action": "HOLD",
+      "reason": "趋势向上, 价格高于MA20",
+      "highest_price": 31.3,
+      "trailing_stop_level": 28.8,
+      "allocation": 300000
+    }
+  ],
+  "capital": 1000000,
+  "rules": {
+    "quant_stock": "603986.SH",
+    "subjective_stocks": [
+      "603773.SH",
+      "300975.SZ"
+    ],
+    "quant_strategy": "多指标共振(>=2)+MA20趋势过滤，止损-8%",
+    "subjective_strategy": "趋势回调加仓+移动止盈(回撤8%)+固定止盈15%，止损-8%"
+  }
+}

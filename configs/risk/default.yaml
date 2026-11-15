@@ -1,0 +1,13 @@
+# Independent risk policy. Applied AFTER portfolio construction and enforced
+# again on rounded orders (handover doc sections 8.6, 8.7).
+# Violations block new risk; they never auto-rescale a solved allocation.
+max_weight_per_name: 0.20         # fraction of total equity per single name
+max_gross_exposure: 0.80          # max sum of long weights (cash is allowed)
+cash_reserve: 0.05                # min cash fraction of total equity
+max_turnover: 0.50                # max one-session notional turnover fraction
+min_order_value: 1000.0           # skip orders below this notional (in market currency)
+max_open_orders_per_symbol: 1
+allowed_sides: [BUY, SELL]
+# Exit policy (enforced by execution, not by the LLM/agent layer):
+stop_loss_pct: 0.08               # hard stop below position entry-adjusted cost
+trail_stop_pct: 0.10              # trailing stop below running high-water mark

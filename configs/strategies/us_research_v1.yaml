@@ -1,0 +1,53 @@
+# US research strategy v1 (Phase 3 evaluation candidate).
+# Scope per handover 8.1: daily data, long-only, small fixed universe.
+strategy: us_research_v1
+market: us
+label:
+  # Decision after close on session t. Entry at next session's open (t+1),
+  # exit at the following session's open (t+2): one coherent holding session.
+  entry_offset: 1
+  entry_field: open
+  exit_offset: 2
+  exit_field: open
+features:
+  - ret_1
+  - ret_5
+  - ret_20
+  - close_over_ma5
+  - close_over_ma20
+  - close_over_ma60
+  - ma5_over_ma20
+  - macd_norm
+  - macd_hist_norm
+  - rsi14
+  - bb_pos20
+  - bb_width20
+  - vol_5
+  - vol_20
+  - atr14_norm
+  - volume_ratio20
+walk_forward:
+  initial_train_fraction: 0.5     # of each symbol's own history
+  test_sessions: 40
+  step_sessions: 40
+  policy_tune_fraction: 0.5       # first half of each OOS window tunes the threshold
+model:
+  primary: gbm
+  challenger: logistic
+  gbm:
+    n_estimators: 200
+    max_depth: 3
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 5
+  logistic:
+    C: 0.5
+    max_iter: 1000
+portfolio:
+  edge_threshold: 0.002           # min expected net edge to open a position
+  lambda_vol: 0.10                # risk penalty per unit weight*volatility
+  max_names: 5
+  shrink_conditional_returns: 0.5 # shrinkage of conditional payoff estimates
+benchmark: equal_weight_buyhold
+seed: 42

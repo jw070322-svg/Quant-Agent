@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-05-28 14:41:16.817829",
+  "quant": {
+    "error": "模型文件不存在，请先训练"
+  },
+  "subjective": [
+    {
+      "ticker": "603773.SH",
+      "date": "2026-05-27",
+      "close": 99.99,
+      "ma5": 87.15,
+      "condition": "HIGH",
+      "advice": "建议等待回调"
+    },
+    {
+      "ticker": "300975.SZ",
+      "date": "2026-05-27",
+      "close": 31.3,
+      "ma5": 26.43,
+      "condition": "HIGH",
+      "advice": "建议等待回调"
+    }
+  ],
+  "capital": 300000,
+  "rules": {
+    "quant_stock": "603986.SH",
+    "subjective_stocks": [
+      "603773.SH",
+      "300975.SZ"
+    ],
+    "batch_buy": "分3次建仓，间隔5天，目标仓位30.0%"
+  }
+}

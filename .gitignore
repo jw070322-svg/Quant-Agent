@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Regenerable data caches — manifests keep the SHA-256 hashes of the raw
+# snapshots, and `qa update` + `qa ingest` rebuild everything from sources.
+datasets/raw/
+datasets/updates/
+datasets/normalized/
+
+# Run artifacts are immutable per-run evidence but regenerable by re-running
+# the studies; the registry manifests and trials ledgers inside each run are
+# intentionally versioned with the code that produced them via config.json.
+artifacts/runs/*/
+artifacts/models/*/
+artifacts/decisions/
+artifacts/*.log
+artifacts/*.txt
+
+# Legacy unverified research artifacts stay in place but are not version-controlled
+models/
+outputs/*.png
+scripts/**/*.png
+scripts/**/*.pkl
+*.pkl

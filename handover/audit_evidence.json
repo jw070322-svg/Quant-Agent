@@ -1,0 +1,881 @@
+{
+  "scope": "F:\\quant agent\\quant_project",
+  "counts": {
+    ".py": 17,
+    ".csv": 11,
+    ".txt": 12,
+    ".pkl": 16,
+    ".png": 9,
+    ".json": 4,
+    ".pyc": 1
+  },
+  "files": [
+    {
+      "path": "A_stock_pool_train.py",
+      "bytes": 8817,
+      "sha256": "6376a4d55684af8cb92d86becb462b30e3dcd993e3038eb5e9b0ef1a3bcbe72b"
+    },
+    {
+      "path": "data/cn/000001.SZ.csv",
+      "bytes": 187395,
+      "sha256": "5907d174a2c16d575f751a74e183e0291536d59d0f87df8aa66c4874f6dc63b7"
+    },
+    {
+      "path": "data/cn/300975.SZ.csv",
+      "bytes": 123962,
+      "sha256": "6382652f7cf9988b33b65721a15adf81e5c37e437414c4b79194dd93acca7ea9"
+    },
+    {
+      "path": "data/cn/600036.SH.csv",
+      "bytes": 186733,
+      "sha256": "d1837025b7741799dff2850fd8eb0c2fba2fc9070058e0cd983efcff3979b947"
+    },
+    {
+      "path": "data/cn/600519.SH.csv",
+      "bytes": 192451,
+      "sha256": "013eef0a8d5ac09451c197262e612b64200907532e28934c37dd7fc094477494"
+    },
+    {
+      "path": "data/cn/603773.SH.csv",
+      "bytes": 181304,
+      "sha256": "e8d60d80a70f85f1359922a5c26fdfca98b1de488bf50d7244af71158372f9f6"
+    },
+    {
+      "path": "data/cn/603986.SH.csv",
+      "bytes": 189545,
+      "sha256": "0f707c4e43ed3e8c2337abb4f7abf1a691b214059fb83fe42061d655b18a825c"
+    },
+    {
+      "path": "data/download_us_data.py",
+      "bytes": 1509,
+      "sha256": "a75edcd28ffff7f93a88d046bf17e0564f8edd4682aaa5a8d5b4191c45973e4c"
+    },
+    {
+      "path": "data/GOOGL.csv",
+      "bytes": 295728,
+      "sha256": "f2a00d2221e465daf81adbf4084f25f71d347c8902d4c61b0e845fce3dfd41d8"
+    },
+    {
+      "path": "data/us/AAPL.csv",
+      "bytes": 26989,
+      "sha256": "729bbb49f8c098e340eb202da513a6abdc0f8f7fd75f62114dea3c30953f005b"
+    },
+    {
+      "path": "data/us/AMZN.csv",
+      "bytes": 26974,
+      "sha256": "2573363dd68aa80b6648bc1438299c4b2c5693dc60453e637760afd21b1f2d91"
+    },
+    {
+      "path": "data/us/GOOGL.csv",
+      "bytes": 27474,
+      "sha256": "dfe515af52760e49e88809ad27c80fbfa9fe9e32b7d0ef0a3b127c7273cd4722"
+    },
+    {
+      "path": "data/us/MSFT.csv",
+      "bytes": 289554,
+      "sha256": "d3dd6df4e3121ac745baf53cc399362314b0b5c9d1d52ace359b0b26c5491845"
+    },
+    {
+      "path": "models/cn/features_300975.SZ.txt",
+      "bytes": 126,
+      "sha256": "117c8cdd922780c5584ad0d86bca68989354b0b786c8c6729546c2ee245b1ff6"
+    },
+    {
+      "path": "models/cn/features_603773.SH.txt",
+      "bytes": 126,
+      "sha256": "117c8cdd922780c5584ad0d86bca68989354b0b786c8c6729546c2ee245b1ff6"
+    },
+    {
+      "path": "models/cn/features_603986.SH.txt",
+      "bytes": 126,
+      "sha256": "117c8cdd922780c5584ad0d86bca68989354b0b786c8c6729546c2ee245b1ff6"
+    },
+    {
+      "path": "models/cn/model_300975.SZ.pkl",
+      "bytes": 229021,
+      "sha256": "f17dd82f2e8bc794b6720c94d6efa2e6d928c2158516e349c6fc4cb859853bf3"
+    },
+    {
+      "path": "models/cn/model_603773.SH.pkl",
+      "bytes": 229492,
+      "sha256": "b073975ed6173fbb33f8d4a0851720aed90ddf6c389a37f9489cf8199e8d6fce"
+    },
+    {
+      "path": "models/cn/model_603986.SH.pkl",
+      "bytes": 230048,
+      "sha256": "f9662103c5b4b29481c30242558c21f47f37d3db6f54a48f741f4148f6a56012"
+    },
+    {
+      "path": "models/us/features_AAPL.txt",
+      "bytes": 126,
+      "sha256": "117c8cdd922780c5584ad0d86bca68989354b0b786c8c6729546c2ee245b1ff6"
+    },
+    {
+      "path": "models/us/features_AMZN.txt",
+      "bytes": 126,
+      "sha256": "117c8cdd922780c5584ad0d86bca68989354b0b786c8c6729546c2ee245b1ff6"
+    },
+    {
+      "path": "models/us/features_GOOGL.txt",
+      "bytes": 126,
+      "sha256": "117c8cdd922780c5584ad0d86bca68989354b0b786c8c6729546c2ee245b1ff6"
+    },
+    {
+      "path": "models/us/features_GOOGL_tuned.txt",
+      "bytes": 126,
+      "sha256": "117c8cdd922780c5584ad0d86bca68989354b0b786c8c6729546c2ee245b1ff6"
+    },
+    {
+      "path": "models/us/high_return_model.pkl",
+      "bytes": 221515,
+      "sha256": "9dd26c6593f428124f0020148cd9f0369bdee9475d1f33b5c3ec48bbe318e0e3"
+    },
+    {
+      "path": "models/us/live_model_AAPL.pkl",
+      "bytes": 225954,
+      "sha256": "b50877eba156047bf0a1900d49ee10d319e1b2af7af175391f473b952ddf8ed8"
+    },
+    {
+      "path": "models/us/live_model_AMZN.pkl",
+      "bytes": 225951,
+      "sha256": "b28f0498a4f69a32d7b5e57cae8a498aeb27a0db42df83a8ab60afa0fe29946c"
+    },
+    {
+      "path": "models/us/live_model_GOOGL.pkl",
+      "bytes": 224783,
+      "sha256": "cf09d26c5c55f4b124926bd4741e88ceaeb37e89035b751323504c026b277d8d"
+    },
+    {
+      "path": "models/us/model_AAPL.pkl",
+      "bytes": 221515,
+      "sha256": "9dd26c6593f428124f0020148cd9f0369bdee9475d1f33b5c3ec48bbe318e0e3"
+    },
+    {
+      "path": "models/us/model_AMZN.pkl",
+      "bytes": 218384,
+      "sha256": "b0ba813055f8f9aade3e69afcc24e0ad6972c59ce78ca7f3f1633754cd09fc38"
+    },
+    {
+      "path": "models/us/model_GOOGL.pkl",
+      "bytes": 219453,
+      "sha256": "963d9181a8c442651da67971011e1de12a77e2184b10534d05107c7223778558"
+    },
+    {
+      "path": "models/us/model_GOOGL_tuned.pkl",
+      "bytes": 219453,
+      "sha256": "963d9181a8c442651da67971011e1de12a77e2184b10534d05107c7223778558"
+    },
+    {
+      "path": "multi_stock_train.py",
+      "bytes": 11223,
+      "sha256": "b7dff458c2be080a95bfae219ba80a77ef73b27bda37fb6c135505cf7febb1bc"
+    },
+    {
+      "path": "outputs/a_stock_portfolio.png",
+      "bytes": 92726,
+      "sha256": "40e49b318fd4be06f7d6f29f0f7c69584345ede871564e6d1169279f6b357e37"
+    },
+    {
+      "path": "outputs/googl_optimized_equity.png",
+      "bytes": 84447,
+      "sha256": "1d74a3078065661f3bd3b4e61b6a8887be239a0f3bf884758b3a87a60c886058"
+    },
+    {
+      "path": "outputs/optimized_portfolio.png",
+      "bytes": 56930,
+      "sha256": "f373a55efbe87b4dbec43075fc4a2e5cd857bd19116a75099833b7e4f955f76b"
+    },
+    {
+      "path": "outputs/selected_stocks.json",
+      "bytes": 949,
+      "sha256": "fb0272efbdf96657a7a9f4ac603aea0e6e919a33dc3abf6b227549068bb15954"
+    },
+    {
+      "path": "outputs/today_decision.json",
+      "bytes": 1475,
+      "sha256": "32a583d45986853253fba1c1cd30db71da2b85958a48b5b8820cb01eff35b4aa"
+    },
+    {
+      "path": "outputs/us_portfolio.png",
+      "bytes": 117625,
+      "sha256": "700a0b5067d5c1a33a1405090416e1aa0e45cd6e44695209b9ed403239c1d6a3"
+    },
+    {
+      "path": "outputs/us_portfolio_optimized.png",
+      "bytes": 106211,
+      "sha256": "92ba405ddf98acae0fdf678f67690b54a44f30d55709c03bc19fafdfeaffeb71"
+    },
+    {
+      "path": "scripts/data/stock_selector.py",
+      "bytes": 7316,
+      "sha256": "d553f178bd7afdf08ba1fe6a2defa0c61af296add5e81152db1603adcc0539e0"
+    },
+    {
+      "path": "scripts/live/__pycache__/portfolio_optimizer.cpython-313.pyc",
+      "bytes": 2152,
+      "sha256": "aaaf2279ab0b111f017ef09ab254458b2ad0cfa0fcb9c02be5eb22ade273a181"
+    },
+    {
+      "path": "scripts/live/deepseek_agent.py",
+      "bytes": 3953,
+      "sha256": "73bf61a836397ea3c733b5895dd991e7f43d4248937bf7f552197772b740cd45"
+    },
+    {
+      "path": "scripts/live/live_model_AAPL.pkl",
+      "bytes": 225954,
+      "sha256": "b50877eba156047bf0a1900d49ee10d319e1b2af7af175391f473b952ddf8ed8"
+    },
+    {
+      "path": "scripts/live/live_model_AMZN.pkl",
+      "bytes": 225951,
+      "sha256": "b28f0498a4f69a32d7b5e57cae8a498aeb27a0db42df83a8ab60afa0fe29946c"
+    },
+    {
+      "path": "scripts/live/live_model_GOOGL.pkl",
+      "bytes": 224783,
+      "sha256": "cf09d26c5c55f4b124926bd4741e88ceaeb37e89035b751323504c026b277d8d"
+    },
+    {
+      "path": "scripts/live/live_strategy.py",
+      "bytes": 8376,
+      "sha256": "a2d8f157c49c8650ad1e54900fac965bf7a3ac1196dbf9383fcba588e2380ecb"
+    },
+    {
+      "path": "scripts/live/live_threshold_AAPL.txt",
+      "bytes": 18,
+      "sha256": "491a1dcaa86aaaadd62e4133ba6292122c47242854c9214a33c8dfb6e2bfd0ed"
+    },
+    {
+      "path": "scripts/live/live_threshold_AMZN.txt",
+      "bytes": 4,
+      "sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25"
+    },
+    {
+      "path": "scripts/live/live_threshold_GOOGL.txt",
+      "bytes": 3,
+      "sha256": "d2cbad71ff333de67d07ec676e352ab7f38248eb69c942950157220607c55e84"
+    },
+    {
+      "path": "scripts/live/orchestrator.py",
+      "bytes": 5227,
+      "sha256": "94f5693e4eff82e7cdf047c2737c2a6fceff5ebf45da03fb0e2196b6bae1c9ee"
+    },
+    {
+      "path": "scripts/live/portfolio_optimizer.py",
+      "bytes": 1776,
+      "sha256": "9ea4c0593ca5a34f78fbb7a29570c2beedc0aa431cc52962238c53a87b4899cb"
+    },
+    {
+      "path": "scripts/live/today_signals.json",
+      "bytes": 494,
+      "sha256": "50f95195f66c56044799da354ce5a6c430091889341babf8c24cfb50c064f674"
+    },
+    {
+      "path": "scripts/live/trade_engine.py",
+      "bytes": 10890,
+      "sha256": "9d18bd75c8a4ac3fa720b54c3a1348374cb6ad2d25e4d0ed142f5e55f514c606"
+    },
+    {
+      "path": "scripts/training/a_stock_equity.png",
+      "bytes": 38837,
+      "sha256": "fa55d6807547095eca9cc90448035b2078a910368853e0209b7b7d494580d59a"
+    },
+    {
+      "path": "scripts/training/batch_train_a_stocks.py",
+      "bytes": 10131,
+      "sha256": "e33198ae039e8933461080c1dd5b6674290c34722a10235f8d9046a60e5c4705"
+    },
+    {
+      "path": "scripts/training/features_603986.SH.txt",
+      "bytes": 126,
+      "sha256": "117c8cdd922780c5584ad0d86bca68989354b0b786c8c6729546c2ee245b1ff6"
+    },
+    {
+      "path": "scripts/training/features_GOOGL_tuned.txt",
+      "bytes": 126,
+      "sha256": "117c8cdd922780c5584ad0d86bca68989354b0b786c8c6729546c2ee245b1ff6"
+    },
+    {
+      "path": "scripts/training/googl_optimized_equity.png",
+      "bytes": 84447,
+      "sha256": "1d74a3078065661f3bd3b4e61b6a8887be239a0f3bf884758b3a87a60c886058"
+    },
+    {
+      "path": "scripts/training/individual_models.py",
+      "bytes": 13558,
+      "sha256": "bd0f5e9f4ce1e8b44be8060f60598d693acfb10a59b9be69eece64059468d3bd"
+    },
+    {
+      "path": "scripts/training/model_603986.SH.pkl",
+      "bytes": 230048,
+      "sha256": "f9662103c5b4b29481c30242558c21f47f37d3db6f54a48f741f4148f6a56012"
+    },
+    {
+      "path": "scripts/training/model_GOOGL_tuned.pkl",
+      "bytes": 219453,
+      "sha256": "963d9181a8c442651da67971011e1de12a77e2184b10534d05107c7223778558"
+    },
+    {
+      "path": "scripts/training/portfolio_backtest.py",
+      "bytes": 8476,
+      "sha256": "7b5858525428b4165b0727069e997223fb7c8a98cee4c674c0772b42b6780327"
+    },
+    {
+      "path": "scripts/training/train_a_stock.py",
+      "bytes": 7417,
+      "sha256": "4a53f91aaefd9f0e40a399c8c571a05f175ecf9a58b07042dd5b763e57957464"
+    },
+    {
+      "path": "scripts/training/tune_googl.py",
+      "bytes": 12936,
+      "sha256": "b221c0bb7b0503ae19b4a9830644b62cdd7793b8ad79fb5a8cd1fb4e77378561"
+    },
+    {
+      "path": "scripts/validation/robust_oos_portfolio.png",
+      "bytes": 87786,
+      "sha256": "81713dd2c4286d8fa1235294afff5c211877d81989f000c529e72478a3dd0efa"
+    },
+    {
+      "path": "scripts/validation/robust_walk_forward_short.py",
+      "bytes": 11534,
+      "sha256": "b7ad2e2a48b6f35e01e8b5e25226b16dd2ef4d25e1d286a84b0946d388f7b725"
+    },
+    {
+      "path": "scripts/validation/short_focus_oos.png",
+      "bytes": 137714,
+      "sha256": "123b53bde52820ae7e57b69755bfcd7ca8965e991d075b9a363e0f19f3a4ab99"
+    },
+    {
+      "path": "scripts/validation/walk_forward_validation.py",
+      "bytes": 11853,
+      "sha256": "77fb05dc9d3946b84b1cc36568867e6106a20294d251b0cbee8ac33aadee4e73"
+    },
+    {
+      "path": "today_decision.json",
+      "bytes": 730,
+      "sha256": "04abdb83d82110f119133f96538773a9907fc3346313e2439fc8a80f85d1a292"
+    },
+    {
+      "path": "train_model.py",
+      "bytes": 10748,
+      "sha256": "f2870a17fc60a03209f8c4a2455c8207a3b3022236a36d5c46775df6c1c4421e"
+    }
+  ],
+  "csv": [
+    {
+      "path": "data/cn/000001.SZ.csv",
+      "rows": 1792,
+      "columns": [
+        "ts_code",
+        "trade_date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "pre_close",
+        "change",
+        "pct_chg",
+        "vol",
+        "amount"
+      ],
+      "min_date": "20190102",
+      "max_date": "20260527",
+      "duplicates": 0,
+      "ascending": false,
+      "bad_ohlcv_rows": 0,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/cn/300975.SZ.csv",
+      "rows": 1234,
+      "columns": [
+        "ts_code",
+        "trade_date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "pre_close",
+        "change",
+        "pct_chg",
+        "vol",
+        "amount"
+      ],
+      "min_date": "20210421",
+      "max_date": "20260527",
+      "duplicates": 0,
+      "ascending": false,
+      "bad_ohlcv_rows": 0,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/cn/600036.SH.csv",
+      "rows": 1792,
+      "columns": [
+        "ts_code",
+        "trade_date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "pre_close",
+        "change",
+        "pct_chg",
+        "vol",
+        "amount"
+      ],
+      "min_date": "20190102",
+      "max_date": "20260527",
+      "duplicates": 0,
+      "ascending": false,
+      "bad_ohlcv_rows": 0,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/cn/600519.SH.csv",
+      "rows": 1792,
+      "columns": [
+        "ts_code",
+        "trade_date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "pre_close",
+        "change",
+        "pct_chg",
+        "vol",
+        "amount"
+      ],
+      "min_date": "20190102",
+      "max_date": "20260527",
+      "duplicates": 0,
+      "ascending": false,
+      "bad_ohlcv_rows": 0,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/cn/603773.SH.csv",
+      "rows": 1792,
+      "columns": [
+        "ts_code",
+        "trade_date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "pre_close",
+        "change",
+        "pct_chg",
+        "vol",
+        "amount"
+      ],
+      "min_date": "20190102",
+      "max_date": "20260527",
+      "duplicates": 0,
+      "ascending": false,
+      "bad_ohlcv_rows": 0,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/cn/603986.SH.csv",
+      "rows": 1791,
+      "columns": [
+        "ts_code",
+        "trade_date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "pre_close",
+        "change",
+        "pct_chg",
+        "vol",
+        "amount"
+      ],
+      "min_date": "20190102",
+      "max_date": "20260527",
+      "duplicates": 0,
+      "ascending": false,
+      "bad_ohlcv_rows": 0,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/GOOGL.csv",
+      "rows": 1865,
+      "columns": [
+        "ts_code",
+        "trade_date",
+        "close",
+        "open",
+        "high",
+        "low",
+        "pre_close",
+        "pct_change",
+        "vol",
+        "amount",
+        "vwap",
+        "adj_factor",
+        "change",
+        "turnover_ratio",
+        "total_mv",
+        "pe",
+        "pb"
+      ],
+      "min_date": "20190102",
+      "max_date": "20260603",
+      "duplicates": 0,
+      "ascending": false,
+      "bad_ohlcv_rows": 0,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/us/AAPL.csv",
+      "rows": 508,
+      "columns": [
+        "date",
+        "symbol",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume"
+      ],
+      "min_date": "2024-03-01",
+      "max_date": "2026-03-11",
+      "duplicates": 0,
+      "ascending": true,
+      "bad_ohlcv_rows": 0,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/us/AMZN.csv",
+      "rows": 508,
+      "columns": [
+        "date",
+        "symbol",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume"
+      ],
+      "min_date": "2024-03-01",
+      "max_date": "2026-03-11",
+      "duplicates": 0,
+      "ascending": true,
+      "bad_ohlcv_rows": 2,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/us/GOOGL.csv",
+      "rows": 508,
+      "columns": [
+        "date",
+        "symbol",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume"
+      ],
+      "min_date": "2024-03-01",
+      "max_date": "2026-03-11",
+      "duplicates": 0,
+      "ascending": true,
+      "bad_ohlcv_rows": 1,
+      "missing_or_nonfinite_rows": 0
+    },
+    {
+      "path": "data/us/MSFT.csv",
+      "rows": 1865,
+      "columns": [
+        "ts_code",
+        "trade_date",
+        "close",
+        "open",
+        "high",
+        "low",
+        "pre_close",
+        "pct_change",
+        "vol",
+        "amount",
+        "vwap",
+        "adj_factor",
+        "change",
+        "turnover_ratio",
+        "total_mv",
+        "pe",
+        "pb"
+      ],
+      "min_date": "20190102",
+      "max_date": "20260603",
+      "duplicates": 0,
+      "ascending": false,
+      "bad_ohlcv_rows": 0,
+      "missing_or_nonfinite_rows": 0
+    }
+  ],
+  "syntax": [
+    {
+      "path": "A_stock_pool_train.py",
+      "lines": 226,
+      "parse": "PASS"
+    },
+    {
+      "path": "data/download_us_data.py",
+      "lines": 40,
+      "parse": "PASS"
+    },
+    {
+      "path": "multi_stock_train.py",
+      "lines": 288,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/data/stock_selector.py",
+      "lines": 174,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/live/deepseek_agent.py",
+      "lines": 108,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/live/live_strategy.py",
+      "lines": 210,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/live/orchestrator.py",
+      "lines": 143,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/live/portfolio_optimizer.py",
+      "lines": 57,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/live/trade_engine.py",
+      "lines": 308,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/training/batch_train_a_stocks.py",
+      "lines": 250,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/training/individual_models.py",
+      "lines": 327,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/training/portfolio_backtest.py",
+      "lines": 202,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/training/train_a_stock.py",
+      "lines": 188,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/training/tune_googl.py",
+      "lines": 301,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/validation/robust_walk_forward_short.py",
+      "lines": 272,
+      "parse": "PASS"
+    },
+    {
+      "path": "scripts/validation/walk_forward_validation.py",
+      "lines": 275,
+      "parse": "PASS"
+    },
+    {
+      "path": "train_model.py",
+      "lines": 263,
+      "parse": "PASS"
+    }
+  ],
+  "checks": {
+    "optimizer_normalization": [
+      {
+        "candidates": 1,
+        "feasible_solver_weights": [
+          0.2
+        ],
+        "returned_weights": [
+          0.8
+        ],
+        "violates_20pct_cap": true
+      },
+      {
+        "candidates": 2,
+        "feasible_solver_weights": [
+          0.2,
+          0.2
+        ],
+        "returned_weights": [
+          0.4,
+          0.4
+        ],
+        "violates_20pct_cap": true
+      },
+      {
+        "candidates": 3,
+        "feasible_solver_weights": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "returned_weights": [
+          0.26666666666666666,
+          0.26666666666666666,
+          0.26666666666666666
+        ],
+        "violates_20pct_cap": true
+      },
+      {
+        "candidates": 4,
+        "feasible_solver_weights": [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "returned_weights": [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "violates_20pct_cap": false
+      }
+    ],
+    "optimizer_risk": {
+      "solver_weights": [
+        0.05,
+        0.05,
+        0.05,
+        0.05
+      ],
+      "vols": [
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "solver_linear_risk": 0.02,
+      "normalized_linear_risk": 0.08,
+      "limit": 0.02
+    },
+    "unknown_label": {
+      "future_return": "NaN",
+      "comparison_gt_1pct": 0
+    },
+    "saturated_scale": {
+      "1": [
+        -1,
+        0,
+        1
+      ],
+      "1.5": [
+        -1,
+        0.0,
+        1
+      ],
+      "2": [
+        -1,
+        0,
+        1
+      ],
+      "2.5": [
+        -1,
+        0.0,
+        1
+      ],
+      "3": [
+        -1,
+        0,
+        1
+      ],
+      "3.5": [
+        -1,
+        0.0,
+        1
+      ]
+    },
+    "short_walk_forward": {
+      "two_windows_rows": 500,
+      "unique_dates": 375,
+      "overlap": 125
+    },
+    "index_alignment": {
+      "A_rows": [
+        0,
+        2
+      ],
+      "B_rows": [
+        1,
+        3
+      ],
+      "effect": "concat(axis=1) aligns global row indices, not trading dates; each row has one stock, so mean is not a daily equal-weight portfolio"
+    },
+    "selected_without_local_data": [
+      "600549.SH",
+      "600160.SH",
+      "000630.SZ",
+      "300502.SZ",
+      "600221.SH"
+    ],
+    "downloader_resolved_output": "F:\\quant agent\\data\\us"
+  },
+  "identical_artifacts": [
+    [
+      "models/cn/features_300975.SZ.txt",
+      "models/cn/features_603773.SH.txt",
+      "models/cn/features_603986.SH.txt",
+      "models/us/features_AAPL.txt",
+      "models/us/features_AMZN.txt",
+      "models/us/features_GOOGL.txt",
+      "models/us/features_GOOGL_tuned.txt",
+      "scripts/training/features_603986.SH.txt",
+      "scripts/training/features_GOOGL_tuned.txt"
+    ],
+    [
+      "models/cn/model_603986.SH.pkl",
+      "scripts/training/model_603986.SH.pkl"
+    ],
+    [
+      "models/us/high_return_model.pkl",
+      "models/us/model_AAPL.pkl"
+    ],
+    [
+      "models/us/live_model_AAPL.pkl",
+      "scripts/live/live_model_AAPL.pkl"
+    ],
+    [
+      "models/us/live_model_AMZN.pkl",
+      "scripts/live/live_model_AMZN.pkl"
+    ],
+    [
+      "models/us/live_model_GOOGL.pkl",
+      "scripts/live/live_model_GOOGL.pkl"
+    ],
+    [
+      "models/us/model_GOOGL.pkl",
+      "models/us/model_GOOGL_tuned.pkl",
+      "scripts/training/model_GOOGL_tuned.pkl"
+    ],
+    [
+      "outputs/googl_optimized_equity.png",
+      "scripts/training/googl_optimized_equity.png"
+    ]
+  ]
+}
