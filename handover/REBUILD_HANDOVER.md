@@ -32,8 +32,9 @@ safety behavior).
 
 | Fact | Implication |
 |---|---|
-| **Use the Anaconda Python** | `E:/Anaconda/python` (3.13.9; numpy/pandas/scipy/sklearn/xgboost/matplotlib/yaml/pytest complete). The msys2 Python on PATH (3.14.7) has no pip and no scientific stack |
-| **Run mode** | `PYTHONPATH=src /e/Anaconda/python -m quant_agent.cli <cmd>`; tests: `/e/Anaconda/python -m pytest` (root conftest.py injects src). `-I` isolation drops PYTHONPATH |
+| Portable install (primary) | `git clone` + `pip install -e ".[dev]"` on Python >= 3.11 (validated in a fresh venv); no hardcoded paths — everything resolves relative to the repository root; commands use `python -m quant_agent.cli` |
+| Development machine (historical record) | `E:/Anaconda/python` (3.13.9; numpy/pandas/scipy/sklearn/xgboost/matplotlib/yaml/pytest complete; RTX 5060 GPU verified for XGBoost CUDA fits). The msys2 Python on PATH (3.14.7) has no pip and no scientific stack |
+| **Run mode** | `python -m quant_agent.cli <cmd>` from the repository root (portable), or `PYTHONPATH=src /e/Anaconda/python -m quant_agent.cli <cmd>` on the development machine. `-I` isolation drops PYTHONPATH |
 | **No git repository** | `.gitignore` ready; initialize and commit a baseline before further changes |
 | Data are historical snapshots | US ends 2026-03/06 → refreshed via the provider chain to 2026-11-13; freshness warnings on legacy-only data are factual statements |
 | All cost parameters UNVERIFIED | Commission/slippage/stamp tax carry legacy defaults, flagged in configs; every conclusion is sensitive to them |
@@ -126,24 +127,27 @@ established for any hypothesis; the monitor is a review layer, not a signal.**
 6. **P2**: broker paper integration, reconciliation, alerting — all gated by
    DECISIONS §2.3 and by the absence of any approvable bundle.
 
-## 5. Command quick reference
+## 5. Command quick reference (portable; from the repository root)
 
 ```bash
-cd "F:/quant agent/quant_project"
-export PYTHONPATH=src PY=/e/Anaconda/python
-$PY -m pytest                      # 110 tests
-$PY -m quant_agent.cli update --market cn
-$PY -m quant_agent.cli ingest --market cn --as-of 2026-11-15
-$PY -m quant_agent.cli research --strategy us_research_v1
-$PY -m quant_agent.cli xs --family technical
-$PY -m quant_agent.cli multifactor
-$PY -m quant_agent.cli infomonitor
-$PY -m quant_agent.cli eventstudy
-$PY -m quant_agent.cli report --run <run_id>
-$PY -m quant_agent.cli health --run <run_id>
-$PY -m quant_agent.cli bundles [--approve <id> --actor <who> --evidence <ref>]
-$PY -m quant_agent.cli decide --bundle <id> --cash 800000 \
+python -m pytest                      # 110 tests
+python -m quant_agent.cli update --market cn
+python -m quant_agent.cli ingest --market cn --as-of 2026-11-15
+python -m quant_agent.cli research --strategy us_research_v1
+# distributed fold fitting (shards on different workers, one shared run id):
+python -m quant_agent.cli research --strategy us_research_v1 --fit-shard 0/2 --run-id <shared-id>
+python -m quant_agent.cli research --strategy us_research_v1 --fit-shard 1/2 --run-id <shared-id>
+python -m quant_agent.cli research-finalize --strategy us_research_v1 --run-id <shared-id>
+python -m quant_agent.cli xs --family technical
+python -m quant_agent.cli multifactor
+python -m quant_agent.cli infomonitor
+python -m quant_agent.cli eventstudy
+python -m quant_agent.cli report --run <run_id>
+python -m quant_agent.cli health --run <run_id>
+python -m quant_agent.cli bundles [--approve <id> --actor <who> --evidence <ref>]
+python -m quant_agent.cli decide --bundle <id> --cash 800000 \
      --holdings '{"600519.SH": 100}' --pending-orders '[{"symbol":"600519.SH","side":"BUY","qty":100,"ref_price":1300.0}]'
+# development machine alternative: PYTHONPATH=src /e/Anaconda/python -m ...
 ```
 
 Artifacts: `artifacts/runs/<run_id>/` (config/folds/metrics/health/report.md/

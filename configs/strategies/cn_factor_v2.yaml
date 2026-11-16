@@ -39,6 +39,7 @@ model:
   primary: gbm
   challenger: logistic
   gbm:
+    device: cpu
     n_estimators: 200
     max_depth: 3
     learning_rate: 0.05

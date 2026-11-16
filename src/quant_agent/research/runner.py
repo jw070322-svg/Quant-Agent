@@ -11,9 +11,20 @@ Protocol (handover 8.5):
   simulator with the SAME costs.
 - Results are reported with calibration, block-bootstrap uncertainty, and a
   health record; a fail blocks any complete-run claim.
+
+Distributed execution (GPU swarm readiness): the EXPENSIVE phase is the
+per-fold fitting, which is embarrassingly parallel because folds are disjoint
+by construction. `run_research(..., fit_shard="i/n")` fits only the folds
+assigned to shard i (fold_id % n == i) and writes shard outputs into a SHARED
+run directory (pass an explicit run_id so every worker targets the same
+directory). `finalize_research(...)` merges the shard outputs (verifying
+disjoint fold coverage), then runs the sequential evaluation locally. Fold
+fitting on a GPU worker: set model.gbm.device = "cuda" in the strategy
+config (models.py falls back to CPU automatically when CUDA is unusable).
 """
 from __future__ import annotations
 
+import glob
 import time
 from pathlib import Path
 
@@ -39,7 +50,7 @@ from ..research.models import fit_predict_proba, make_model
 from ..research.splits import build_folds
 from ..research.trials import TrialLedger
 from ..risk.checks import RiskLimits
-from ..util import config_fingerprint, now_utc_iso, read_json, write_json
+from ..util import config_fingerprint, now_utc_iso, read_json, sha256_file, write_json
 
 DEFAULT_THRESHOLD = 0.55
 
@@ -70,15 +81,16 @@ def _mini_sim_return(panel: dict, sessions: pd.DatetimeIndex, pred_df: pd.DataFr
     return float(sim.equity_curve.iloc[-1] / initial_equity - 1.0)
 
 
-def run_research(strategy: str, *, market: str | None = None,
-                 initial_equity: float = 1_000_000.0) -> str:
-    t0 = time.time()
+# ------------------------------------------------------------------ context
+def _prepare_context(strategy: str, market: str | None,
+                     initial_equity: float) -> dict:
+    """Shared preparation for fitting and finalization: configs, data gate,
+    labeled panel, sessions, folds, policy objects."""
     scfg = load_strategy_config(strategy)
     market = market or scfg["market"]
     mcfg = load_market_config(market)
     rcfg = load_risk_config()
 
-    # ---- data gate: never claim a complete run over incomplete data --------
     manifest_path = PROJECT_ROOT / "datasets" / f"manifest_{market}.json"
     if not manifest_path.exists():
         ingest_market(market)
@@ -103,40 +115,44 @@ def run_research(strategy: str, *, market: str | None = None,
         step_sessions=scfg["walk_forward"]["step_sessions"],
         policy_tune_fraction=scfg["walk_forward"]["policy_tune_fraction"],
     )
-    spy = _sessions_per_year(sessions)
-    feat_cols = list(scfg["features"])
-    seed = int(scfg["seed"])
-    pcfg = PortfolioConfig(
-        edge_threshold=scfg["portfolio"]["edge_threshold"],
-        lambda_vol=scfg["portfolio"]["lambda_vol"],
-        max_names=scfg["portfolio"]["max_names"],
-        max_weight_per_name=rcfg["max_weight_per_name"],
-        max_gross_exposure=rcfg["max_gross_exposure"],
-    )
     limits = RiskLimits(**{k: rcfg[k] for k in
                            ("max_weight_per_name", "max_gross_exposure", "cash_reserve",
                             "max_turnover", "min_order_value", "max_open_orders_per_symbol",
                             "allowed_sides", "stop_loss_pct", "trail_stop_pct")})
-    cost_bps = round_trip_cost_bps(mcfg)
-    shrink = float(scfg["portfolio"]["shrink_conditional_returns"])
+    return {
+        "scfg": scfg, "mcfg": mcfg, "rcfg": rcfg, "manifest": manifest,
+        "frames": frames, "panel": panel, "sessions": sessions, "folds": folds,
+        "limits": limits, "spy": _sessions_per_year(sessions),
+        "feat_cols": list(scfg["features"]),
+        "cost_bps": round_trip_cost_bps(mcfg),
+        "shrink": float(scfg["portfolio"]["shrink_conditional_returns"]),
+        "seed": int(scfg["seed"]),
+        "initial_equity": initial_equity,
+        "primary_kind": scfg["model"]["primary"],
+        "pcfg": PortfolioConfig(
+            edge_threshold=scfg["portfolio"]["edge_threshold"],
+            lambda_vol=scfg["portfolio"]["lambda_vol"],
+            max_names=scfg["portfolio"]["max_names"],
+            max_weight_per_name=rcfg["max_weight_per_name"],
+            max_gross_exposure=rcfg["max_gross_exposure"],
+        ),
+    }
 
-    run_id = f"{strategy}-{market}-{config_fingerprint({'s': strategy, 'm': market})}-{now_utc_iso().replace(':', '')}"
-    run_dir = new_run_dir(strategy, market, run_id)
-    trials = TrialLedger(run_dir, run_id)
-    trials.log("config", strategy_fingerprint=config_fingerprint(scfg),
-               market_fingerprint=config_fingerprint(mcfg),
-               risk_fingerprint=config_fingerprint(rcfg),
-               dataset_hashes={s: e.get("source_sha256") for s, e in manifest["symbols"].items()})
-    for f in folds:
-        trials.log("fold_defined", **f.to_dict())
 
-    # ---- walk-forward fitting and prediction -------------------------------
+def _fit_assigned_folds(ctx: dict, assigned_folds: list, run_dir: Path,
+                        trials: TrialLedger, initial_equity: float) -> tuple[
+        pd.DataFrame, dict[int, float], list[dict]]:
+    """Fit + predict + policy-tune for the ASSIGNED folds only (shard unit).
+    Returns (predictions, chosen_thresholds, fold_records)."""
+    panel, feat_cols = ctx["panel"], ctx["feat_cols"]
+    mcfg, pcfg, limits = ctx["mcfg"], ctx["pcfg"], ctx["limits"]
+    seed, shrink, cost_bps = ctx["seed"], ctx["shrink"], ctx["cost_bps"]
+    threshold_grid = [round(x, 2) for x in np.arange(0.40, 0.71, 0.05)]
     pred_rows: list[dict] = []
     chosen_thresholds: dict[int, float] = {}
-    threshold_grid = [round(x, 2) for x in np.arange(0.40, 0.71, 0.05)]
     fold_records = []
 
-    for fold in folds:
+    for fold in assigned_folds:
         train_parts, pred_parts = [], []
         for sym, df in panel.items():
             elig = df.loc[training_eligible(df, fit_cutoff=fold.fit_cutoff)]
@@ -158,8 +174,8 @@ def run_research(strategy: str, *, market: str | None = None,
                    base_rate=float(y_tr.mean()), fit_cutoff=str(fold.fit_cutoff.date()))
 
         fold_pred_frames = {}
-        for kind in (scfg["model"]["primary"], scfg["model"]["challenger"]):
-            params = scfg["model"].get(kind, {})
+        for kind in (ctx["primary_kind"], ctx["scfg"]["model"]["challenger"]):
+            params = ctx["scfg"]["model"].get(kind, {})
             model = make_model(kind, params, seed)
             p = fit_predict_proba(model, X_tr, y_tr, X_pr)
             pdf = pred_df[["date", "symbol", "vol_20"]].copy()
@@ -184,14 +200,14 @@ def run_research(strategy: str, *, market: str | None = None,
                 trials.log("degenerate_fold", fold_id=fold.fold_id, model=kind,
                            note="single class in training window; no predictions")
 
-        # policy tuning on the tune half, using the PRIMARY model only
-        tune_pdf = fold_pred_frames.get(scfg["model"]["primary"])
+        tune_pdf = fold_pred_frames.get(ctx["primary_kind"])
         best_thr, best_score = DEFAULT_THRESHOLD, -np.inf
         if tune_pdf is not None and len(tune_pdf[tune_pdf["window"] == "tune"]):
-            tune_sessions = sessions[(sessions >= fold.tune_start) & (sessions <= fold.tune_end)]
+            tune_sessions = ctx["sessions"][(ctx["sessions"] >= fold.tune_start)
+                                            & (ctx["sessions"] <= fold.tune_end)]
             for thr in threshold_grid:
                 score = _mini_sim_return(panel, tune_sessions, tune_pdf, thr, pcfg,
-                                         mcfg, limits, initial_equity, run_id)
+                                         mcfg, limits, initial_equity, trials.run_id)
                 trials.log("policy_tune", fold_id=fold.fold_id, threshold=thr,
                            tune_net_return=score)
                 if score > best_score + 1e-12:
@@ -205,15 +221,28 @@ def run_research(strategy: str, *, market: str | None = None,
 
     predictions = pd.concat(pred_rows, ignore_index=True) if pred_rows else pd.DataFrame(
         columns=["date", "symbol", "model", "fold_id", "p_up", "mu_net", "vol", "window"])
+    return predictions, chosen_thresholds, fold_records
 
-    # ---- final continuous simulation with the activation schedule ----------
-    fold_for_date: dict[pd.Timestamp, tuple[object, pd.DataFrame]] = {}
-    for fold in folds:
-        mask = (sessions >= fold.predict_start) & (sessions <= fold.predict_end)
-        for t in sessions[mask]:
+
+def _finalize(ctx: dict, run_id: str, run_dir: Path, predictions: pd.DataFrame,
+              chosen_thresholds: dict[int, float], fold_records: list[dict],
+              trials: TrialLedger, initial_equity: float,
+              model_sha256: str | None = None) -> None:
+    """Sequential evaluation phase (runs once, locally): activation schedule,
+    continuous simulations, benchmarks, metrics, calibration, health,
+    artifacts, and bundle registration."""
+    panel = ctx["panel"]
+    sessions = ctx["sessions"]
+    mcfg, rcfg, scfg = ctx["mcfg"], ctx["rcfg"], ctx["scfg"]
+    limits, pcfg = ctx["limits"], ctx["pcfg"]
+    primary_kind = ctx["primary_kind"]
+    name_cap = rcfg["max_weight_per_name"]
+
+    fold_for_date: dict[pd.Timestamp, object] = {}
+    for fold in ctx["folds"]:
+        for t in sessions[(sessions >= fold.predict_start) & (sessions <= fold.predict_end)]:
             fold_for_date[t] = fold
 
-    primary_kind = scfg["model"]["primary"]
     primary_pred = predictions[predictions["model"] == primary_kind] if len(predictions) else predictions
 
     def active_threshold(t) -> float:
@@ -248,7 +277,7 @@ def run_research(strategy: str, *, market: str | None = None,
                                    "weight": float(w), "threshold": thr})
         return {k: float(v) for k, v in res.weights.items() if v > 0}
 
-    name_cap = rcfg["max_weight_per_name"]
+    sessions_oos = sessions[(sessions >= ctx["folds"][0].predict_start)]
 
     def buyhold_fn(t, account, prices):
         if t == sessions_oos[0]:
@@ -293,7 +322,6 @@ def run_research(strategy: str, *, market: str | None = None,
             max_weight_per_name=min(0.10, name_cap))
         return w  # {} -> flat (cash is a legitimate output)
 
-    sessions_oos = sessions[(sessions >= folds[0].predict_start)]
     sims = {}
     sims["strategy"] = run_simulation(panel, sessions_oos, strategy_fn, market_cfg=mcfg,
                                       limits=limits, initial_equity=initial_equity, run_id=run_id)
@@ -320,7 +348,7 @@ def run_research(strategy: str, *, market: str | None = None,
         predictions.loc[~matured, "label_realized"] = np.nan
 
     strat_summ = summarize(
-        sims["strategy"].daily_returns, sessions_per_year=spy,
+        sims["strategy"].daily_returns, sessions_per_year=ctx["spy"],
         turnover=float(sims["strategy"].turnover.sum()),
         costs_paid=float(sims["strategy"].costs.iloc[-1]),
         exposure=float(sims["strategy"].exposure.mean()),
@@ -331,34 +359,35 @@ def run_research(strategy: str, *, market: str | None = None,
     # fold REPORT windows (policy selected strictly before each report window;
     # tune windows run previous-fold/default thresholds). Both views reported.
     report_sessions = None
-    for fold in folds:
+    for fold in ctx["folds"]:
         m = sessions[(sessions >= fold.report_start) & (sessions <= fold.report_end)]
         report_sessions = m if report_sessions is None else report_sessions.union(m)
+
     def _window_summary(sim):
         dr = sim.daily_returns
         dr_rep = dr[dr.index.isin(report_sessions)] if report_sessions is not None else dr
-        return summarize(dr_rep, sessions_per_year=spy,
+        return summarize(dr_rep, sessions_per_year=ctx["spy"],
                          turnover=float(sim.turnover[sim.turnover.index.isin(report_sessions)].sum()),
                          costs_paid=float(sim.costs.iloc[-1]),
                          exposure=float(sim.exposure[sim.exposure.index.isin(report_sessions)].mean()),
                          n_trades=int(sim.fills["session"].isin(
                              [str(d.date()) for d in report_sessions]).sum()) if len(sim.fills) else 0)
+
     strat_report_summ = _window_summary(sims["strategy"])
     strat_report_summ.update(completed_trade_stats(
         sims["strategy"].fills[sims["strategy"].fills["order_type"] != "STOP"]
         if len(sims["strategy"].fills) else sims["strategy"].fills))
-    bench_report_summ = {name: _window_summary(sim) for name, sim in sims.items()
-                         if name != "strategy"}
-
     bench_summ = {}
     for name, sim in sims.items():
         if name == "strategy":
             continue
-        bench_summ[name] = summarize(sim.daily_returns, sessions_per_year=spy,
+        bench_summ[name] = summarize(sim.daily_returns, sessions_per_year=ctx["spy"],
                                      turnover=float(sim.turnover.sum()),
                                      costs_paid=float(sim.costs.iloc[-1]),
                                      exposure=float(sim.exposure.mean()),
                                      n_trades=len(sim.fills))
+    bench_report_summ = {name: _window_summary(sim) for name, sim in sims.items()
+                         if name != "strategy"}
 
     cal, bins = {}, []
     if len(predictions):
@@ -370,16 +399,17 @@ def run_research(strategy: str, *, market: str | None = None,
             cal = calibration(y, ev["p_up"].to_numpy(dtype=float))
             bins = reliability_bins(y, ev["p_up"].to_numpy(dtype=float))
     boot = block_bootstrap_sharpe_ci(sims["strategy"].daily_returns,
-                                     sessions_per_year=spy, seed=seed)
+                                     sessions_per_year=ctx["spy"],
+                                     seed=int(scfg["seed"]))
 
-    health = run_health_checks(manifest=manifest, predictions=predictions,
+    health = run_health_checks(manifest=ctx["manifest"], predictions=predictions,
                                sim_result=sims["strategy"],
                                initial_equity=initial_equity,
                                limits_max_weight=rcfg["max_weight_per_name"],
                                as_of=now_utc_iso()[:10])
 
     metrics = {
-        "sessions_per_year": spy,
+        "sessions_per_year": ctx["spy"],
         "oos_span": [str(sessions_oos[0].date()), str(sessions_oos[-1].date())],
         "strategy": strat_summ,
         "strategy_report_windows_only": strat_report_summ,
@@ -389,52 +419,24 @@ def run_research(strategy: str, *, market: str | None = None,
         "reliability_bins": bins,
         "bootstrap": boot,
         "chosen_thresholds": {str(k): v for k, v in chosen_thresholds.items()},
-        "runtime_seconds": round(time.time() - t0, 2),
+        "runtime_seconds": 0.0,
     }
 
     # ---- persist artifacts --------------------------------------------------
-    # frozen decision artifact (F-002 fix): the model + conditional payoffs
-    # are fitted at REGISTRATION time on all matured labels; decide.py loads
-    # this immutable artifact and NEVER refits at decision time.
-    model_sha256 = None
-    try:
-        import pickle
-        train_parts = []
-        for sym, df in panel.items():
-            train_parts.append(df.loc[training_eligible(df, fit_cutoff=sessions[-1])]
-                               .dropna(subset=feat_cols))
-        final_train = pd.concat(train_parts, ignore_index=True)
-        y_final = (final_train["label"].to_numpy(dtype=float) > 0).astype(int)
-        if len(final_train) and len(np.unique(y_final)) == 2:
-            payoff_final = PayoffModel.fit(final_train, shrink=shrink)
-            final_model = make_model(primary_kind, scfg["model"].get(primary_kind, {}), seed)
-            final_model.fit(final_train[feat_cols].to_numpy(dtype=float), y_final)
-            artifact = {"model": final_model, "payoff": payoff_final,
-                        "feature_names": feat_cols, "kind": primary_kind,
-                        "trained_through": str(sessions[-1].date())}
-            (run_dir / "model.pkl").write_bytes(
-                pickle.dumps(artifact, protocol=pickle.HIGHEST_PROTOCOL))
-            from ..util import sha256_file
-            model_sha256 = sha256_file(run_dir / "model.pkl")
-        else:
-            trials.log("model_artifact_skipped",
-                       note="degenerate final training set; bundle will be decision-ineligible")
-    except Exception as exc:  # noqa: BLE001 - recorded, run still completes
-        trials.log("model_artifact_failed", error=f"{type(exc).__name__}: {str(exc)[:150]}")
-
     import sys as _sys
     import importlib.metadata as _md
     env_fingerprint = {
         "python": _sys.version.split()[0],
-        "packages": {p: (_md.version(p) if True else "") for p in
+        "packages": {p: _md.version(p) for p in
                      ("numpy", "pandas", "scikit-learn", "xgboost")},
     }
     config_blob = {
-        "run_id": run_id, "strategy": scfg["strategy"], "market": market,
+        "run_id": run_id, "strategy": scfg["strategy"], "market": mcfg["market"],
         "created_utc": now_utc_iso(),
         "config_fingerprint": config_fingerprint({"s": scfg, "m": mcfg, "r": rcfg}),
         "strategy_config": scfg, "market_config": mcfg, "risk_config": rcfg,
-        "dataset_source_sha256": {s: e.get("source_sha256") for s, e in manifest["symbols"].items()},
+        "dataset_source_sha256": {s: e.get("source_sha256")
+                                  for s, e in ctx["manifest"]["symbols"].items()},
         "initial_equity": initial_equity,
         "model_sha256": model_sha256,
         "model_kind": primary_kind,
@@ -455,11 +457,202 @@ def run_research(strategy: str, *, market: str | None = None,
         trials.log("ledger_event", **ev_)
     write_json(run_dir / "metrics.json", metrics)
     write_json(run_dir / "health.json", health)
-    report = build_markdown_report(run_id)
-    (run_dir / "report.md").write_text(report, encoding="utf-8")
+    report_md = build_markdown_report(run_id)
+    (run_dir / "report.md").write_text(report_md, encoding="utf-8")
     _plot_equity(eq, run_dir / "equity.png", run_id)
     save_bundle(run_dir, status="candidate",
                 note="auto-registered on research completion")
+
+
+# ------------------------------------------------------------------- shards
+def _shard_paths(run_dir: Path, shard: int, n_shards: int) -> dict:
+    return {
+        "predictions": run_dir / f"oos_predictions_shard{shard}of{n_shards}.csv",
+        "thresholds": run_dir / f"chosen_thresholds_shard{shard}of{n_shards}.json",
+        "folds": run_dir / f"fold_records_shard{shard}of{n_shards}.json",
+    }
+
+
+# ------------------------------------------------------------------- public
+def run_research(strategy: str, *, market: str | None = None,
+                 initial_equity: float = 1_000_000.0,
+                 fit_shard: str | None = None,
+                 run_id: str | None = None) -> str:
+    """Fit + evaluate a strategy. Two modes:
+
+    - Single mode (default): fit ALL folds and finalize in one call.
+    - Shard mode (`fit_shard="i/n"`): fit only folds with fold_id % n == i and
+      write shard outputs into the SHARED run directory named by the required
+      `run_id`. After every shard has run, call `finalize_research` with the
+      same run_id to merge and evaluate. Designed for distributing fold
+      fitting across workers (a GPU swarm: set model.gbm.device = "cuda").
+    """
+    t0 = time.time()
+    ctx = _prepare_context(strategy, market, initial_equity)
+    market = ctx["mcfg"]["market"]
+
+    if fit_shard is not None:
+        shard_text = str(fit_shard)
+        if "/" not in shard_text:
+            raise ValueError('fit_shard must be "i/n" (e.g. "0/2")')
+        shard, n_shards = (int(x) for x in shard_text.split("/"))
+        if not (0 <= shard < n_shards) or n_shards < 1:
+            raise ValueError(f"invalid shard spec: {fit_shard}")
+        if run_id is None:
+            raise ValueError("shard mode requires an explicit --run-id shared "
+                             "by every worker")
+        run_dir = new_run_dir(strategy, market, run_id)
+        trials = TrialLedger(run_dir, run_id)
+        cfg_path = run_dir / "config.json"
+        if not cfg_path.exists():
+            write_json(cfg_path, {
+                "run_id": run_id, "strategy": ctx["scfg"]["strategy"],
+                "market": market, "created_utc": now_utc_iso(),
+                "config_fingerprint": config_fingerprint(
+                    {"s": ctx["scfg"], "m": ctx["mcfg"], "r": ctx["rcfg"]}),
+                "strategy_config": ctx["scfg"], "market_config": ctx["mcfg"],
+                "risk_config": ctx["rcfg"],
+                "dataset_source_sha256": {s: e.get("source_sha256")
+                                          for s, e in ctx["manifest"]["symbols"].items()},
+                "initial_equity": initial_equity,
+                "shard_plan": f"{n_shards} shards",
+            })
+        trials.log("config", strategy_fingerprint=config_fingerprint(ctx["scfg"]),
+                   market_fingerprint=config_fingerprint(ctx["mcfg"]),
+                   risk_fingerprint=config_fingerprint(ctx["rcfg"]),
+                   dataset_hashes={s: e.get("source_sha256")
+                                   for s, e in ctx["manifest"]["symbols"].items()},
+                   shard=f"{shard}/{n_shards}")
+        assigned = [f for f in ctx["folds"] if f.fold_id % n_shards == shard]
+        for f in assigned:
+            trials.log("fold_defined", **f.to_dict())
+        predictions, chosen_thresholds, fold_records = _fit_assigned_folds(
+            ctx, assigned, run_dir, trials, initial_equity)
+        paths = _shard_paths(run_dir, shard, n_shards)
+        predictions.to_csv(paths["predictions"], index=False)
+        write_json(paths["thresholds"], {str(k): v for k, v in chosen_thresholds.items()})
+        write_json(paths["folds"], fold_records)
+        if shard == 0:
+            # deterministic registration artifact: identical on every shard;
+            # shard 0 materializes it once (F-002 frozen model contract)
+            _write_model_artifact(ctx, run_dir, trials)
+        trials.log("shard_done", shard=shard, n_shards=n_shards,
+                   folds_assigned=len(assigned),
+                   predictions=int(len(predictions)),
+                   elapsed_seconds=round(time.time() - t0, 2))
+        return run_id
+
+    # single mode: fit all folds, then finalize in-process
+    fp = config_fingerprint({"s": ctx["scfg"], "m": ctx["mcfg"]})
+    run_id = f"{strategy}-{market}-{fp}-{now_utc_iso().replace(':', '')}"
+    run_dir = new_run_dir(strategy, market, run_id)
+    trials = TrialLedger(run_dir, run_id)
+    trials.log("config", strategy_fingerprint=config_fingerprint(ctx["scfg"]),
+               market_fingerprint=config_fingerprint(ctx["mcfg"]),
+               risk_fingerprint=config_fingerprint(ctx["rcfg"]),
+               dataset_hashes={s: e.get("source_sha256")
+                               for s, e in ctx["manifest"]["symbols"].items()})
+    for f in ctx["folds"]:
+        trials.log("fold_defined", **f.to_dict())
+    predictions, chosen_thresholds, fold_records = _fit_assigned_folds(
+        ctx, list(ctx["folds"]), run_dir, trials, initial_equity)
+    model_sha = _write_model_artifact(ctx, run_dir, trials)
+    _finalize(ctx, run_id, run_dir, predictions, chosen_thresholds,
+              fold_records, trials, initial_equity, model_sha256=model_sha)
+    return run_id
+
+
+def _write_model_artifact(ctx: dict, run_dir: Path, trials: TrialLedger) -> str | None:
+    """Frozen decision artifact (F-002): model + conditional payoffs fitted at
+    registration time on all matured labels; decide.py loads this immutable
+    artifact and NEVER refits at decision time."""
+    import pickle
+    panel, feat_cols = ctx["panel"], ctx["feat_cols"]
+    train_parts = []
+    for sym, df in panel.items():
+        train_parts.append(df.loc[training_eligible(df, fit_cutoff=ctx["sessions"][-1])]
+                           .dropna(subset=feat_cols))
+    final_train = pd.concat(train_parts, ignore_index=True)
+    if not len(final_train) or final_train["label"].notna().sum() == 0:
+        trials.log("model_artifact_skipped",
+                   note="no matured labels; bundle will be decision-ineligible")
+        return None
+    y_final = (final_train["label"].to_numpy(dtype=float) > 0).astype(int)
+    if len(np.unique(y_final)) < 2:
+        trials.log("model_artifact_skipped",
+                   note="single class in final training set; bundle will be "
+                        "decision-ineligible")
+        return None
+    payoff_final = PayoffModel.fit(final_train, shrink=ctx["shrink"])
+    final_model = make_model(ctx["primary_kind"],
+                             ctx["scfg"]["model"].get(ctx["primary_kind"], {}),
+                             ctx["seed"])
+    final_model.fit(final_train[feat_cols].to_numpy(dtype=float), y_final)
+    artifact = {"model": final_model, "payoff": payoff_final,
+                "feature_names": feat_cols, "kind": ctx["primary_kind"],
+                "trained_through": str(ctx["sessions"][-1].date())}
+    (run_dir / "model.pkl").write_bytes(
+        pickle.dumps(artifact, protocol=pickle.HIGHEST_PROTOCOL))
+    return sha256_file(run_dir / "model.pkl")
+
+
+def _merge_shard_outputs(run_dir: Path, expected_folds: set[int]) -> tuple[
+        pd.DataFrame, dict[int, float], list[dict]]:
+    """Concatenate shard outputs with disjointness/coverage validation."""
+    shard_files = sorted(glob.glob(str(run_dir / "oos_predictions_shard*.csv")))
+    if not shard_files:
+        raise FileNotFoundError(f"no shard prediction files under {run_dir}")
+    predictions = pd.concat((pd.read_csv(f, parse_dates=["date"])
+                             for f in shard_files), ignore_index=True)
+    chosen_thresholds: dict[int, float] = {}
+    fold_records: list[dict] = []
+    seen_folds: set[int] = set()
+    for f in sorted(glob.glob(str(run_dir / "chosen_thresholds_shard*.json"))):
+        for k, v in read_json(f).items():
+            fid = int(k)
+            if fid in seen_folds:
+                raise RuntimeError(
+                    f"fold {fid} predicted by multiple shards — shard outputs "
+                    "must be disjoint; do not reuse a run_id across different "
+                    "shard plans")
+            seen_folds.add(fid)
+            chosen_thresholds[fid] = float(v)
+    for f in sorted(glob.glob(str(run_dir / "fold_records_shard*.json"))):
+        fold_records.extend(read_json(f))
+    missing = expected_folds - seen_folds
+    if missing:
+        raise RuntimeError(
+            f"shards incomplete: folds {sorted(missing)} have no predictions — "
+            f"run the remaining shards before finalizing")
+    predictions = predictions.sort_values(
+        ["fold_id", "date", "symbol", "model"]).reset_index(drop=True)
+    fold_records.sort(key=lambda r: r["fold_id"])
+    return predictions, chosen_thresholds, fold_records
+
+
+def finalize_research(strategy: str, run_id: str, *, market: str | None = None,
+                      initial_equity: float | None = None) -> str:
+    """Merge shard outputs from a shared run directory and run the sequential
+    evaluation (activation schedule, simulations, metrics, health, artifacts,
+    registration). Call once after every `research --fit-shard` worker has
+    finished."""
+    run_dir = PROJECT_ROOT / "artifacts" / "runs" / run_id
+    cfg_path = run_dir / "config.json"
+    if not cfg_path.exists():
+        raise FileNotFoundError(
+            f"run '{run_id}' has no config.json — run the shards first "
+            "(qa research --fit-shard i/n --run-id <id>)")
+    cfg = read_json(cfg_path)
+    market = market or cfg["market"]
+    initial_equity = float(initial_equity if initial_equity is not None
+                           else cfg.get("initial_equity", 1_000_000.0))
+    ctx = _prepare_context(strategy, market, initial_equity)
+    predictions, chosen_thresholds, fold_records = _merge_shard_outputs(
+        run_dir, {f.fold_id for f in ctx["folds"]})
+    trials = TrialLedger(run_dir, run_id)
+    model_sha = _write_model_artifact(ctx, run_dir, trials)
+    _finalize(ctx, run_id, run_dir, predictions, chosen_thresholds,
+              fold_records, trials, initial_equity, model_sha256=model_sha)
     return run_id
 
 

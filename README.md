@@ -6,36 +6,64 @@ daily data, rebuilt from the legacy prototype under
 `models/`, `outputs/`) are preserved unmodified as unverified research
 artifacts; this package is the supported implementation.
 
-## Quick start
+## Quick start (portable)
+
+Works on any machine with Python >= 3.11 and network access for market data —
+no hardcoded paths, no specific interpreter required:
 
 ```bash
-cd "F:/quant agent/quant_project"
-export PYTHONPATH=src
-export PY=/e/Anaconda/python        # Python 3.13.9 with the full stack
+git clone https://github.com/jw070322-svg/Quant-Agent.git
+cd Quant-Agent
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -e ".[dev]"
+pytest tests -q
 
-# Data: fetch fresh bars + valuation + news, then validate and normalize
-$PY -m quant_agent.cli update --market cn
-$PY -m quant_agent.cli ingest --market cn --as-of 2026-11-15
-
-# Research: walk-forward evaluation with pre-registered protocol
-$PY -m quant_agent.cli research --strategy us_research_v1
-$PY -m quant_agent.cli report  --run <run_id>
-$PY -m quant_agent.cli health  --run <run_id>
+# Data + research (uses `python` from PATH; everything resolves relative to
+# the repository root)
+python -m quant_agent.cli update --market cn
+python -m quant_agent.cli ingest --market cn --as-of 2026-11-15
+python -m quant_agent.cli research --strategy us_research_v1
+python -m quant_agent.cli report  --run <run_id>
+python -m quant_agent.cli health  --run <run_id>
 
 # Factor studies (all pre-registered in docs/DECISIONS.md)
-$PY -m quant_agent.cli xs --family technical      # H3 technical attribution
-$PY -m quant_agent.cli multifactor                # H4 multi-factor synthesis
-$PY -m quant_agent.cli infomonitor                # H5 critical-info monitor
-$PY -m quant_agent.cli eventstudy                 # H6 forward validation
+python -m quant_agent.cli xs --family technical      # H3 technical attribution
+python -m quant_agent.cli multifactor                # H4 multi-factor synthesis
+python -m quant_agent.cli infomonitor                # H5 critical-info monitor
+python -m quant_agent.cli eventstudy                 # H6 forward validation
 
 # Registry and paper decisions (gated)
-$PY -m quant_agent.cli bundles --approve <bundle_id> --actor risk-owner --evidence <ref>
-$PY -m quant_agent.cli decide --bundle <bundle_id>
+python -m quant_agent.cli bundles --approve <bundle_id> --actor risk-owner --evidence <ref>
+python -m quant_agent.cli decide --bundle <bundle_id>
 ```
 
-Tests: `$PY -m pytest tests -q` (110 tests, all passing at the time of
-writing). Interpreter note: use the Anaconda Python at `E:/Anaconda/python`;
-the msys2 Python on PATH has no pip and no scientific stack.
+## Distributed fold fitting (GPU swarm)
+
+Fold fitting is embarrassingly parallel — folds are disjoint by construction.
+Fit shards on different workers (one shared run id), then merge and evaluate
+on any single machine:
+
+```bash
+# worker 0 — on a CUDA box, set model.gbm.device: cuda in the strategy config
+python -m quant_agent.cli research --strategy us_research_v1 --fit-shard 0/2 --run-id us-run-001
+# worker 1
+python -m quant_agent.cli research --strategy us_research_v1 --fit-shard 1/2 --run-id us-run-001
+# merge + sequential evaluation (validated: disjoint fold coverage enforced;
+# merged predictions are identical to an unsharded run)
+python -m quant_agent.cli research-finalize --strategy us_research_v1 --run-id us-run-001
+```
+
+GPU enablement: set `model.gbm.device: cuda` in the strategy config on a
+CUDA machine (xgboost >= 2.0; verified on an RTX 5060). If CUDA is unusable
+at fit time, the runner falls back to the CPU path automatically.
+
+## Development-machine notes
+
+The original development environment (Windows, Anaconda Python 3.13.9 at
+`E:/Anaconda/python`) is recorded in `requirements.lock`; `pip install -e
+".[dev]"` on Python >= 3.11 is the portable equivalent and is the supported
+path for other machines.
 
 ## Layout
 

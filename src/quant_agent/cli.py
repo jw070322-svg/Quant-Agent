@@ -38,6 +38,18 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--strategy", required=True)
     p.add_argument("--market", default=None)
     p.add_argument("--initial-equity", type=float, default=1_000_000.0)
+    p.add_argument("--fit-shard", default=None, metavar="I/N",
+                   help="fit only folds with fold_id %% n == I into the shared "
+                        "run-id directory (distributed fold fitting)")
+    p.add_argument("--run-id", default=None,
+                   help="shared run id (required with --fit-shard)")
+
+    p = sub.add_parser("research-finalize",
+                       help="merge research shards and run the sequential evaluation")
+    p.add_argument("--strategy", required=True)
+    p.add_argument("--run-id", required=True)
+    p.add_argument("--market", default=None)
+    p.add_argument("--initial-equity", type=float, default=None)
 
     p = sub.add_parser("report", help="print a run's markdown report")
     p.add_argument("--run", required=True)
@@ -118,9 +130,30 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "research":
         from .research.runner import run_research
         run_id = run_research(args.strategy, market=args.market,
-                              initial_equity=args.initial_equity)
+                              initial_equity=args.initial_equity,
+                              fit_shard=args.fit_shard, run_id=args.run_id)
+        if args.fit_shard:
+            print(f"shard {args.fit_shard} complete for run '{run_id}'; "
+                  "run remaining shards, then: qa research-finalize "
+                  f"--strategy {args.strategy} --run-id {run_id}")
+            return 0
         print(f"run complete: {run_id}")
         print(f"dir: artifacts/runs/{run_id}")
+        metrics = read_json(PROJECT_ROOT / "artifacts" / "runs" / run_id / "metrics.json")
+        print(json.dumps({
+            "strategy_total_return": metrics["strategy"]["total_return"],
+            "strategy_sharpe": metrics["strategy"]["sharpe"],
+            "benchmarks": {k: v["total_return"] for k, v in metrics["benchmarks"].items()},
+            "complete_run_claim": read_json(
+                PROJECT_ROOT / "artifacts" / "runs" / run_id / "health.json")["complete_run_claim"],
+        }, indent=2))
+        return 0
+
+    if args.cmd == "research-finalize":
+        from .research.runner import finalize_research
+        run_id = finalize_research(args.strategy, args.run_id, market=args.market,
+                                   initial_equity=args.initial_equity)
+        print(f"run finalized: {run_id}")
         metrics = read_json(PROJECT_ROOT / "artifacts" / "runs" / run_id / "metrics.json")
         print(json.dumps({
             "strategy_total_return": metrics["strategy"]["total_return"],

@@ -114,7 +114,28 @@ Per-session simulator loop:
 
 Details: docs/VALIDATION.md; adjudications: docs/DECISIONS.md §2.4-§2.9.
 
-## 5. Known boundaries (honest list)
+## 5. Portability and distributed execution
+
+- **Paths**: everything resolves relative to the repository root — no absolute
+  paths in code or configs. Data caches live under `datasets/` and are
+  regenerable from public sources via `qa update` + `qa ingest`.
+- **Install**: `pip install -e ".[dev]"` on Python >= 3.11 (validated in a
+  fresh virtual environment); `requirements.lock` records the original
+  development environment for reproducibility audits.
+- **GPU**: the XGBoost device is configurable (`model.gbm.device` in strategy
+  configs). With `device="cuda"` fits run on NVIDIA GPUs (verified on an RTX
+  5060); an unusable device falls back to the CPU path automatically at fit
+  time.
+- **Swarm**: the expensive phase — per-fold fitting — is embarrassingly
+  parallel because folds are disjoint by construction. `qa research
+  --fit-shard i/n --run-id <shared-id>` fits only `fold_id % n == i` on each
+  worker and writes shard outputs into the shared run directory;
+  `qa research-finalize` merges the shards (duplicating or missing folds fail
+  loudly) and runs the sequential evaluation on one machine. Merged
+  predictions are identical to an unsharded run (equivalence validated on
+  real data).
+
+## 6. Known boundaries (honest list)
 
 - The simulator runs on daily OHLC: stops trigger on the session low, no
   intraday path; suspended symbols leave orders pending until expiry.
