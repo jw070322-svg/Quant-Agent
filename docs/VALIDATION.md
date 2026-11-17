@@ -117,7 +117,7 @@ the calibration gate and stays a candidate; it must be read against the full
 search history of six registered runs. See DECISIONS.md §2.4 and the runs'
 trials.jsonl.
 
-## 2.2 Cross-sectional factor screening H2 (pre-registered 2026-11-15,
+## 2.2 Cross-sectional factor screening H2 (pre-registered 2026-11-15, — **2026-11-17 ERRATUM: invalid_protocol_pending_replay (R1/R6/R7); see handover/RESEARCH_ERRATA.md E-001** —
 adjudicated same day)
 
 Data chain: akshare Sina daily bars (150 CSI-300 current constituents, seeded
@@ -130,7 +130,7 @@ was the only IC-screen pass (NW t −2.82, FM t −2.75, net spread +37.2%) but
 the quintiles were non-monotone. Report:
 `artifacts/runs/xs_cn_h2-2caccc9508e3f8f2-2026-11-15T105527Z/`.
 
-## 2.3 Technical indicator attribution H3 (pre-registered 2026-11-15,
+## 2.3 Technical indicator attribution H3 (pre-registered 2026-11-15, — **2026-11-17 ERRATUM: invalid_protocol_pending_replay (R6/R7); see handover/RESEARCH_ERRATA.md E-001** —
 adjudicated same day)
 
 Reused the H2 universe (150 names); 16 shared-library technical indicators as
@@ -139,22 +139,37 @@ cross-sectional factors + an equal-weight TA composite; 74 monthly windows
 candidates passed the full screen**: all IC screens failed (ret_1 rejected on
 direction — the sample shows 1-day momentum, not reversal); FM-significant and
 direction-consistent were only bb_pos20 (t −2.05) and vol_5 (t −2.74), but
-their net-cost quintile portfolios failed. Composite-model cross-reference
-(GBM on the same features, AUC ≈ 0.50). Report:
+their net-cost quintile portfolios failed.
+Corrected replay (run `xs_ta_h3-2caccc9508e3f8f2-2026-11-17T153427Z`):
+conclusions unchanged — none of the 17 candidates passes; ret_1 still shows
+1-day momentum (direction-rejected); FM-consistent bb_pos20/vol_5 still fail
+the net-cost portfolios. Composite-model cross-reference (GBM on the same
+features, AUC ≈ 0.50). Pre-fix report preserved:
 `artifacts/runs/xs_ta_h3-2caccc9508e3f8f2-2026-11-15T110412Z/`. Adjudication:
 DECISIONS.md §2.6.
 
-## 2.4 Multi-factor synthesis H4 (pre-registered 2026-11-15, adjudicated
-same day)
+## 2.4 Multi-factor synthesis H4 (pre-registered 2026-11-15; **2026-11-17 ERRATA E-001/E-003: R2/R3/R5/R6 + two-sided orientation; CORRECTED REPLAY completed** — adjudicated same day)
 
 Train/test windows split in time (30/30), 14 factors with MAD winsorization +
 size neutralization, four-gate train-window screening (selected:
 BP/amihud_20/turnover/vol_5), four synthesis methods with TOP_N = 30 on the
-test windows (same simulator, net costs). **Equal-weight synthesis +12.6%
-underperformed the equal-weight universe benchmark +18.6%; all three learned
-weighting schemes turned negative → H4 rejected; weight learning is rejected
-under the rules.** Report:
-`artifacts/runs/xs_mf_h4-2caccc9508e3f8f2-2026-11-15T114232Z/`. Adjudication:
+test windows (same simulator, net costs).
+Pre-fix run (labelled invalid protocol, preserved): "equal-weight +12.6% vs
+benchmark +18.6%, learned weights all negative" — that benchmark was a
+30-name subset (R5) and the learned-weight tables retained only one window
+(R2).
+Corrected replay (run `xs_mf_h4-2caccc9508e3f8f2-2026-11-17T154618Z`):
+screening re-selects BP/amihud_20/turnover/vol_5 (coverage now real:
+93-100%); test-window synthesis **equal-weight +31.1% (Sharpe 0.78) and Ridge
++22.9% both BEAT the corrected universe benchmark +17.9%**; robustness passes
+(costs ×4 +23.1%, lag +30.5%); criteria a/c/d pass. **Criterion (b) still
+fails: test-window composite RankIC significance not reached → NOT PASSED per
+the pre-registered criteria; promotion refused.** The flawed run's "all
+learned weights negative" claim did not survive the corrections; the
+improvement is attributed to the protocol fixes, not to a new discovery.
+Weight learning: Ridge beats equal-weight on returns but shows negative test
+RankIC — still refused for promotion. Reports: pre-fix
+`...2026-11-15T114232Z/`, corrected `...2026-11-17T154618Z/`. Adjudication:
 DECISIONS.md §2.7.
 
 ## 2.5 Critical-information-point monitor H5 (pre-registered 2026-11-15,

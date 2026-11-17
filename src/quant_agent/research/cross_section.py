@@ -142,7 +142,11 @@ def _factor_rows(frames: dict, sessions: pd.DatetimeIndex,
             val = valuation.get(sym)
             if val is None:
                 continue
-            window = val.loc[: t + pd.Timedelta(days=LOOKBACK_GAP_DAYS)].tail(1)
+            # R1 fix: BACKWARD-ONLY point-in-time join — the valuation row must
+            # exist at or before the signal date (available_at <= signal_at),
+            # with a maximum permitted age. The previous forward window
+            # (t..t+5d) let future valuation records enter historical signals.
+            window = val.loc[:t].tail(1)
             if window.empty or (t - window.index[0]).days > LOOKBACK_GAP_DAYS:
                 continue
             pe_ttm, pb, mv = window.iloc[0]["市盈率(TTM)"], window.iloc[0]["市净率"], window.iloc[0]["总市值"]
@@ -152,10 +156,11 @@ def _factor_rows(frames: dict, sessions: pd.DatetimeIndex,
             vol20 = hist.pct_change().iloc[-20:].std(ddof=1)
             if not np.isfinite(vol20) or vol20 <= 0:
                 continue
+            # R7 fix: forward outcome availability no longer gates the SIGNAL
+            # row — rows with an incomplete forward window are retained (fwd
+            # NaN) and drop out only in the evaluation paths.
             fwd = float(open_adj[sym].loc[exit_d] / open_adj[sym].loc[entry_d] - 1.0) \
                 if entry_d in open_adj[sym].index and exit_d in open_adj[sym].index else np.nan
-            if not np.isfinite(fwd):
-                continue
             dollar_vol = close_t * float(volume[sym].loc[t]) if t in volume[sym].index else np.nan
             rows.append({
                 "date": t, "symbol": sym, "fwd_ret": fwd,
@@ -197,8 +202,8 @@ def _technical_factor_rows(frames: dict, sessions: pd.DatetimeIndex,
                 continue  # warm-up or degenerate rows are excluded, never faked
             fwd = float(open_adj[sym].loc[exit_d] / open_adj[sym].loc[entry_d] - 1.0) \
                 if entry_d in open_adj[sym].index and exit_d in open_adj[sym].index else np.nan
-            if not np.isfinite(fwd):
-                continue
+            # R7 fix: incomplete forward windows no longer gate the
+            # signal row (outcomes join in the evaluation path only)
             row = {"date": t, "symbol": sym, "fwd_ret": fwd}
             row.update({name: float(vals[name]) for name in feature_names})
             rows.append(row)
@@ -234,7 +239,9 @@ def _quintile_sims(panel: dict, sessions: pd.DatetimeIndex, factor_df: pd.DataFr
                 continue
             # within-quintile equal weight, scaled to the gross-exposure policy
             w = min(1.0 / len(names), limits.max_weight_per_name) * limits.max_gross_exposure
-            target_for[sessions[idx[0] + 1]] = {s: w for s in names}
+            # R6 fix: submit at the SIGNAL session close; the simulator
+            # fills at the next open (signal+1), matching the label entry
+            target_for[sessions[idx[0]]] = {s: w for s in names}
 
         def fn(t, account, prices):
             if t in target_for:

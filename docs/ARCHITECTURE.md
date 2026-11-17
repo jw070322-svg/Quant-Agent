@@ -139,6 +139,10 @@ Details: docs/VALIDATION.md; adjudications: docs/DECISIONS.md §2.4-§2.9.
 
 - The simulator runs on daily OHLC: stops trigger on the session low, no
   intraday path; suspended symbols leave orders pending until expiry.
+- N5: the participation cap uses the COMPLETED session's volume — an ex-post
+  capacity assumption, not an observable opening-liquidity limit; a stop
+  threshold does not guarantee fills at that threshold (event-level data
+  required to model real liquidity; deferred per plan §4.5).
 - Intent sizing uses the prior close; actual fills use the next open; a gap
   can cancel a BUY at fill time (explicit contract, no squeezing).
 - Participation caps depend on the inferred volume unit (recorded in the

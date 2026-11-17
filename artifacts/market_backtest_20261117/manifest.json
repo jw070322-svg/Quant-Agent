@@ -1,0 +1,100 @@
+{
+  "retrieved_utc": "2026-11-17T12:01:18.407288+00:00",
+  "numpy": "2.4.4",
+  "pandas": "2.3.3",
+  "script_sha256": "dbd3bb225cb7f30da64a5c09fc984632c2931d42c5fe4a4f151f3f752acf2cc5",
+  "series": {
+    "SPY": {
+      "market": "US",
+      "requested_cutoff": "2026-11-16",
+      "sources": [
+        "https://finance.sina.com.cn/staticdata/us/SPY",
+        "https://finance.sina.com.cn/us_stock/company/reinstatement/SPY_qfq.js"
+      ],
+      "rows": 2231,
+      "first": "2018-01-02",
+      "last": "2026-11-16",
+      "sha256": "71c5e51ff6363b623e0a3dd47f4c2775ce46e365522ed7a869d569fceacd0a72"
+    },
+    "QQQ": {
+      "market": "US",
+      "requested_cutoff": "2026-11-16",
+      "sources": [
+        "https://finance.sina.com.cn/staticdata/us/QQQ",
+        "https://finance.sina.com.cn/us_stock/company/reinstatement/QQQ_qfq.js"
+      ],
+      "rows": 2231,
+      "first": "2018-01-02",
+      "last": "2026-11-16",
+      "sha256": "82f9c5b5962482e8ea7d22d5982c1d8ebe49f473b10c7d3b79f2c679d6b0ad5c"
+    },
+    "IWM": {
+      "market": "US",
+      "requested_cutoff": "2026-11-16",
+      "sources": [
+        "https://finance.sina.com.cn/staticdata/us/IWM",
+        "https://finance.sina.com.cn/us_stock/company/reinstatement/IWM_qfq.js"
+      ],
+      "rows": 2231,
+      "first": "2018-01-02",
+      "last": "2026-11-16",
+      "sha256": "5b992f1810775d57ce5621ad749c939ad6cfad7e5aa1cec86762be6b4a60fd04"
+    },
+    "DIA": {
+      "market": "US",
+      "requested_cutoff": "2026-11-16",
+      "sources": [
+        "https://finance.sina.com.cn/staticdata/us/DIA",
+        "https://finance.sina.com.cn/us_stock/company/reinstatement/DIA_qfq.js"
+      ],
+      "rows": 2231,
+      "first": "2018-01-02",
+      "last": "2026-11-16",
+      "sha256": "736e5bbcb97708c511edec1c39824a66c529c38748c6541736cb05ac8d9fab50"
+    },
+    "sh510300": {
+      "market": "CN",
+      "requested_cutoff": "2026-11-17",
+      "sources": [
+        "https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.510300&klt=101&fqt=2&beg=20180101&end=20261117&lmt=3000&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56"
+      ],
+      "rows": 2152,
+      "first": "2018-01-02",
+      "last": "2026-11-17",
+      "sha256": "e4d96fb7a4a3e3c96e3d15a5c15466bc8af0351276769b7a41e7e684386b082a"
+    },
+    "sh510500": {
+      "market": "CN",
+      "requested_cutoff": "2026-11-17",
+      "sources": [
+        "https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.510500&klt=101&fqt=2&beg=20180101&end=20261117&lmt=3000&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56"
+      ],
+      "rows": 2152,
+      "first": "2018-01-02",
+      "last": "2026-11-17",
+      "sha256": "af024b00fcee7ebdded7a8ccbb86ea2c4c86e363f472737688958b8469533e1a"
+    },
+    "sh510050": {
+      "market": "CN",
+      "requested_cutoff": "2026-11-17",
+      "sources": [
+        "https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.510050&klt=101&fqt=2&beg=20180101&end=20261117&lmt=3000&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56"
+      ],
+      "rows": 2152,
+      "first": "2018-01-02",
+      "last": "2026-11-17",
+      "sha256": "7c902f699c224b020c3b3fb0e1ceefd522969f57a1cd088a03e630ac4791df6b"
+    },
+    "sz159915": {
+      "market": "CN",
+      "requested_cutoff": "2026-11-17",
+      "sources": [
+        "https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159915&klt=101&fqt=2&beg=20180101&end=20261117&lmt=3000&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56"
+      ],
+      "rows": 2151,
+      "first": "2018-01-02",
+      "last": "2026-11-17",
+      "sha256": "d5929130ccfeed72920cf2429bc2cc0233f62ec885191d530c38d89bacbb09ec"
+    }
+  }
+}

@@ -1,5 +1,12 @@
 """Paper broker: fills at next-session open with explicit frictions.
 
+N5 capacity assumption (disclosed): the participation cap multiplies the
+COMPLETED session's volume — an ex-post, full-day capacity assumption. It is
+not an observable opening-auction liquidity limit, and a stop threshold does
+not guarantee fills at that price. These are modeling limitations documented
+in ARCHITECTURE §6, to be resolved with event-level data (deferred per
+comprehensive plan §4.5), not quantified P&L corrections.
+
 Conventions (documented, tested):
 - Fill price = next session's adjusted open, worsened by slippage.
 - Fill qty is capped by participation (fraction of that bar's volume);

@@ -7,6 +7,8 @@ event log alone (restart reconciliation).
 """
 from __future__ import annotations
 
+import numpy as np
+import pandas as pd
 from dataclasses import dataclass, field
 
 import pandas as pd
@@ -39,6 +41,37 @@ class Account:
         self.lots: dict[str, list[Lot]] = {}
         self.realized_pnl = 0.0
         self.events: list[dict] = []
+        # N4: last VALIDATED mark per symbol, with its session. Equity falls
+        # back to this (never to entry price) when no bar exists; symbols
+        # whose mark is stale are reported by stale_marks() and must not
+        # receive new risk.
+        self.last_marks: dict[str, dict] = {}
+
+    def apply_mark(self, symbol: str, mark: float, *, session: str) -> None:
+        """Record a validated mark (e.g., an adjusted close that exists for
+        this symbol on this session)."""
+        if not np.isfinite(mark) or mark <= 0:
+            raise ValueError(f"invalid mark for {symbol}: {mark}")
+        self.last_marks[symbol] = {"mark": float(mark), "session": str(session)}
+        self.update_high_water(symbol, float(mark), session=session)
+        self._record("mark", session, symbol=symbol, mark=float(mark))
+
+    def stale_marks(self, session, *, max_age_sessions: int) -> list[str]:
+        """Held symbols whose valuation is materially incomplete: no mark at
+        all, or a last mark older than max_age_sessions (calendar-day gap at
+        daily resolution). New BUYs on these symbols must be blocked; SELLs
+        (de-risking) remain permitted."""
+        session_ts = pd.Timestamp(session)
+        out: set[str] = set()
+        for sym in self.lots:
+            m = self.last_marks.get(sym)
+            if m is None:
+                out.add(sym)
+                continue
+            age_days = (session_ts - pd.Timestamp(m["session"])).days
+            if age_days > max_age_sessions:
+                out.add(sym)
+        return sorted(out)
 
     # ---------------------------------------------------------------- events
     def apply_deposit(self, amount: float, session: str) -> None:
@@ -137,11 +170,20 @@ class Account:
             return sum(l.qty for l in lots)
         return sum(l.qty for l in lots if l.entry_date < session)
 
-    def equity(self, prices: dict[str, float]) -> float:
-        return self.cash + sum(
-            l.qty * prices.get(sym, l.entry_price)
-            for sym, lots in self.lots.items() for l in lots
-        )
+    def equity(self, prices: dict[str, float], session: str | None = None) -> float:
+        """Mark-to-market equity. Fallback chain per held symbol (N4):
+        today's price → last VALIDATED mark (with its age recorded via
+        stale_marks) → entry price as the final resort. Symbols valued below
+        today's bar are reported by stale_marks() and blocked from new risk."""
+        total = self.cash
+        for sym, lots in self.lots.items():
+            qty = sum(l.qty for l in lots)
+            px = prices.get(sym)
+            if px is None:
+                m = self.last_marks.get(sym)
+                px = m["mark"] if m else lots[0].entry_price
+            total += qty * px
+        return float(total)
 
     def _record(self, kind: str, session: str, **fields) -> None:
         self.events.append({"kind": kind, "session": session, **fields})

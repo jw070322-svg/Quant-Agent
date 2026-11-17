@@ -185,16 +185,24 @@ def test_holdings_drive_equity_and_sell_intents(tmp_path, monkeypatch):
 
 
 def test_stale_data_blocks_buys_but_allows_derisking_sells(tmp_path, monkeypatch):
+    """Stale incident: proposed BUYs are rejected with a stale reason while a
+    de-risking SELL on an overweight holding is still allowed."""
     proj = setup_env(tmp_path, monkeypatch, status="approved",
                      manifest_date_end="2026-01-01")  # far in the past -> stale
+    # cash-only book: every proposed BUY is stale-blocked, nothing approved
     record = decide_mod.paper_decide("mech-test", initial_equity=1_000_000.0,
-                                     cash=200_000.0, holdings={"ALPHA": 5000.0})
+                                     cash=1_000_000.0)
     assert record["inputs"]["stale_symbols_blocked"] == ["ALPHA", "BETA"]
-    approved_sides = [i["side"] for i in record["approved_intents"]]
-    assert all(s == "SELL" for s in approved_sides), \
-        "stale incident: no new risk (BUY), de-risking (SELL) still allowed"
+    sides = [i["side"] for i in record["approved_intents"]]
+    assert sides == [], "stale incident: no new risk may be approved"
     assert any("stale" in r for rej in record["rejected_intents"]
                for r in rej["rejected_reasons"])
+    # de-risking: an overweight holding is trimmed even while stale
+    record2 = decide_mod.paper_decide("mech-test", initial_equity=1_000_000.0,
+                                      cash=200_000.0, holdings={"ALPHA": 5000.0})
+    sides2 = [i["side"] for i in record2["approved_intents"]]
+    assert "SELL" in sides2, "overweight holding must still be trimmed when stale"
+    assert all(i["side"] == "SELL" for i in record2["approved_intents"])
 
 
 def test_pending_orders_freeze_cash(tmp_path, monkeypatch):

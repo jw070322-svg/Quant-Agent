@@ -87,10 +87,11 @@ def test_factor_rows_coverage_gate_and_values():
                    "reversal_5", "turnover"]
     assert rows["fwd_ret"].notna().all()
     assert rows[factor_cols].notna().all().all()
-    # EP = 1/PE, BP = 1/PB exactly for one known (date, symbol)
+    # EP = 1/PE, BP = 1/PB exactly for one known (date, symbol), using the
+    # R1-corrected BACKWARD-ONLY as-of join (latest valuation at or before t)
     r = rows.iloc[0]
     val = frames["valuation"][r["symbol"]]
-    window = val.loc[: r["date"] + pd.Timedelta(days=5)].tail(1)
+    window = val.loc[: r["date"]].tail(1)
     assert r["EP"] == pytest.approx(1.0 / float(window["市盈率(TTM)"].iloc[0]), abs=1e-9)
     assert r["BP"] == pytest.approx(1.0 / float(window["市净率"].iloc[0]), abs=1e-9)
 
@@ -116,7 +117,10 @@ def test_as_of_valuation_uses_latest_within_gap_window():
     assert len(rows) == 3
     r = rows.iloc[0]
     val = frames["valuation"][r["symbol"]]
-    asof = val.loc[: r["date"] + pd.Timedelta(days=5)].tail(1)
+    asof = val.loc[: r["date"]].tail(1)
+    # backward-only: the as-of valuation row is at or before the signal date,
+    # and no older than the permitted age
+    assert asof.index[0] <= r["date"]
     assert (r["date"] - asof.index[0]).days <= 5
 
 

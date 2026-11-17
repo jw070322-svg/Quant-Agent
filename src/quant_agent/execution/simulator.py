@@ -177,11 +177,12 @@ def run_simulation(panel_bars: dict[str, pd.DataFrame], sessions: pd.DatetimeInd
                         "side": "SELL", "qty": qty, "price": px, "fees": fees,
                         "order_type": "STOP", "stop_price": stop})
 
-        # 3) mark to market
+        # 3) mark to market: validated marks only (N4) — a held symbol without
+        # a bar today keeps its last validated mark and is reported stale
         for sym in list(account.lots):
             if sym in prices:
-                account.update_high_water(sym, prices[sym], session=t_str)
-        equity = account.equity(prices)
+                account.apply_mark(sym, prices[sym], session=t_str)
+        equity = account.equity(prices, session=t_str)
         invested = sum(account.positions().get(s, 0.0) * prices[s]
                        for s in account.positions() if s in prices)
         equity_rows.append((t, equity))
@@ -211,7 +212,10 @@ def run_simulation(panel_bars: dict[str, pd.DataFrame], sessions: pd.DatetimeInd
             approved, rejected = check_order_intents(
                 intents, limits=limits, equity=equity, cash=account.cash,
                 pending_buy_value=pending_buy_value,
-                sellable_qty=sellable_next, stale_symbols=set(),
+                sellable_qty=sellable_next,
+                # N4: held symbols without a validated mark today are stale —
+                # new BUYs blocked, de-risking SELLs permitted
+                stale_symbols=set(account.stale_marks(t_str, max_age_sessions=0)),
                 eligible_symbols=set(bars_indexed),
                 open_orders_count=open_count,
             )

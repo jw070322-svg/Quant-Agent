@@ -4,12 +4,10 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from quant_agent.data.ingest import ingest_market
+
 from quant_agent.features.pipeline import build_panel
 from quant_agent.labels.forward import LabelSpec, add_labels, training_eligible
 from quant_agent.research.splits import build_folds
-from quant_agent.util import read_json
-
 SYMS = ("ALPHA", "BETA", "GAMMA")
 
 
@@ -127,17 +125,29 @@ def test_real_data_quarantine_matches_audit_evidence():
 
 def test_complete_run_gate_blocks_unusable_universe(tmp_path, monkeypatch):
     """A manifest marking a symbol unusable must block research (no
-    complete-run claim over incomplete data)."""
-    from quant_agent.research import runner
-    ingest_market("us")
-    manifest_path = "datasets/manifest_us.json"
-    m = read_json(manifest_path)
-    m["symbols"]["MSFT"]["usable"] = False
-    m["symbols"]["MSFT"]["reason"] = "test-injected unusable"
-    import json
-    with open(manifest_path, "w", encoding="utf-8") as f:
-        json.dump(m, f)
+    complete-run claim over incomplete data).
+
+    W0 evidence isolation: runs against a TEMPORARY project root with a copied
+    manifest — the suite must never write repository datasets or manifests
+    (the previous version called the real ingest_market twice, regenerating
+    datasets and manifest hashes as a side effect)."""
+    import json as _json
+
+    import quant_agent.research.runner as runner_mod
+    from quant_agent.config import PROJECT_ROOT as REAL_ROOT
+    from quant_agent.util import write_json as _write_json
+
+    tmp_proj = tmp_path / "proj"
+    (tmp_proj / "datasets").mkdir(parents=True)
+    real_manifest = _json.loads(
+        (REAL_ROOT / "datasets" / "manifest_us.json").read_text(encoding="utf-8"))
+    real_manifest["symbols"]["MSFT"]["usable"] = False
+    real_manifest["symbols"]["MSFT"]["reason"] = "test-injected unusable"
+    _write_json(tmp_proj / "datasets" / "manifest_us.json", real_manifest)
+
+    monkeypatch.setattr(runner_mod, "PROJECT_ROOT", tmp_proj)
     with pytest.raises(RuntimeError, match="complete-run gate"):
-        runner.run_research("us_research_v1")
-    # restore for other tests
-    ingest_market("us")
+        runner_mod.run_research("us_research_v1")
+    # the real repository manifest was never touched
+    live = (REAL_ROOT / "datasets" / "manifest_us.json").read_text(encoding="utf-8")
+    assert "test-injected unusable" not in live

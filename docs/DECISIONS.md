@@ -132,7 +132,7 @@ and (`cn_research_v1-cn-...-2026-11-14T111424Z`, AUC 0.494, report window
   six registered runs; the positive US v2 CI is not a "new discovery" and must
   be confirmed by prospective/paper evidence.
 
-### 2.5 Hypothesis H2: cross-sectional value/size/momentum/low-vol/liquidity
+### 2.5 Hypothesis H2: cross-sectional value/size/momentum/low-vol/liquidity — **2026-11-17 ERRATUM: invalid_protocol_pending_replay (R1/R6/R7); see handover/RESEARCH_ERRATA.md E-001**
 factors (A-shares, pre-registered 2026-11-15, before any return computation)
 
 **Data sources (verified live)**: akshare — Sina daily bars (raw + qfq →
@@ -189,7 +189,7 @@ Under survivorship bias and ~2-day valuation sampling, this result is a
 screening record only; reviving size requires a new pre-registration with
 historical constituents.
 
-### 2.6 Hypothesis H3: technical-indicator attribution (A-shares,
+### 2.6 Hypothesis H3: technical-indicator attribution — **2026-11-17 ERRATUM: invalid_protocol_pending_replay (R6/R7); see handover/RESEARCH_ERRATA.md E-001** (A-shares,
 pre-registered 2026-11-15, before any evaluation run)
 
 **Motivation**: the walk-forward composite model (16 technical features → GBM
@@ -239,7 +239,7 @@ cross-section 145 names. **None of the 17 candidates passed the full screen.**
   bb_pos20, vol_5) may only be revived via separate new pre-registrations
   with evidence-based directions; nothing is adopted post hoc in this round.
 
-### 2.7 Hypothesis H4: multi-factor synthesis and TOP_N selection (A-shares,
+### 2.7 Hypothesis H4: multi-factor synthesis and TOP_N selection — **2026-11-17 ERRATUM: invalid_protocol_pending_replay (R2/R3/R5/R6); see handover/RESEARCH_ERRATA.md E-001** (A-shares,
 pre-registered 2026-11-15, before any evaluation run)
 
 **Data**: reuses the H2/H3 cache (150 CSI-300 current constituents, seed = 42;
@@ -286,24 +286,38 @@ rule). **Trial budget: 1 registered run** (14 factors × 4 methods in one pass
 bias) and require a new pre-registration with historical constituents.
 
 **Adjudication (2026-11-15, backfilled; run
-`xs_mf_h4-2caccc9508e3f8f2-2026-11-15T114232Z`)**: train 30 / test 30 windows,
-average cross-section 138 names.
-- **Train-window screening**: BP (t 2.98), amihud_20 (t 4.45), turnover
-  (t −4.83, observed negative), vol_5 (t 2.77) passed all four gates; lowvol
-  passed but was redundant with vol_5 (|ρ| = 0.71) and dropped; size was
-  significant (t −2.23) but rejected on ICIR 0.24 < 0.30; EP t 1.86 narrowly
-  failed; technical/oscillator factors all failed (consistent with H3).
-  Frozen selected list: **BP, amihud_20, turnover, vol_5**.
-- **Test-window synthesis**: equal-weight composite +12.6% (Sharpe 0.34)
-  **below the equal-weight universe benchmark +18.6%**; ICIR weights −0.5%,
-  shrinkage −0.5%, Ridge −0.5% — **all learned weighting schemes underperformed
-  equal weight and turned negative**; test-window RankIC 0.0247 (t 0.52) not
-  significant → the train-window IC strength was overfit/weight instability.
-- **Criteria a/b/c all False → H4 rejected**; per the template rule the
-  weight-learning methods (ICIR/shrinkage/Ridge) are rejected (they did not
-  beat the equal-weight baseline).
-- Final status: **rejected** (the H4 synthesis configuration); BP/amihud/
-  turnover/vol_5 remain pre-registered screening observations.
+`xs_mf_h4-2caccc9508e3f8f2-2026-11-15T114232Z` — labelled
+invalid_protocol_pending_replay on 2026-11-17; CORRECTED REPLAY
+`xs_mf_h4-2caccc9508e3f8f2-2026-11-17T154618Z` supersedes its evidence)**:
+train 30 / test 30 windows, average cross-section 138 names.
+
+*Pre-fix adjudication (preserved for the record)*: train screening selected
+BP (t 2.98), amihud_20 (t 4.45), turnover (t −4.83), vol_5 (t 2.77); test
+equal-weight composite +12.6% below the benchmark +18.6%; all learned weights
+negative → rejected.
+
+*Corrected replay (2026-11-17, after R1-R7 fixes + E-003 orientation fix)*:
+- **Train-window screening** (real coverage 93-100%): BP (IC 0.1274, t 3.25)
+  ✓, amihud_20 (IC 0.0818, t 4.68) ✓, vol_5 (aligned IC −0.0765, t −2.11) ✓;
+  EP (t 2.11) passes gates but is redundant with BP (|ρ| = 0.70); size aligned
+  IC +0.0648 (t 2.51) rejected on ICIR 0.27 < 0.30; turnover correctly fails
+  as undefined (E-003 explanation superseded — after the orientation fix
+  turnover returns: t −4.34, selected). Frozen list: **BP, amihud_20,
+  turnover, vol_5**.
+- **Test-window synthesis**: equal-weight composite **+31.1%** (Sharpe 0.78)
+  and Ridge **+22.9%** (Sharpe 0.73) both **BEAT the corrected universe
+  benchmark +17.9%**; ICIR +10.2%, shrinkage +10.5%; robustness: costs ×4
+  +21.4%, lag +30.5% — criteria a/c/d PASS.
+- **Criterion (b) still fails**: test-window composite RankIC 0.0163
+  (t 0.58 < 2) — the synthesis beats its benchmark on net returns but its
+  cross-sectional rank information remains statistically unconfirmed.
+- **Verdict: NOT PASSED per the pre-registered criteria → promotion refused;
+  status stays research_only.** The flawed run's "all learned weights
+  negative" claim did not survive the corrections; the improvement is
+  attributed to the protocol fixes (R1/R2/R5/R6), not to a new discovery,
+  and carries the multiple-testing burden of the full search history.
+  Weight learning (Ridge) requires a fresh registered trial with the
+  corrected protocol before any revival claim.
 
 ### 2.8 Hypothesis H5: critical-information-point monitor validation
 (deal-amount anomalies × news correlation, pre-registered 2026-11-15, before

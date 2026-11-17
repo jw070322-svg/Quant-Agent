@@ -42,16 +42,17 @@ class AllocationResult:
 
 
 def _capped_proportional(base: pd.Series, cap: float, budget: float) -> pd.Series:
-    """Largest s with sum(min(cap, s*b_i)) <= budget, exact on capped simplex."""
+    """Largest s with sum(min(cap, s*b_i)) <= budget, exact on the capped
+    simplex. Names with a nonpositive base receive zero weight (they were
+    selected for review but the risk penalty removed their allocation)."""
     if base.empty or base.sum() <= 0 or budget <= 0 or cap <= 0:
         return pd.Series(0.0, index=base.index)
-    b = base.sort_values(ascending=False)
+    b = base[base > 0].sort_values(ascending=False)
     remaining = budget
     weights = {}
-    for i, (name, bi) in enumerate(b.items()):
-        n_left = len(b) - i
+    for name, bi in b.items():
         # level s at which this and all remaining uncapped names hit cap
-        s_full = remaining / b.iloc[i:].sum()
+        s_full = remaining / b.loc[name:].sum()
         w = min(cap, s_full * bi)
         weights[name] = w
         remaining -= w
@@ -75,16 +76,20 @@ def target_weights(mu_net: pd.Series, vol: pd.Series, cfg: PortfolioConfig) -> A
     if (v <= 0).any() or not np.isfinite(v).all():
         raise ValueError("vol must be finite and positive for every candidate")
 
-    eligible = mu[mu > cfg.edge_threshold].index
+    # N1 fix: the RISK-ADJUSTED edge (net of the volatility penalty) must clear
+    # the threshold — a raw edge that the penalty eliminates is not eligible,
+    # and if every penalized edge fails, the correct portfolio is cash.
+    penalized = mu - cfg.lambda_vol * v
+    eligible = penalized[penalized > cfg.edge_threshold].index
     if len(eligible) == 0:
-        return AllocationResult(pd.Series(0.0, index=mu.index),
-                                {"reason": "no candidate above edge threshold", "selected": []})
+        return AllocationResult(
+            pd.Series(0.0, index=mu.index),
+            {"reason": "no candidate above risk-adjusted edge threshold",
+             "selected": [], "gross_weight": 0.0, "cash_weight": 1.0})
     # rank by edge per unit risk; tie-break deterministically by mu then name
     score = (mu[eligible] / v[eligible]).sort_values(ascending=False)
     selected = list(score.index[: cfg.max_names])
-    # score net of a linear risk penalty, floored at a small positive value so
-    # ordering is preserved but no name gets zero/negative base weight
-    base = (mu[selected] - cfg.lambda_vol * v[selected]).clip(lower=1e-6)
+    base = penalized[selected].clip(lower=0.0)
     if base.sum() <= 0:
         return AllocationResult(pd.Series(0.0, index=mu.index),
                                 {"reason": "risk penalty zeroed all edges", "selected": selected})

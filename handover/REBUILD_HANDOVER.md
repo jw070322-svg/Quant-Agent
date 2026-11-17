@@ -1,7 +1,6 @@
-# Quant Agent Rebuild Engineering Handover (v3.2, English)
+# Quant Agent Rebuild Engineering Handover (v3.3, English)
 
-Date: 2026-11-15 (v3.2 converts the handover to English; the adjudications of
-hypotheses H1-H6 are incorporated)
+Date: 2026-11-17 (v3.3 adds the evidence-isolation round: W0/W1/W2 + corrective replays; v3.2 converted the handover to English)
 Project root: `F:\quant agent\quant_project`
 Document chain: `QUANT_AGENT_HANDOVER.md` (original audit) →
 `REBUILD_HANDOVER.md` (v1-v3 rebuild record; this file) →
@@ -11,6 +10,36 @@ preserved in Chinese as an immutable historical input) →
 findings were addressed by the audit round; preserved as a translated
 historical plan below). Legacy prototypes (root `*.py`, `scripts/`, `models/`,
 `outputs/`) are preserved unmodified as unverified research artifacts.
+
+## 0. Evidence-isolation round (2026-11-17; per COMPREHENSIVE_RESEARCH_PLAN
+2026-11-17 immediate first slice: W0 + W1 + W2 fixtures)
+
+Inputs: `handover/IMPROVEMENT_PLAN_2026-11-16.md` (R1-R7),
+`handover/COMPREHENSIVE_RESEARCH_PLAN_2026-11-17.md` (N1-N5, W0-W8, G0-G6),
+`artifacts/market_backtest_20261117/REPORT.md` (ETF study).
+
+| ID | Severity | Location | Defect | Fix | Tests |
+|---|---|---|---|---|---|
+| R1 | Critical (research validity) | `cross_section.py::_factor_rows`, `multi_factor.py::build_factor_panel` | Forward valuation lookup (signal+5d window) let future valuation records enter historical signals | BACKWARD-ONLY PIT join (≤ signal date, age ≤ 5d); rows without a fresh-enough valuation dropped | fixtures in `tests/unit/test_cross_section.py` |
+| R7 | Critical | same | Rows with incomplete forward outcomes were dropped from the SIGNAL cross-section (label availability changed eligibility) | Outcomes join in evaluation paths only; signal rows retained with NaN fwd | fixture |
+| R6 | High | `cross_section.py::_quintile_sims`, `multi_factor.py::run_top_n_sim` | Active entries executed at signal+2 open (double shift) vs +1-open labels | Targets keyed at the SIGNAL session close; lag parameter now changes delay only | replay comparisons |
+| R2 | High | `multi_factor.py` synthesis loop | `setdefault` accumulation retained only the FIRST test window per learned method (ICIR/shrink/ridge had 1 IC window, not 30) | Direct accumulate + single concat; full date coverage asserted | fixture |
+| R3 | Medium | `multi_factor.py::summarize_factor_ics` | Coverage ≡ 1.0 by construction (max n / max n) | Coverage = finite obs / eligible universe per date + worst window | fixture |
+| R4 | Medium | `multi_factor.py::select_factors` | Nonfinite statistics could pass screening | Nonfinite → explicit rejection | fixture |
+| R5 | High | `multi_factor.py` benchmark | The "equal-weight universe benchmark" applied TOP_N=30 — an arbitrary ≤30-name subset | Benchmark has its own membership (top_n=None → all eligible names) | fixture |
+| E-003 | High (new, found in replay) | `multi_factor.py::preprocess` | Two-sided factor (direction 0) orientation multiplied z by 0 → zero-variance z → factor silently killed | Two-sided factors receive no orientation transform | corrected replay |
+| Off-by-one | Medium (new) | `multi_factor.py::build_factor_panel` | History gate 240 rows vs mom_12_1 needing iloc[-241] → IndexError on newly-listed symbols | Gate ≥ 241 | replay |
+| N1 | High | `portfolio/optimizer.py` | 1e-6 floor kept holdings whose penalized edge was negative; cash unreachable | Eligibility + base both on the PENALIZED edge; zero-base names get zero weight; positive-base filter in water-filling | `tests/unit/test_w2_fixes.py` |
+| N2 | Medium | `research/metrics.py::summarize` | Drawdown not anchored at initial equity (first-period loss invisible) | HWM anchored at initial equity | fixture |
+| N3 | High | `research/metrics.py::completed_trade_stats` | Position-blind BUY/SELL pairing ignored quantities and fees | Fee-aware FIFO matching; partial exits vs completed positions distinguished; open qty reported | 3 fixtures |
+| N4 | High | `ledger/account.py` | Missing marks reverted to entry price | Last-validated-mark chain (`apply_mark`/`stale_marks`); stale marks block new BUYs in the simulator | 2 fixtures |
+| N5 | Medium | `execution/broker.py` | Full-day volume as opening-liquidity cap (ex-post assumption) | Disclosed (broker docstring + ARCHITECTURE §6); event-level fix deferred per plan §4.5 | disclosure |
+| W0 | High | `tests/replay/test_research_protocol.py` + `conftest.py` | Test suite wrote repository datasets/manifests (ingest side effects) | Gate test isolated to a temporary root; session-start snapshot + end-of-suite boundary check on protected files | boundary test |
+
+Erratum ledger: `handover/RESEARCH_ERRATA.md` (E-001 protocol defects + replay
+ledger; E-002 accounting; E-003 orientation). H2/H3/H4 pre-fix runs are
+labelled `invalid_protocol_pending_replay` in docs/DECISIONS.md §2.5-2.7 and
+docs/VALIDATION.md §2.2-2.4; corrected replays completed 2026-11-17.
 
 ## 0. Audit-fix round (2026-11-15; every item followed "failing test → minimal
 fix → full regression")
@@ -53,13 +82,13 @@ safety behavior).
 | Phase 4 paper execution | ✅ Mechanism done; ⬜ no live feed/broker | decide integration 5 tests; staleness blocking refuses all BUYs on stale snapshots by design |
 | Phase 5 controlled deployment | ⬜ Not started (gates unmet) | docs/DECISIONS.md §2.3 lists entry conditions |
 | Factor mining H1 (2026-11-15) | ✅ Pre-registered → run → adjudicated | 8-factor v2 pack: delta-AUC (US +0.006/CN +0.001) far below the pre-registered +0.02 → **H1 rejected, v2 pack retired**; US v2 returns improved (+26.1%, first positive CI) but the calibration gate failed; bundle stays candidate |
-| Cross-sectional screening H2 (2026-11-15) | ✅ Pre-registered → fetched → evaluated → adjudicated | akshare three sources; 150-symbol sample, 60 windows; **no factor passed the full screen**; size the only IC-screen pass (t −2.82, net spread +37%) but non-monotone |
-| Technical attribution H3 (2026-11-15) | ✅ Pre-registered → run → adjudicated | 16 indicators individually attributed (74 windows × 145 names): **none passed the full screen**; FM-consistent significance only bb_pos20/vol_5 (net portfolios failed); ret_1 shows 1-day momentum (t +2.87) opposite to the pre-registered reversal |
-| Multi-factor synthesis H4 (2026-11-15) | ✅ Pre-registered → run → adjudicated | Train/test split 30/30, 14 factors MAD + size-neutralized; screening selected BP/amihud/turnover/vol_5; test-window **equal-weight synthesis +12.6% < benchmark +18.6%; all three weight-learning schemes turned negative → H4 rejected**; final status rejected |
+| Cross-sectional screening H2 (2026-11-15; **corrected replay 2026-11-17**) | ✅ Pre-registered → fetched → evaluated → erratum → corrected replay | R1/R6/R7 fixed; corrected run: **no factor passed the full screen**; size the only IC-screen pass and slightly stronger corrected (t −3.30, net spread +39.6%, Sharpe 1.24) but non-monotone; pre-fix run preserved |
+| Technical attribution H3 (2026-11-15; **corrected replay 2026-11-17**) | ✅ Pre-registered → run → erratum → corrected replay | R6/R7 fixed; corrected run: **none of the 17 candidates passes**; FM-consistent significance only bb_pos20/vol_5 (net portfolios failed); ret_1 shows 1-day momentum opposite to the pre-registered reversal |
+| Multi-factor synthesis H4 (2026-11-15; **corrected replay 2026-11-17**) | ✅ Pre-registered → run → erratum → corrected replay | Fixes changed the outcome materially: equal-weight synthesis **+31.1% (Sharpe 0.78) beats the corrected universe benchmark +17.9%**, Ridge +22.9%; robustness passes (costs ×4, lag); **criterion (b) RankIC significance still fails → NOT PASSED; promotion refused**; the flawed run's "learned weights all negative" claim did not survive; improvement attributed to protocol fixes with full multiple-testing burden |
 | Info-point monitor H5 (2026-11-15) | ✅ Pre-registered → implemented → run → validated | Deal-amount anomaly (robust z / d-o-d) × news correlation dual-requirement module; full-history scan of 150 symbols → 9556 anomaly clusters; market 8/8 and stock 5/10 dual-confirmed (incl. 2024-09-24 z = 12.1); JSON contract + reasoning-first enforced by tests; CCTV keyword low specificity disclosed; E3 |
 | Forward validation H6 (2026-11-15) | ✅ Pre-registered → run → adjudicated | Forward outcomes for 9548 clusters + 60 news fetches (24 dual / 16 quant-only) + CCTV verification of all 39 market clusters: **the news leg shows no measurable incremental forward information → H6 rejected; the monitor stays review-only (E3)**; recorded findings: volume persistence 210% (t 73.5), 5-session drift +0.42% (t 2.62, unadjusted) |
 | Fallback scheme | ✅ Design + stress evidence; 🔶 acceptance pending human | US passes costs ×4 / lag / correlation stress; CN fails the lag leg (−1.2%); `fallback_accepted` stays false |
-| Engineering baseline | ✅ | 110 tests green; requirements.lock; docs trio in English; README.md added |
+| Engineering baseline | ✅ | 135 tests green (incl. W0 boundary check, W2 fixtures, device/shard tests); requirements.lock; docs in English |
 
 ## 2. Current file map
 

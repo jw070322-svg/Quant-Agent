@@ -1,0 +1,599 @@
+{
+  "US": {
+    "first": "2020-01-02",
+    "last": "2026-11-16",
+    "missing_bars": [],
+    "recent_first": "2025-11-14",
+    "methods": {
+      "buy_hold": {
+        "base": {
+          "sessions": 1728,
+          "total": 1.6485397015872945,
+          "annualized": 0.15262609092740065,
+          "sharpe_zero_cash": 0.7507097127584133,
+          "drawdown": -0.3876484480026353,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.14576045310677996
+        },
+        "double_cost": {
+          "sessions": 1728,
+          "total": 1.6472167546834036,
+          "annualized": 0.1525421113196883,
+          "sharpe_zero_cash": 0.750384350659352,
+          "drawdown": -0.3876484480026353,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.1456876456876457
+        },
+        "delay_one_session": {
+          "sessions": 1728,
+          "total": 1.6485397015872945,
+          "annualized": 0.15262609092740065,
+          "sharpe_zero_cash": 0.7507097127584133,
+          "drawdown": -0.3876484480026353,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.14576045310677996
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": 0.11361560624719447,
+          "annualized": 0.11361560624719447,
+          "sharpe_zero_cash": 0.8484139085772783,
+          "drawdown": -0.08946650638832354,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.0
+        },
+        "annual_returns": {
+          "2020": 0.2000548567197722,
+          "2021": 0.3185422390112329,
+          "2022": -0.19501283106643763,
+          "2023": 0.2796426400400924,
+          "2024": 0.25876512981784927,
+          "2025": 0.17990128005303485,
+          "2026": 0.09406545290522339
+        }
+      },
+      "equal_weight": {
+        "base": {
+          "sessions": 1728,
+          "total": 1.4666487236739232,
+          "annualized": 0.14072856127124167,
+          "sharpe_zero_cash": 0.6852324289942658,
+          "drawdown": -0.39097346436691527,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.3448941344508358
+        },
+        "double_cost": {
+          "sessions": 1728,
+          "total": 1.4637340007511939,
+          "annualized": 0.14053188663008465,
+          "sharpe_zero_cash": 0.6844886933060594,
+          "drawdown": -0.3909787739892201,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.34481709568606406
+        },
+        "delay_one_session": {
+          "sessions": 1728,
+          "total": 1.4666487236739232,
+          "annualized": 0.14072856127124167,
+          "sharpe_zero_cash": 0.6852324289942658,
+          "drawdown": -0.39097346436691527,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.3448941344508358
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": 0.12197624420968611,
+          "annualized": 0.12197624420968611,
+          "sharpe_zero_cash": 0.816729615651411,
+          "drawdown": -0.09383991211620257,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.20714488492301764
+        },
+        "annual_returns": {
+          "2020": 0.2529413653975805,
+          "2021": 0.2512978222354285,
+          "2022": -0.20968558398600357,
+          "2023": 0.294667736965172,
+          "2024": 0.19952778980339847,
+          "2025": 0.16766867547969766,
+          "2026": 0.09781129948078027
+        }
+      },
+      "trend_200": {
+        "base": {
+          "sessions": 1728,
+          "total": 0.8147567430152964,
+          "annualized": 0.09079804961605964,
+          "sharpe_zero_cash": 0.69214979078461,
+          "drawdown": -0.2752163195967512,
+          "avg_exposure": 0.8043981481481481,
+          "annualized_turnover": 2.1869169581875734
+        },
+        "double_cost": {
+          "sessions": 1728,
+          "total": 0.8011976476840528,
+          "annualized": 0.08960570035902626,
+          "sharpe_zero_cash": 0.6843930720439417,
+          "drawdown": -0.27738741363505515,
+          "avg_exposure": 0.8043981481481481,
+          "annualized_turnover": 2.186334498834499
+        },
+        "delay_one_session": {
+          "sessions": 1728,
+          "total": 0.8657141234634269,
+          "annualized": 0.09521212610278762,
+          "sharpe_zero_cash": 0.7150871887587481,
+          "drawdown": -0.2822478811282535,
+          "avg_exposure": 0.8038194444444444,
+          "annualized_turnover": 2.1869169581875734
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": 0.008068443565997008,
+          "annualized": 0.008068443565997008,
+          "sharpe_zero_cash": 0.12684137995399666,
+          "drawdown": -0.08946650638832376,
+          "avg_exposure": 0.9166666666666666,
+          "annualized_turnover": 1.9995002498750625
+        },
+        "annual_returns": {
+          "2020": 0.16751651992147876,
+          "2021": 0.31854223901123135,
+          "2022": -0.23376687281751773,
+          "2023": 0.10509172782863896,
+          "2024": 0.2587651298178488,
+          "2025": 0.11675875460133289,
+          "2026": -0.009628769494199885
+        },
+        "vs_benchmark": {
+          "annualized_arithmetic_excess": -0.07014641362694461,
+          "ci95": [
+            -0.174321390181069,
+            0.03510469394815298
+          ],
+          "p_one_sided": 0.9135216195951013,
+          "holm_p": 1.0
+        },
+        "benchmark": "buy_hold",
+        "stress_excess_total": {
+          "double_cost": -0.8460191069993508,
+          "delay_one_session": -0.7828255781238675
+        },
+        "recent_excess_total": -0.10554716268119746
+      },
+      "momentum_252": {
+        "base": {
+          "sessions": 1728,
+          "total": 1.4506720738324446,
+          "annualized": 0.13964806802939278,
+          "sharpe_zero_cash": 0.6860892168704774,
+          "drawdown": -0.34368713776527315,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 2.8793336281936495
+        },
+        "double_cost": {
+          "sessions": 1728,
+          "total": 1.4265879716488605,
+          "annualized": 0.13800784493541807,
+          "sharpe_zero_cash": 0.6798045552839157,
+          "drawdown": -0.34369331518690105,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 2.8788902399233858
+        },
+        "delay_one_session": {
+          "sessions": 1728,
+          "total": 1.4765911782978254,
+          "annualized": 0.14139795096567886,
+          "sharpe_zero_cash": 0.6926821576159459,
+          "drawdown": -0.3436735570318069,
+          "avg_exposure": 0.9994212962962963,
+          "annualized_turnover": 2.881211355411198
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": 0.10203719135858913,
+          "annualized": 0.10203719135858913,
+          "sharpe_zero_cash": 0.6317657419744486,
+          "drawdown": -0.10529183222216798,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 2.179256477932457
+        },
+        "annual_returns": {
+          "2020": 0.3478433855499734,
+          "2021": 0.22105238506875224,
+          "2022": -0.20181699123606445,
+          "2023": 0.23017072576246989,
+          "2024": 0.20273163555329998,
+          "2025": 0.16069776439168848,
+          "2026": 0.08631487162927809
+        },
+        "vs_benchmark": {
+          "annualized_arithmetic_excess": -0.0016022634788569814,
+          "ci95": [
+            -0.042443426028507675,
+            0.038314565965890134
+          ],
+          "p_one_sided": 0.5311172206948263,
+          "holm_p": 1.0
+        },
+        "benchmark": "equal_weight",
+        "stress_excess_total": {
+          "double_cost": -0.03714602910233333,
+          "delay_one_session": 0.009942454623902197
+        },
+        "recent_excess_total": -0.019939052851096983
+      },
+      "momentum_63_126_252": {
+        "base": {
+          "sessions": 1728,
+          "total": 1.647494733864065,
+          "annualized": 0.152559760189386,
+          "sharpe_zero_cash": 0.7362832972695487,
+          "drawdown": -0.34368713776527315,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 4.478774417856394
+        },
+        "double_cost": {
+          "sessions": 1728,
+          "total": 1.607135803779232,
+          "annualized": 0.14998065009462547,
+          "sharpe_zero_cash": 0.7264633612532728,
+          "drawdown": -0.34369331518690105,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 4.477748287387887
+        },
+        "delay_one_session": {
+          "sessions": 1728,
+          "total": 1.6477761028569877,
+          "annualized": 0.1525776226660811,
+          "sharpe_zero_cash": 0.7367375727293751,
+          "drawdown": -0.3436735570318069,
+          "avg_exposure": 0.9994212962962963,
+          "annualized_turnover": 4.478584978039925
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": 0.07768981653179208,
+          "annualized": 0.07768981653179208,
+          "sharpe_zero_cash": 0.5110426539195779,
+          "drawdown": -0.09889246484587966,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 6.112507105179768
+        },
+        "annual_returns": {
+          "2020": 0.42948978109060043,
+          "2021": 0.2411279456487363,
+          "2022": -0.15856225436845361,
+          "2023": 0.24876378963960666,
+          "2024": 0.17123987877943048,
+          "2025": 0.1562843093027404,
+          "2026": 0.04863590836941434
+        },
+        "vs_benchmark": {
+          "annualized_arithmetic_excess": 0.009565172185858836,
+          "ci95": [
+            -0.03255974934393923,
+            0.05211043085623433
+          ],
+          "p_one_sided": 0.33566608347913024,
+          "holm_p": 1.0
+        },
+        "benchmark": "equal_weight",
+        "stress_excess_total": {
+          "double_cost": 0.14340180302803818,
+          "delay_one_session": 0.18112737918306454
+        },
+        "recent_excess_total": -0.044286427677894036
+      }
+    },
+    "composite_vs_single_horizon": {
+      "annualized_arithmetic_excess": 0.011167435664715819,
+      "ci95": [
+        -0.01738910280479406,
+        0.041313167471238976
+      ],
+      "p_one_sided": 0.23194201449637591
+    }
+  },
+  "CN": {
+    "first": "2020-01-02",
+    "last": "2026-11-17",
+    "missing_bars": [
+      [
+        "2021-02-08",
+        "sz159915"
+      ]
+    ],
+    "recent_first": "2025-11-04",
+    "methods": {
+      "buy_hold": {
+        "base": {
+          "sessions": 1665,
+          "total": 0.09050408451604852,
+          "annualized": 0.01277774703759249,
+          "sharpe_zero_cash": 0.15950095692431976,
+          "drawdown": -0.38465220165922465,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.1464001464001464
+        },
+        "double_cost": {
+          "sessions": 1665,
+          "total": 0.08941575708641025,
+          "annualized": 0.012629561081286544,
+          "sharpe_zero_cash": 0.15861438984351905,
+          "drawdown": -0.3846522016592204,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.14625403846960733
+        },
+        "delay_one_session": {
+          "sessions": 1665,
+          "total": 0.09050408451604852,
+          "annualized": 0.01277774703759249,
+          "sharpe_zero_cash": 0.15950095692431976,
+          "drawdown": -0.38465220165922465,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.1464001464001464
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": -0.10833333333333295,
+          "annualized": -0.1050816697538296,
+          "sharpe_zero_cash": -0.7060980896890413,
+          "drawdown": -0.1756824652487019,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.0
+        },
+        "annual_returns": {
+          "2020": 0.257558143785686,
+          "2021": -0.036469344608879295,
+          "2022": -0.18193454013530874,
+          "2023": -0.0838176128743856,
+          "2024": 0.14442546962673908,
+          "2025": 0.17458963973566322,
+          "2026": -0.10671506352087046
+        }
+      },
+      "equal_weight": {
+        "base": {
+          "sessions": 1665,
+          "total": 0.24317509035631324,
+          "annualized": 0.03241280400396396,
+          "sharpe_zero_cash": 0.2609786718483362,
+          "drawdown": -0.387960648975775,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.4296944207611359
+        },
+        "double_cost": {
+          "sessions": 1665,
+          "total": 0.23953601732114138,
+          "annualized": 0.031969368382497976,
+          "sharpe_zero_cash": 0.25878194993385073,
+          "drawdown": -0.3884201984239791,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.42953258244429426
+        },
+        "delay_one_session": {
+          "sessions": 1665,
+          "total": 0.24317509035631324,
+          "annualized": 0.03241280400396396,
+          "sharpe_zero_cash": 0.2609786718483362,
+          "drawdown": -0.387960648975775,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.4296944207611359
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": -0.1304670917561832,
+          "annualized": -0.12659947074793754,
+          "sharpe_zero_cash": -0.575084509225229,
+          "drawdown": -0.25401365327865066,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 0.4032743776671752
+        },
+        "annual_returns": {
+          "2020": 0.31812935347761395,
+          "2021": 0.044735299679908413,
+          "2022": -0.1994198048968696,
+          "2023": -0.10459451135797737,
+          "2024": 0.13895178082124549,
+          "2025": 0.2804474134029542,
+          "2026": -0.13647220808018268
+        }
+      },
+      "trend_200": {
+        "base": {
+          "sessions": 1665,
+          "total": -0.11826926737322441,
+          "annualized": -0.01827652403979363,
+          "sharpe_zero_cash": -0.07543597498177361,
+          "drawdown": -0.4331701347188269,
+          "avg_exposure": 0.5711711711711712,
+          "annualized_turnover": 2.343573543573543
+        },
+        "double_cost": {
+          "sessions": 1665,
+          "total": -0.13226472948516654,
+          "annualized": -0.020575723793988865,
+          "sharpe_zero_cash": -0.09331926804391114,
+          "drawdown": -0.4388101992087755,
+          "avg_exposure": 0.5711711711711712,
+          "annualized_turnover": 2.3424046801292304
+        },
+        "delay_one_session": {
+          "sessions": 1665,
+          "total": -0.04688113080210554,
+          "annualized": -0.007011829512780898,
+          "sharpe_zero_cash": 0.009477484788709651,
+          "drawdown": -0.37196397046145147,
+          "avg_exposure": 0.5711711711711712,
+          "annualized_turnover": 2.343573543573543
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": -0.003895652173913411,
+          "annualized": -0.003772214232691584,
+          "sharpe_zero_cash": 0.03463547674108424,
+          "drawdown": -0.08407301959470748,
+          "avg_exposure": 0.7182539682539683,
+          "annualized_turnover": 0.9682539682539681
+        },
+        "annual_returns": {
+          "2020": 0.11798887356954557,
+          "2021": -0.06418551797040173,
+          "2022": 0.0,
+          "2023": -0.1241256430089448,
+          "2024": -0.17910342624946674,
+          "2025": 0.1745896397356641,
+          "2026": -0.0020878402903803384
+        },
+        "vs_benchmark": {
+          "annualized_arithmetic_excess": -0.03618906059816715,
+          "ci95": [
+            -0.15448477323092485,
+            0.059135404866645515
+          ],
+          "p_one_sided": 0.7523119220194951,
+          "holm_p": 1.0
+        },
+        "benchmark": "buy_hold",
+        "stress_excess_total": {
+          "double_cost": -0.2216804865715768,
+          "delay_one_session": -0.13738521531815406
+        },
+        "recent_excess_total": 0.10443768115941954
+      },
+      "momentum_252": {
+        "base": {
+          "sessions": 1665,
+          "total": 0.07479077449092619,
+          "annualized": 0.010625876168017134,
+          "sharpe_zero_cash": 0.15937855759841585,
+          "drawdown": -0.44604654864339777,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 3.9826146649587417
+        },
+        "double_cost": {
+          "sessions": 1665,
+          "total": 0.04594562356765275,
+          "annualized": 0.006604789035717706,
+          "sharpe_zero_cash": 0.14142038979152408,
+          "drawdown": -0.4524487452878735,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 3.981580677787948
+        },
+        "delay_one_session": {
+          "sessions": 1665,
+          "total": 0.05803161547560909,
+          "annualized": 0.008300985940338013,
+          "sharpe_zero_cash": 0.14776834375553746,
+          "drawdown": -0.4465791628145399,
+          "avg_exposure": 0.9993993993993994,
+          "annualized_turnover": 3.9786945308993604
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": -0.1742632799004994,
+          "annualized": -0.16922858089417303,
+          "sharpe_zero_cash": -0.5148442810352695,
+          "drawdown": -0.3693585289510265,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 2.190129390218676
+        },
+        "annual_returns": {
+          "2020": 0.35005846217432524,
+          "2021": 0.07569015238152477,
+          "2022": -0.29555914896533053,
+          "2023": -0.09720632550726216,
+          "2024": 0.02519137703780472,
+          "2025": 0.390314749279179,
+          "2026": -0.18354350812062825
+        },
+        "vs_benchmark": {
+          "annualized_arithmetic_excess": -0.015460070117357652,
+          "ci95": [
+            -0.08424918061844255,
+            0.046194305609518045
+          ],
+          "p_one_sided": 0.6750812296925769,
+          "holm_p": 1.0
+        },
+        "benchmark": "equal_weight",
+        "stress_excess_total": {
+          "double_cost": -0.19359039375348863,
+          "delay_one_session": -0.18514347488070415
+        },
+        "recent_excess_total": -0.043796188144316184
+      },
+      "momentum_63_126_252": {
+        "base": {
+          "sessions": 1665,
+          "total": 0.3830309154963465,
+          "annualized": 0.04866899267351332,
+          "sharpe_zero_cash": 0.32860496185269533,
+          "drawdown": -0.4059645844350599,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 3.828256199790671
+        },
+        "double_cost": {
+          "sessions": 1665,
+          "total": 0.34733501603471995,
+          "annualized": 0.04465816149176716,
+          "sharpe_zero_cash": 0.31092230433068635,
+          "drawdown": -0.4138344564251999,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 3.82736802026247
+        },
+        "delay_one_session": {
+          "sessions": 1665,
+          "total": 0.3438741828036842,
+          "annualized": 0.044264492329419536,
+          "sharpe_zero_cash": 0.3102513758622029,
+          "drawdown": -0.40760350507779064,
+          "avg_exposure": 0.9993993993993994,
+          "annualized_turnover": 3.8207297036792953
+        },
+        "recent252": {
+          "sessions": 252,
+          "total": -0.0455800796350988,
+          "annualized": -0.04416553542147361,
+          "sharpe_zero_cash": -0.04312595917376856,
+          "drawdown": -0.2712924273968339,
+          "avg_exposure": 1.0,
+          "annualized_turnover": 2.205196863248581
+        },
+        "annual_returns": {
+          "2020": 0.43335139105103515,
+          "2021": 0.11388481282884877,
+          "2022": -0.24512410042059496,
+          "2023": -0.09521568423526039,
+          "2024": 0.025191377037804497,
+          "2025": 0.31093881052404915,
+          "2026": -0.05630654300196414
+        },
+        "vs_benchmark": {
+          "annualized_arithmetic_excess": 0.020182878230635123,
+          "ci95": [
+            -0.04877959562673347,
+            0.08344311253647148
+          ],
+          "p_one_sided": 0.2846788302924269,
+          "holm_p": 1.0
+        },
+        "benchmark": "equal_weight",
+        "stress_excess_total": {
+          "double_cost": 0.10779899871357856,
+          "delay_one_session": 0.10069909244737096
+        },
+        "recent_excess_total": 0.0848870121210844
+      }
+    },
+    "composite_vs_single_horizon": {
+      "annualized_arithmetic_excess": 0.03564294834799278,
+      "ci95": [
+        -0.00607281245630775,
+        0.08875563907250282
+      ],
+      "p_one_sided": 0.09197700574856287
+    }
+  }
+}
