@@ -1,0 +1,3 @@
+version: 1
+market: cn
+snapshot: ../../datasets/factor_snapshots/cn_v1

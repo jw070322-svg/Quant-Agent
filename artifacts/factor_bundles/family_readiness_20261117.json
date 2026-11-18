@@ -1,0 +1,154 @@
+{
+  "cn_MOM": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  },
+  "cn_ATO": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs",
+      "missing float"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  },
+  "cn_QV": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs",
+      "missing float",
+      "missing financials"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  },
+  "cn_FAR": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs",
+      "missing financials"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  },
+  "cn_VPA": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs",
+      "missing float",
+      "missing financials"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  },
+  "us_MOM": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  },
+  "us_ATO": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs",
+      "missing float"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  },
+  "us_QV": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs",
+      "missing float",
+      "missing financials"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  },
+  "us_FAR": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs",
+      "missing financials"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  },
+  "us_VPA": {
+    "status": "blocked_data",
+    "reasons": [
+      "snapshot manifest missing",
+      "missing sessions",
+      "missing bars",
+      "missing universe",
+      "missing actions",
+      "missing costs",
+      "missing float",
+      "missing financials"
+    ],
+    "holm_p": 1.0,
+    "research_gate_pass": false,
+    "promotion_allowed": false
+  }
+}

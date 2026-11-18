@@ -1,0 +1,68 @@
+{
+  "market": "cn",
+  "catalog": {
+    "MOM": {
+      "formula": "mean(z(TRI/lag(TRI,L)-1)), L=63,126,252",
+      "benchmark": "MOM252",
+      "stage": "A"
+    },
+    "ATO": {
+      "formula": "-z(mean(turnover,21)/mean(turnover,252))",
+      "benchmark": "UNIVERSE",
+      "stage": "B"
+    },
+    "QV": {
+      "formula": "top_third(BM) intersect F_SCORE>=7",
+      "benchmark": "VALUE",
+      "stage": "C"
+    },
+    "FAR": {
+      "formula": "bottom_third(return21) intersect F_SCORE>=7",
+      "benchmark": "REVERSAL",
+      "stage": "C"
+    },
+    "VPA": {
+      "formula": "(z(BM)+z(ROE)-z(ATO))/3",
+      "benchmark": "UNIVERSE",
+      "stage": "C"
+    }
+  },
+  "config": {
+    "version": 1,
+    "start": "2010-01-01",
+    "warmup_sessions": 252,
+    "development_months": 36,
+    "minimum_evaluation_months": 36,
+    "minimum_universe": 300,
+    "maximum_universe": 1000,
+    "minimum_coverage": 0.8,
+    "gross": 0.8,
+    "name_cap": 0.05,
+    "initial_equity": 1000000.0,
+    "bootstrap_samples": 10000,
+    "block_months": 3,
+    "seed": 42,
+    "market": "cn",
+    "snapshot": "../../datasets/factor_snapshots/cn_v1"
+  },
+  "config_sha256": "e0c73088600292ac0213ecad3a17ae05c92923ffdff13f83c90e64b862e5eceb",
+  "source_sha256": "24f145d9f807ef017c15f4c5eb244b2cd5a6a2f274ab7900e845d903623b5802",
+  "code_commit": "c28843fee00fb5759f90bcf2cfb1691f60900112",
+  "dirty_patch_sha256": "bf6123b3ce5f31668b12233627dd9694614a8c422cf0fdd1dd6e3a470281de24",
+  "snapshot": {
+    "market": "cn"
+  },
+  "registered_at": "2026-11-18T04:36:46.802287+00:00",
+  "python": "3.13.9",
+  "numpy": "2.5.5",
+  "pandas": "3.1.1",
+  "family_size": 10,
+  "parent_studies": [
+    "H2",
+    "H3",
+    "H4",
+    "market_backtest_20261117"
+  ],
+  "evidence_kind": "historical_diagnostic",
+  "promotion_allowed": false
+}

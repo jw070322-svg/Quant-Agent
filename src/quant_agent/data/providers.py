@@ -345,3 +345,28 @@ def fetch_cctv_news(date: str) -> pd.DataFrame:
         "headline": df["title"].astype(str),
         "content": df["content"].astype(str),
     }).dropna(subset=["timestamp"])
+
+
+def fetch_cn_daily_pair(symbol: str, *, start: str,
+                        end: str | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Raw daily bars (with outstanding_share and amount) plus the qfq series
+    (split/dividend-consistent wealth index) for one CN symbol."""
+    ak = _akshare()
+    code, _, suffix = symbol.partition(".")
+    stock = f"{suffix.lower()}{code}"
+    start_s = pd.Timestamp(start).strftime("%Y%m%d")
+    end_s = (pd.Timestamp(end) if end else pd.Timestamp.today()).strftime("%Y%m%d")
+
+    def _call(adjust):
+        return ak.stock_zh_a_daily(stock=stock, start_date=start_s,
+                                   end_date=end_s, adjust=adjust)
+
+    raw = _retry(lambda: _call(""), what=f"raw {symbol}")
+    qfq = _retry(lambda: _call("qfq"), what=f"qfq {symbol}")
+    if raw is None or len(raw) == 0:
+        raise ProviderError(f"empty raw history for {symbol}")
+    if qfq is None or len(qfq) == 0:
+        raise ProviderError(f"empty qfq history for {symbol}")
+    for df in (raw, qfq):
+        df["date"] = pd.to_datetime(df["date"])
+    return raw, qfq

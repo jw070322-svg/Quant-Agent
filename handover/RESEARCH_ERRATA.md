@@ -67,3 +67,42 @@ Fixed: two-sided factors receive NO orientation transform (sign forced to 1).
 Regression covered by the corrected replay (turnover restored, t −4.34,
 selected). Recorded as a defect in the orientation-convention implementation,
 not in the pre-registered factor definitions.
+
+## E-004 (2026-11-17 local): further direction, coverage and timing audit
+
+The November 17 replay above remains preserved as historical evidence, but it
+does not resolve the additional defects identified while implementing the
+factor bundle:
+
+- `vol_5` was negated in construction and again in preprocessing, reversing its
+  intended low-volatility direction. Construction now retains positive volatility.
+- Feature coverage counted outcome-complete rows and divided by a population
+  already filtered by feature availability. Coverage now uses feature-only counts
+  and an independent price-history eligibility denominator; absent dates count as
+  zero coverage, and missing denominators are invalid.
+- An entirely incomplete future-return window caused its signal date to vanish.
+  Signal dates now remain present with unavailable outcomes.
+- The legacy delay stress changed both signal age and execution date. It now
+  preserves the signal and shifts only submission/execution.
+
+Methodology changes are explicitly separate from corrections: fixed-direction
+screening now rejects contrary signed IC; two-sided factor direction is learned
+from matured training observations only and frozen. These are new conventions,
+not evidence that the original preregistration passed.
+
+A combined corrective/methodology replay completed in
+`artifacts/runs/xs_mf_h4-2caccc9508e3f8f2-2026-11-18T043703Z/`
+(UTC identifier; November 17 local). Equal weight returned 12.05%, Ridge 22.17%,
+and the universe benchmark 16.68%. Ridge's RankIC t was -0.04 and costs x4 return
+15.63%; the existing acceptance verdict remains **NOT PASSED**. The extra retained
+signal window also changes the historical split, so these differences must not be
+attributed solely to the sign correction. A common-window causal decomposition
+has not been performed. Current-membership survivorship bias remains.
+
+Documentation correction: the earlier replay's costs x4 result is 23.11% as in its
+JSON and markdown artifacts; the 21.4% value in DECISIONS was a transcription
+error. Earlier "pending replay" language is historical: the E-001 replay is
+complete, and this entry records the additional audit. No historical artifact was
+overwritten. The replay finished successfully; console rendering subsequently
+failed under GBK. CLI output now escapes unsupported symbols to prevent that
+presentation failure from obscuring completion.

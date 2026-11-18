@@ -1,0 +1,3 @@
+version: 1
+market: us
+snapshot: ../../datasets/factor_snapshots/us_v1

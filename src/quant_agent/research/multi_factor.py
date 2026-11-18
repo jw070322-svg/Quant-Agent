@@ -148,10 +148,9 @@ def build_factor_panel(frames: dict, sessions: pd.DatetimeIndex,
     rows = []
     for t in rebalance_dates:
         idx = sessions.get_indexer([t])[0]
-        if idx + 1 + REBALANCE_SESSIONS >= len(sessions):
-            continue  # forward window incomplete for the whole cross-section
-        entry_d = sessions[idx + 1]
-        exit_d = sessions[idx + 1 + REBALANCE_SESSIONS]
+        entry_d = sessions[idx + 1] if idx + 1 < len(sessions) else pd.NaT
+        exit_d = (sessions[idx + 1 + REBALANCE_SESSIONS]
+                  if idx + 1 + REBALANCE_SESSIONS < len(sessions) else pd.NaT)
         for sym, c in close.items():
             if t not in c.index:
                 continue
@@ -195,7 +194,7 @@ def build_factor_panel(frames: dict, sessions: pd.DatetimeIndex,
                 "turnover": np.log(dollar / mv) if np.isfinite(dollar) and dollar > 0 else np.nan,
                 "rsi14": float(ft_row["rsi14"]),
                 "bb_pos20": float(ft_row["bb_pos20"]),
-                "vol_5": -float(ft_row["vol_5"]) if np.isfinite(ft_row["vol_5"]) else np.nan,
+                "vol_5": float(ft_row["vol_5"]) if np.isfinite(ft_row["vol_5"]) else np.nan,
                 "macd_hist_norm": float(ft_row["macd_hist_norm"]),
                 "close_over_ma20": float(ft_row["close_over_ma20"]),
             })
@@ -236,12 +235,12 @@ def factor_ic_stats(panel: pd.DataFrame, factors: list[str]) -> pd.DataFrame:
     rows = []
     for date, sub in panel.groupby("date"):
         for f in factors:
-            z = sub[f"z_{f}"].dropna()
-            joined = pd.concat([z, sub.loc[z.index, "fwd_ret"]], axis=1).dropna()
-            if len(joined) < 10:
-                continue
-            ic = joined[f"z_{f}"].corr(joined["fwd_ret"], method="spearman")
-            rows.append({"date": date, "factor": f, "ic": ic, "n": len(joined)})
+            z = sub[f"z_{f}"].replace([np.inf, -np.inf], np.nan).dropna()
+            joined = pd.concat([z, sub.loc[z.index, "fwd_ret"]], axis=1).replace([np.inf, -np.inf], np.nan).dropna()
+            ic = (joined[f"z_{f}"].corr(joined["fwd_ret"], method="spearman")
+                  if len(joined) >= 10 else float("nan"))
+            rows.append({"date": date, "factor": f, "ic": ic,
+                         "n": len(joined), "n_features": int(np.isfinite(z).sum())})
     return pd.DataFrame(rows)
 
 
@@ -256,9 +255,11 @@ def summarize_factor_ics(ic_df: pd.DataFrame, factors: list[str],
         mean_ic = float(ic.mean()) if len(ic) else float("nan")
         sd = float(ic.std(ddof=1)) if len(ic) > 1 else float("nan")
         icir = mean_ic / sd if sd and np.isfinite(sd) and sd > 0 else float("nan")
-        if eligible_counts and len(s):
-            covs = [n / eligible_counts.get(date, n)
-                    for date, n in zip(s["date"], s["n"])]
+        if eligible_counts and len(s) and set(s['date']).issubset(eligible_counts):
+            s = s.set_index('date').reindex(list(eligible_counts)).reset_index(names='date')
+            s['n_features'] = s['n_features'].fillna(0)
+            covs = [n / eligible_counts[date] if eligible_counts.get(date, 0) > 0 else float('nan')
+                    for date, n in zip(s["date"], s["n_features"])]
             coverage = float(np.mean(covs))
             worst = float(np.min(covs))
         else:
@@ -294,6 +295,8 @@ def select_factors(stats: dict, panel: pd.DataFrame, factors: list[str]) -> dict
             reasons.append(f"ICIR {st['icir']:.2f} < {SCREEN['min_icir']}")
         if abs(st["nw_t"]) < SCREEN["min_nw_t"]:
             reasons.append(f"NW t {st['nw_t']:.2f} < {SCREEN['min_nw_t']}")
+        if FACTOR_DIRECTIONS.get(f, 1) != 0 and st["mean_ic"] <= 0:
+            reasons.append("observed IC contradicts the registered economic direction")
         if reasons:
             rejected[f] = reasons
         else:
@@ -349,7 +352,7 @@ def run_top_n_sim(panel_bars: dict, sessions: pd.DatetimeIndex, scores: pd.DataF
     all_dates = sorted(scores["date"].unique())
     target_for: dict[pd.Timestamp, dict[str, float]] = {}
     for date in all_dates:
-        src_date = all_dates[max(0, all_dates.index(date) - lag_windows)]
+        src_date = date
         sub = scores[scores["date"] == src_date].dropna(subset=["score"])
         ranked = sub.sort_values("score", ascending=False)
         if top_n is not None:
@@ -406,12 +409,24 @@ def run_multi_factor_study(*, index: str = "000300", n_symbols: int = 150,
     split = int(len(dates) * TRAIN_TEST_SPLIT)
     train_dates, test_dates = dates[:split], dates[split:]
     first_test_decision = test_dates[0]
-    train_panel = panel[(panel["date"].isin(train_dates))
-                        & (panel["label_end"] < first_test_decision)]
+    train_panel = panel[panel["date"].isin(train_dates)].copy()
+    train_panel.loc[~(train_panel['label_end'] < first_test_decision), 'fwd_ret'] = np.nan
+    # Two-sided directions are fitted on matured training outcomes only, then frozen.
+    orientations = {}
+    for factor in factors_present:
+        if FACTOR_DIRECTIONS[factor] == 0:
+            ic = factor_ic_stats(train_panel, [factor])['ic'].mean()
+            sign = -1 if np.isfinite(ic) and ic < 0 else 1
+            orientations[factor] = sign
+            panel[f'z_{factor}'] *= sign
+            train_panel[f'z_{factor}'] *= sign
     test_panel = panel[panel["date"].isin(test_dates)]
 
     # ---- train-window screening (frozen list; R4 gates; R3 coverage) --------
-    eligible_counts = {d: int(n) for d, n in panel.groupby("date").size().items()}
+    # Eligibility is determined BEFORE valuation/features/outcomes are joined.
+    eligible_counts = {d: sum(int((df['date'] <= d).sum() >= MIN_HISTORY_SESSIONS + 1
+                                 and d in set(df['date'])) for df in bars.values())
+                       for d in train_dates}
     ic_train = factor_ic_stats(train_panel, factors_present)
     stats_train = summarize_factor_ics(ic_train, factors_present, eligible_counts)
     selection = select_factors(stats_train, train_panel, factors_present)
@@ -544,6 +559,7 @@ def run_multi_factor_study(*, index: str = "000300", n_symbols: int = 150,
         "factor_screening_train": stats_train,
         "selection": selection,
         "selected_factors": selected,
+        "training_orientations": orientations,
         "synthesis_test_ic": synth_ic,
         "results": {k: {kk: vv for kk, vv in v.items() if kk != "daily_returns"}
                     for k, v in results.items()},

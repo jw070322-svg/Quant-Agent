@@ -187,3 +187,44 @@ class Account:
 
     def _record(self, kind: str, session: str, **fields) -> None:
         self.events.append({"kind": kind, "session": session, **fields})
+
+
+class RawAccount(Account):
+    """Raw shares/currency, with dividend receivables included in NAV."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.receivables = []
+
+    def action(self, event):
+        symbol, date = event['symbol'], str(pd.Timestamp(event['date']).date())
+        value, kind = float(event['value']), event['kind']
+        if not np.isfinite(value) or value < 0 or (kind == 'split' and value == 0):
+            raise ValueError('invalid corporate action')
+        qty = self.positions().get(symbol, 0.)
+        if kind == 'split':
+            for lot in self.lots.get(symbol, []):
+                lot.qty *= value
+                lot.entry_price /= value
+                lot.high_water /= value
+            if symbol in self.last_marks:
+                self.last_marks[symbol]['mark'] /= value
+        elif kind == 'dividend':
+            self.receivables.append({'amount': qty*value, 'pay_date': str(pd.Timestamp(event['pay_date']).date())})
+        elif kind == 'delisting':
+            self.cash += qty*value
+            self.lots.pop(symbol, None)
+        else:
+            raise ValueError(f'unsupported action {kind}')
+        self._record('raw_action', date, symbol=symbol, action=kind, value=value, quantity=qty)
+
+    def settle(self, session):
+        day = str(pd.Timestamp(session).date())
+        due = [r for r in self.receivables if r['pay_date'] <= day]
+        for item in due:
+            self.cash += item['amount']
+            self._record('dividend_payment', day, amount=item['amount'])
+        self.receivables = [r for r in self.receivables if r['pay_date'] > day]
+
+    def equity(self, prices, session=None):
+        return super().equity(prices, session) + sum(r['amount'] for r in self.receivables)

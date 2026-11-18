@@ -1,5 +1,10 @@
 # Design Decisions and Pre-Registered Criteria (DECISIONS)
 
+Current audit note (2026-11-17): the E-001 replay completed. The additional E-004
+audit and combined corrective/methodology replay are documented in
+`handover/RESEARCH_ERRATA.md`; H4 remains NOT PASSED. Earlier pending-replay
+headings below describe the original audit stage, not the current state.
+
 This document records the design decisions already made, their rationale, and
 the **pre-registered** acceptance criteria. The criteria were written down
 before the selections they constrain, to discipline future searches and
@@ -307,7 +312,7 @@ negative → rejected.
 - **Test-window synthesis**: equal-weight composite **+31.1%** (Sharpe 0.78)
   and Ridge **+22.9%** (Sharpe 0.73) both **BEAT the corrected universe
   benchmark +17.9%**; ICIR +10.2%, shrinkage +10.5%; robustness: costs ×4
-  +21.4%, lag +30.5% — criteria a/c/d PASS.
+  +23.1%, lag +30.5% — criteria a/c/d PASS (transcription corrected from artifact).
 - **Criterion (b) still fails**: test-window composite RankIC 0.0163
   (t 0.58 < 2) — the synthesis beats its benchmark on net returns but its
   cross-sectional rank information remains statistically unconfirmed.
@@ -483,3 +488,43 @@ review-only (E3).**
   recorded).
 - Market-level news correlation via CCTV keyword presence (zero specificity;
   needs a policy-domain materiality model).
+
+
+### 2.10 Hypothesis H7: evaluation of the five frozen bundle strategies on an
+assembled CN canonical snapshot (pre-registered 2026-11-18, BEFORE evaluation;
+registered per handover/FACTOR_BUNDLE_IMPLEMENTATION.md)
+
+**Candidates**: the five frozen v1 specifications (MOM, ATO, QV, FAR, VPA)
+implemented by the factor-bundle subsystem; v1 constants are immutable
+(analysis/version changes require a new experiment version).
+
+**Data**: a canonical CN snapshot assembled token-free (W6): Sina raw daily
+bars + qfq wealth index as TRI (2018-01-01 → present), annual financial
+statements from Sina with 公告日期 as available_at (current-vintage
+restatement disclosed), daily float from outstanding_share, implemented
+分红/送转 corporate actions from Eastmoney fhps, current CSI 300 + CSI 500
+membership. SURVIVORSHIP BIAS (current membership, no delisting history) →
+status ceiling research_only regardless of results.
+
+**Overlap statement**: MOM overlaps the momentum families examined in H1/H4
+and the ETF momentum study; ATO/FAR overlap the liquidity/reversal
+observations in H2/H3; VPA is a new value-quality composite. This evaluation
+is a REPLICATION on newly assembled point-in-time data at a larger universe
+(~800 names vs 150), not an untouched holdout — the history examined in
+H1-H6 remains diagnostic.
+
+**Gates (frozen in the bundle implementation, not re-stated here)**:
+≥36 monthly observations per strategy; positive net active return vs the
+assigned comparator in base, costs ×2 and delay +1; family Holm-adjusted
+p < 0.05 across the 10 slots (CN+US; US slots remain blocked p=1);
+`promotion_allowed` always false. Costs ×4 and delay +2 are diagnostics.
+
+**Trial budget**: 1 registered evaluation run for the five specs on this
+snapshot version + the family correction. No parameter changes, no post-hoc
+factor additions, no winner selection for deployment.
+
+**Known data limitations (declared)**: financial values are current-vintage
+with announcement dates (no as-originally-reported vintages); equity_issued
+is approximated as the increase in share capital at par; historical universe
+membership and delisting records are absent; industry classifications may
+fall back to UNKNOWN.

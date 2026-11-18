@@ -8,6 +8,14 @@ artifacts; this package is the supported implementation.
 
 ## Quick start (portable)
 
+The new US/A-share factor research bundle is documented in
+[`handover/FACTOR_BUNDLE_IMPLEMENTATION.md`](handover/FACTOR_BUNDLE_IMPLEMENTATION.md).
+It provides frozen MOM/ATO/QV/FAR/VPA definitions, offline evaluation, explicit
+Tushare export/normalization, raw-share accounting, and blocked-data reports.
+Start with `python -m quant_agent.cli factor-bundle --market cn --stage readiness
+--config configs/factor_bundles/cn_v1.yaml`. Tushare access and canonical historical
+snapshots are required for empirical validation; no strategy is approved.
+
 Works on any machine with Python >= 3.11 and network access for market data —
 no hardcoded paths, no specific interpreter required:
 

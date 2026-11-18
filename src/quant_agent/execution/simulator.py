@@ -246,3 +246,81 @@ def run_simulation(panel_bars: dict[str, pd.DataFrame], sessions: pd.DatetimeInd
         stop_events=stop_events,
         account=account,
     )
+
+
+def run_raw_simulation(tables, sessions, targets, *, market, initial_equity=1_000_000.,
+                       cost_multiple=1., delay=0, run_id='factor'):
+    """Raw-unit research mode using the shared account, order and broker contracts.
+
+    Targets are frozen at signal close, orders sized at delayed submission close.
+    Orders persist for five attempts. Rebalance replaces outstanding orders.
+    Capacity = 1% of trailing 20-session mean volume known BEFORE the fill.
+    """
+    from ..ledger.account import RawAccount
+    from .broker import RawPaperBroker
+    from .orders import CANCELLED
+    account = RawAccount(initial_equity, currency='CNY' if market == 'cn' else 'USD', t_plus_1=market == 'cn')
+    broker = RawPaperBroker({'costs': {}, 'lots': 1, 'participation_cap': .01}, run_id=run_id)
+    lookup = {}
+    calendar = pd.DatetimeIndex(tables['sessions'].date.sort_values())
+    for symbol, frame in tables['bars'].groupby('symbol'):
+        f = frame.set_index('date').sort_index().reindex(calendar)
+        f['capacity_shares'] = f.volume.rolling(20, min_periods=16).mean().shift(1)*.01
+        lookup[symbol] = {t: row for t, row in f.iterrows() if np.isfinite(row.open)}
+    schedule = {}
+    for t, w in targets.items():
+        i = calendar.get_indexer([pd.Timestamp(t)])[0]
+        if i >= 0 and i+delay < len(calendar):
+            schedule[calendar[i+delay]] = w
+    actions = {t: g.sort_values(['symbol', 'sequence']).to_dict('records') for t, g in tables['actions'].groupby('date')}
+    costs = tables['costs'].set_index('date').sort_index()
+    rows, rejects = [], []
+    for t in sessions:
+        day = str(t.date())
+        fee_row = costs.loc[:t]
+        if fee_row.empty:
+            raise ValueError('cost schedule does not cover evaluation')
+        broker.costs = {k: float(v)*cost_multiple for k, v in fee_row.iloc[-1].items()}
+        for action in actions.get(t, []):
+            for order in broker.pending_orders():
+                if order.symbol == action['symbol']:
+                    order.transition(CANCELLED, reason='corporate action requires resubmission')
+            account.action(action)
+        account.settle(t)
+        bars = {s: d[t] for s, d in lookup.items() if t in d}
+        fills = broker.fill_on_session(t, bars, account)
+        for s, bar in bars.items():
+            if s in account.lots:
+                account.apply_mark(s, float(bar.close), session=day)
+        prices = {s: float(bar.close) for s, bar in bars.items()}
+        equity = account.equity(prices, day)
+        if not np.isfinite(equity) or equity <= 0 or account.cash < -1e-6:
+            raise ValueError('account reconciliation failed')
+        invested = sum(q*account.last_marks[s]['mark'] for s, q in account.positions().items())
+        rows.append({'date': t, 'equity': equity, 'cash': account.cash,
+                     'exposure': invested/equity, 'stale_positions': len(account.stale_marks(t, max_age_sessions=0)),
+                     'turnover': sum(f['qty']*f['price'] for f in fills)/equity,
+                     'costs': sum(f['fees'] for f in fills)})
+        if t in schedule:
+            target = schedule[t]
+            if sum(target.values()) > .8+1e-9 or any(w < 0 or w > .05+1e-9 for w in target.values()):
+                raise ValueError('research target exceeds exposure/name limit')
+            for order in broker.pending_orders():
+                order.transition(CANCELLED, reason='superseded by rebalance')
+            for s in sorted(set(target) | set(account.positions())):
+                if s not in prices:
+                    rejects.append({'date': day, 'symbol': s, 'reason': 'no current sizing mark'})
+                    continue
+                value = equity*target.get(s, 0.) - account.positions().get(s, 0.)*prices[s]
+                if abs(value) > 1e-8:
+                    broker.submit([{'symbol': s, 'side': 'BUY' if value > 0 else 'SELL',
+                                    'qty': abs(value)/prices[s], 'ref_price': prices[s]}], day)
+    daily = pd.DataFrame(rows).set_index('date')
+    daily['return'] = daily.equity.pct_change()
+    if len(daily):
+        daily.iloc[0, daily.columns.get_loc('return')] = daily.equity.iloc[0]/initial_equity-1
+    orders = pd.DataFrame([{'id': o.order_id, 'symbol': o.symbol, 'side': o.side,
+                           'created': o.session_created, 'qty': o.qty, 'filled_qty': o.filled_qty,
+                           'state': o.state, 'reason': o.reason, 'fees': o.fees_paid} for o in broker.orders.values()])
+    return {'daily': daily, 'orders': orders, 'fills': pd.DataFrame(broker.fills),
+            'rejections': pd.DataFrame(rejects), 'events': pd.DataFrame(account.events)}

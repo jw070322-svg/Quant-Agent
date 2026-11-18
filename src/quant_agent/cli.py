@@ -19,6 +19,9 @@ from .util import read_json
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Windows legacy console encodings cannot render research-report symbols.
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(errors='backslashreplace')
     ap = argparse.ArgumentParser(prog="qa", description="quant_agent pipeline")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
@@ -96,7 +99,52 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--news-budget", type=int, default=60)
     p.add_argument("--recent-sessions", type=int, default=30)
 
+    p = sub.add_parser("snapshot-build",
+                       help="assemble the CN canonical factor snapshot (token-free)")
+    p.add_argument("--market", default="cn", choices=["cn"])
+    p.add_argument("--indices", default="000300,000500",
+                   help="comma-separated csindex codes for the universe")
+    p.add_argument("--start", default="2018-01-01")
+    p.add_argument("--end", default=None)
+    p.add_argument("--output", default="datasets/factor_snapshots/cn_v1")
+    p.add_argument("--refresh", action="store_true",
+                   help="refetch cached per-symbol files")
+
+    p = sub.add_parser('factor-bundle', help='frozen factor research, offline evaluation')
+    p.add_argument('--market', required=True, choices=['cn', 'us'])
+    p.add_argument('--stage', required=True, choices=['readiness', 'evaluate'])
+    p.add_argument('--config', required=True)
+    p.add_argument('--output')
+    p = sub.add_parser('factor-family', help='ten-hypothesis family correction')
+    p.add_argument('--reports', nargs='+', required=True)
+    p.add_argument('--output', required=True)
+    p = sub.add_parser('tushare-export', help='explicit immutable raw Tushare export')
+    p.add_argument('--request', required=True)
+    p.add_argument('--output', required=True)
+    p = sub.add_parser('factor-normalize', help='normalize verified exports using explicit mappings')
+    p.add_argument('--raw', required=True)
+    p.add_argument('--recipe', required=True)
+    p.add_argument('--output', required=True)
+
     args = ap.parse_args(argv)
+
+    if args.cmd == 'factor-bundle':
+        from .research.factor_bundle import run_bundle
+        print(run_bundle(args.market, args.stage, args.config, args.output))
+        return 0
+    if args.cmd == 'factor-family':
+        from .research.factor_bundle import family_summary
+        print(family_summary(args.reports, args.output))
+        return 0
+    if args.cmd == 'tushare-export':
+        from .data.factor_snapshot import fetch_tushare_request
+        result = fetch_tushare_request(args.request, args.output)
+        print(json.dumps(result, indent=2))
+        return 0 if all(r['status'] == 'retrieved' for r in result['requests']) else 2
+    if args.cmd == 'factor-normalize':
+        from .data.factor_snapshot import normalize_export
+        print(normalize_export(args.raw, args.recipe, args.output))
+        return 0
 
     if args.cmd == "ingest":
         from .data.ingest import ingest_market
@@ -235,6 +283,19 @@ def main(argv: list[str] | None = None) -> int:
                                                  recent_sessions=args.recent_sessions)
         print(f"forward validation study complete: {study_dir.name}")
         print((study_dir / "report.md").read_text(encoding="utf-8"))
+        return 0
+
+    if args.cmd == "snapshot-build":
+        from .research.snapshot_cn import build_cn_snapshot
+        result = build_cn_snapshot(indices=args.indices.split(","),
+                                   start=args.start, end=args.end,
+                                   output=args.output, refresh=args.refresh,
+                                   progress_cb=print)
+        print(json.dumps({"output": str(result["output"]),
+                          "table_rows": result["table_rows"],
+                          "dropped_bars": result["dropped_bars"]["dropped_total"],
+                          "limitations": result["manifest"]["limitations"]},
+                         indent=2, ensure_ascii=False, default=str))
         return 0
 
     return 1

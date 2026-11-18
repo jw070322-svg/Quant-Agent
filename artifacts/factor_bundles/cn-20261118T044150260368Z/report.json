@@ -1,0 +1,68 @@
+{
+  "market": "cn",
+  "stage": "readiness",
+  "strategies": {
+    "MOM": {
+      "status": "blocked_data",
+      "reasons": [
+        "snapshot manifest missing",
+        "missing sessions",
+        "missing bars",
+        "missing universe",
+        "missing actions",
+        "missing costs"
+      ]
+    },
+    "ATO": {
+      "status": "blocked_data",
+      "reasons": [
+        "snapshot manifest missing",
+        "missing sessions",
+        "missing bars",
+        "missing universe",
+        "missing actions",
+        "missing costs",
+        "missing float"
+      ]
+    },
+    "QV": {
+      "status": "blocked_data",
+      "reasons": [
+        "snapshot manifest missing",
+        "missing sessions",
+        "missing bars",
+        "missing universe",
+        "missing actions",
+        "missing costs",
+        "missing float",
+        "missing financials"
+      ]
+    },
+    "FAR": {
+      "status": "blocked_data",
+      "reasons": [
+        "snapshot manifest missing",
+        "missing sessions",
+        "missing bars",
+        "missing universe",
+        "missing actions",
+        "missing costs",
+        "missing financials"
+      ]
+    },
+    "VPA": {
+      "status": "blocked_data",
+      "reasons": [
+        "snapshot manifest missing",
+        "missing sessions",
+        "missing bars",
+        "missing universe",
+        "missing actions",
+        "missing costs",
+        "missing float",
+        "missing financials"
+      ]
+    }
+  },
+  "promotion_allowed": false
+}

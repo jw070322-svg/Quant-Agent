@@ -1,5 +1,10 @@
 # Validation and Evaluation Report (VALIDATION)
 
+Current audit note (2026-11-17): see E-004 in `handover/RESEARCH_ERRATA.md` for
+the subsequent H4 replay. Its additional direction/coverage/timing corrections
+and training-orientation methodology change do not establish a new holdout.
+H4 remains NOT PASSED; historical pending-replay annotations below are superseded.
+
 Updated: 2026-11-15. Protocol: handover §8.5; criteria: docs/DECISIONS.md §2
 (pre-registered).
 
@@ -167,7 +172,7 @@ fails: test-window composite RankIC significance not reached → NOT PASSED per
 the pre-registered criteria; promotion refused.** The flawed run's "all
 learned weights negative" claim did not survive the corrections; the
 improvement is attributed to the protocol fixes, not to a new discovery.
-Weight learning: Ridge beats equal-weight on returns but shows negative test
+Weight learning: Ridge beats the universe benchmark but trails equal-weight synthesis and shows negative test
 RankIC — still refused for promotion. Reports: pre-fix
 `...2026-11-15T114232Z/`, corrected `...2026-11-17T154618Z/`. Adjudication:
 DECISIONS.md §2.7.

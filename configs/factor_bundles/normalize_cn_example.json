@@ -1,0 +1,12 @@
+{
+  "market": "cn",
+  "tables": {
+    "sessions": {
+      "sources": [{"path": "0000_trade_cal.csv", "filters": {"is_open": [1]}, "columns": {"cal_date": "date"}}]
+    },
+    "float": {
+      "availability_is_publication_date": false,
+      "sources": [{"path": "0001_daily_basic.csv", "columns": {"ts_code": "symbol", "trade_date": "date", "free_share": "float_shares", "total_mv": "market_cap"}, "copies": {"available_at": "date"}, "scales": {"float_shares": 10000, "market_cap": 10000}}]
+    }
+  }
+}

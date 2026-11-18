@@ -1,0 +1,7 @@
+{
+  "market": "cn",
+  "requests": [
+    {"endpoint": "trade_cal", "params": {"exchange": "SSE", "start_date": "20200101", "end_date": "20200331"}, "fields": "cal_date,is_open", "row_limit": 2000},
+    {"endpoint": "daily_basic", "params": {"ts_code": "600000.SH", "start_date": "20200101", "end_date": "20200228"}, "fields": "ts_code,trade_date,free_share,total_mv", "row_limit": 6000}
+  ]
+}

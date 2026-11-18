@@ -152,3 +152,48 @@ class PaperBroker:
         if sell and self.costs["stamp_tax_sell_bps"]:
             fees += value * self.costs["stamp_tax_sell_bps"] / 1e4
         return fees
+
+
+class RawPaperBroker(PaperBroker):
+    """Raw opening fills with prior-session capacity estimates, not auction guarantees."""
+
+    def fill_on_session(self, session, bars, account):
+        day_fills = []
+        # Sells release cash before buys. Stable order within each side.
+        for order in sorted(self.pending_orders(), key=lambda o: (o.side != 'SELL', o.order_id)):
+            if pd.Timestamp(order.session_created) >= session:
+                continue
+            order.age_sessions += 1
+            if order.age_sessions > self.max_order_age_sessions:
+                order.transition(EXPIRED, reason='execution window expired')
+                continue
+            bar = bars.get(order.symbol)
+            side = order.side
+            if bar is None or not bool(bar['buyable' if side == 'BUY' else 'sellable']):
+                order.reason = 'missing quote or trading restriction'
+                continue
+            lot = int(bar['buy_lot' if side == 'BUY' else 'sell_lot'])
+            qty = min(order.open_qty, max(0., float(bar['capacity_shares'])))
+            if side == 'SELL':
+                qty = min(qty, account.sellable_qty(order.symbol, session))
+            qty = float(int(qty // lot)*lot)
+            if qty <= 0:
+                order.reason = 'capacity, lot size, or locked inventory'
+                continue
+            px = float(bar['open'])*(1 + (1 if side == 'BUY' else -1)*self.costs['slippage_bps']/10000)
+            fees = self._fees(qty*px, sell=side == 'SELL')
+            if side == 'BUY' and qty*px+fees > account.cash:
+                order.reason = 'insufficient available cash'
+                continue
+            account.apply_fill(symbol=order.symbol, side=side, qty=qty, price=px, fees=fees,
+                               session=str(session.date()), order_id=order.order_id)
+            old_qty = order.filled_qty
+            order.filled_qty += qty
+            order.avg_fill_price = ((order.avg_fill_price or 0.)*old_qty+qty*px)/order.filled_qty
+            order.fees_paid += fees
+            order.transition(FILLED if order.open_qty <= 1e-9 else PARTIALLY_FILLED)
+            fill = {'session': str(session.date()), 'order_id': order.order_id,
+                    'symbol': order.symbol, 'side': side, 'qty': qty, 'price': px, 'fees': fees}
+            self.fills.append(fill)
+            day_fills.append(fill)
+        return day_fills
