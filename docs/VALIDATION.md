@@ -268,3 +268,32 @@ under lag; CN −1.2% under lag).
 5. Reproduction: `qa ingest --market X` → `qa research --strategy
    X_research_v1` → `qa health --run <id>`; factor studies: `qa xs --family
    valuation|technical`, `qa multifactor`, `qa infomonitor`, `qa eventstudy`.
+
+## 2.7 Factor bundle evaluation H7 (pre-registered 2026-11-18, adjudicated
+2026-11-20)
+
+Five frozen strategies (MOM/ATO/QV/FAR/VPA) evaluated on the assembled CN
+canonical snapshot (467 CSI 300+500 names, 57 monthly observations, raw-share
+execution with T+1, board lots, corporate actions, capacity limits).
+
+| Strategy | Months | Mean annual active | Economic pass | Raw p | Holm p | Gate |
+|---|---:|---:|---|---:|---:|---|
+| MOM | 57 | +0.41% | ✓ | 0.4253 | 1.0 | ✗ |
+| ATO | 57 | −0.63% | ✗ | 0.5549 | 1.0 | ✗ |
+| QV | — | blocked (financials coverage) | — | — | 1.0 | ✗ |
+| FAR | — | blocked | — | — | 1.0 | ✗ |
+| VPA | — | blocked | — | — | 1.0 | ✗ |
+
+**Verdict: H7 rejected — no strategy passes the family-corrected gate.**
+MOM shows positive net active return surviving costs (economic_pass=True) but
+lacks statistical significance (Holm p = 1.0). QV/FAR/VPA are blocked on
+financials coverage (insufficient complete annual statement triples for the
+80% gate). The US slots remain blocked (no US snapshot).
+
+Data provenance: canonical snapshot assembled token-free (Sina bars with
+outstanding_share → float; Sina annual financials with 公告日期 as
+available_at; Eastmoney fhps corporate actions; csindex universe).
+Survivorship bias disclosed.
+
+Report: `artifacts/factor_bundles/cn-20261120T160534604683Z/`;
+family: `artifacts/factor_bundles/family_h7_cn.json`.

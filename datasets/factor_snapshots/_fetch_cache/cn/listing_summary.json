@@ -1,0 +1,1702 @@
+{
+  "000001.SZ": {
+    "listing_date": "1991-04-03 00:00:00",
+    "industry": "J 金融业"
+  },
+  "000002.SZ": {
+    "listing_date": "1991-01-29 00:00:00",
+    "industry": "K 房地产"
+  },
+  "000034.SZ": {
+    "listing_date": "1994-05-09 00:00:00",
+    "industry": "F 批发零售"
+  },
+  "000039.SZ": {
+    "listing_date": "1994-04-08 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000062.SZ": {
+    "listing_date": "1997-01-30 00:00:00",
+    "industry": "F 批发零售"
+  },
+  "000063.SZ": {
+    "listing_date": "1997-11-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000066.SZ": {
+    "listing_date": "1997-06-26 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000100.SZ": {
+    "listing_date": "2004-01-30 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000157.SZ": {
+    "listing_date": "2000-10-12 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000166.SZ": {
+    "listing_date": "2015-01-26 00:00:00",
+    "industry": "J 金融业"
+  },
+  "000301.SZ": {
+    "listing_date": "2000-05-29 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000333.SZ": {
+    "listing_date": "2013-09-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000338.SZ": {
+    "listing_date": "2007-04-30 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000408.SZ": {
+    "listing_date": "1996-06-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000425.SZ": {
+    "listing_date": "1996-08-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000528.SZ": {
+    "listing_date": "1993-11-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000538.SZ": {
+    "listing_date": "1993-12-15 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000559.SZ": {
+    "listing_date": "1994-01-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000568.SZ": {
+    "listing_date": "1994-05-09 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000596.SZ": {
+    "listing_date": "1996-09-27 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000617.SZ": {
+    "listing_date": "1996-10-22 00:00:00",
+    "industry": "J 金融业"
+  },
+  "000625.SZ": {
+    "listing_date": "1997-06-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000630.SZ": {
+    "listing_date": "1996-11-20 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000651.SZ": {
+    "listing_date": "1996-11-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000657.SZ": {
+    "listing_date": "1996-12-05 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000661.SZ": {
+    "listing_date": "1996-12-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000703.SZ": {
+    "listing_date": "1997-03-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000708.SZ": {
+    "listing_date": "1997-03-26 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000725.SZ": {
+    "listing_date": "2001-01-12 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000768.SZ": {
+    "listing_date": "1997-06-26 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000776.SZ": {
+    "listing_date": "1997-06-11 00:00:00",
+    "industry": "J 金融业"
+  },
+  "000786.SZ": {
+    "listing_date": "1997-06-06 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000792.SZ": {
+    "listing_date": "1997-09-04 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000800.SZ": {
+    "listing_date": "1997-06-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000807.SZ": {
+    "listing_date": "1998-04-08 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000830.SZ": {
+    "listing_date": "1998-08-07 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000858.SZ": {
+    "listing_date": "1998-04-27 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000876.SZ": {
+    "listing_date": "1998-03-11 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000877.SZ": {
+    "listing_date": "1999-01-07 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000895.SZ": {
+    "listing_date": "1998-12-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000921.SZ": {
+    "listing_date": "1999-07-13 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000932.SZ": {
+    "listing_date": "1999-08-03 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000938.SZ": {
+    "listing_date": "1999-11-04 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000959.SZ": {
+    "listing_date": "1999-12-16 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000963.SZ": {
+    "listing_date": "2000-01-27 00:00:00",
+    "industry": "F 批发零售"
+  },
+  "000975.SZ": {
+    "listing_date": "2000-06-08 00:00:00",
+    "industry": "B 采矿业"
+  },
+  "000977.SZ": {
+    "listing_date": "2000-06-08 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000987.SZ": {
+    "listing_date": "2000-07-18 00:00:00",
+    "industry": "J 金融业"
+  },
+  "000988.SZ": {
+    "listing_date": "2000-06-08 00:00:00",
+    "industry": "C 制造业"
+  },
+  "000999.SZ": {
+    "listing_date": "2000-03-09 00:00:00",
+    "industry": "C 制造业"
+  },
+  "001280.SZ": {
+    "listing_date": "2025-12-03 00:00:00",
+    "industry": "B 采矿业"
+  },
+  "001289.SZ": {
+    "listing_date": "2022-01-24 00:00:00",
+    "industry": "D 水电煤气"
+  },
+  "001391.SZ": {
+    "listing_date": "2024-12-30 00:00:00",
+    "industry": "G 运输仓储"
+  },
+  "001696.SZ": {
+    "listing_date": "1997-03-06 00:00:00",
+    "industry": "C 制造业"
+  },
+  "001965.SZ": {
+    "listing_date": "2017-12-25 00:00:00",
+    "industry": "G 运输仓储"
+  },
+  "001979.SZ": {
+    "listing_date": "2015-12-30 00:00:00",
+    "industry": "K 房地产"
+  },
+  "002001.SZ": {
+    "listing_date": "2004-06-25 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002008.SZ": {
+    "listing_date": "2004-06-25 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002027.SZ": {
+    "listing_date": "2004-08-04 00:00:00",
+    "industry": "L 商务服务"
+  },
+  "002028.SZ": {
+    "listing_date": "2004-08-05 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002032.SZ": {
+    "listing_date": "2004-08-17 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002049.SZ": {
+    "listing_date": "2005-06-06 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002050.SZ": {
+    "listing_date": "2005-06-07 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002064.SZ": {
+    "listing_date": "2006-08-23 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002065.SZ": {
+    "listing_date": "2006-08-23 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "002074.SZ": {
+    "listing_date": "2006-10-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002078.SZ": {
+    "listing_date": "2006-11-16 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002080.SZ": {
+    "listing_date": "2006-11-20 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002085.SZ": {
+    "listing_date": "2006-11-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002129.SZ": {
+    "listing_date": "2007-04-20 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002142.SZ": {
+    "listing_date": "2007-07-19 00:00:00",
+    "industry": "J 金融业"
+  },
+  "002153.SZ": {
+    "listing_date": "2007-08-13 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "002157.SZ": {
+    "listing_date": "2007-08-17 00:00:00",
+    "industry": "A 农林牧渔"
+  },
+  "002179.SZ": {
+    "listing_date": "2007-11-01 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002202.SZ": {
+    "listing_date": "2007-12-26 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002223.SZ": {
+    "listing_date": "2008-04-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002230.SZ": {
+    "listing_date": "2008-05-12 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "002236.SZ": {
+    "listing_date": "2008-05-20 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002241.SZ": {
+    "listing_date": "2008-05-22 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002252.SZ": {
+    "listing_date": "2008-06-23 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002261.SZ": {
+    "listing_date": "2008-07-23 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "002271.SZ": {
+    "listing_date": "2008-09-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002281.SZ": {
+    "listing_date": "2009-08-21 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002294.SZ": {
+    "listing_date": "2009-09-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002304.SZ": {
+    "listing_date": "2009-11-06 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002311.SZ": {
+    "listing_date": "2009-11-27 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002312.SZ": {
+    "listing_date": "2009-12-03 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002340.SZ": {
+    "listing_date": "2010-01-22 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002352.SZ": {
+    "listing_date": "2010-02-05 00:00:00",
+    "industry": "G 运输仓储"
+  },
+  "002353.SZ": {
+    "listing_date": "2010-02-05 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002371.SZ": {
+    "listing_date": "2010-03-16 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002384.SZ": {
+    "listing_date": "2010-04-09 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002407.SZ": {
+    "listing_date": "2010-05-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002414.SZ": {
+    "listing_date": "2010-07-16 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002415.SZ": {
+    "listing_date": "2010-05-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002422.SZ": {
+    "listing_date": "2010-06-03 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002430.SZ": {
+    "listing_date": "2010-06-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002444.SZ": {
+    "listing_date": "2010-07-13 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002459.SZ": {
+    "listing_date": "2010-08-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002460.SZ": {
+    "listing_date": "2010-08-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002463.SZ": {
+    "listing_date": "2010-08-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002466.SZ": {
+    "listing_date": "2010-08-31 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002475.SZ": {
+    "listing_date": "2010-09-15 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002493.SZ": {
+    "listing_date": "2010-11-02 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002517.SZ": {
+    "listing_date": "2010-12-07 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "002532.SZ": {
+    "listing_date": "2010-12-31 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002555.SZ": {
+    "listing_date": "2011-03-02 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "002558.SZ": {
+    "listing_date": "2011-03-02 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "002594.SZ": {
+    "listing_date": "2011-06-30 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002595.SZ": {
+    "listing_date": "2011-06-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002600.SZ": {
+    "listing_date": "2011-07-15 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002601.SZ": {
+    "listing_date": "2011-07-15 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002602.SZ": {
+    "listing_date": "2011-07-28 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "002625.SZ": {
+    "listing_date": "2011-11-03 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002648.SZ": {
+    "listing_date": "2011-12-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002653.SZ": {
+    "listing_date": "2012-01-17 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002683.SZ": {
+    "listing_date": "2012-06-12 00:00:00",
+    "industry": "B 采矿业"
+  },
+  "002709.SZ": {
+    "listing_date": "2014-01-23 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002714.SZ": {
+    "listing_date": "2014-01-28 00:00:00",
+    "industry": "A 农林牧渔"
+  },
+  "002736.SZ": {
+    "listing_date": "2014-12-29 00:00:00",
+    "industry": "J 金融业"
+  },
+  "002812.SZ": {
+    "listing_date": "2016-09-14 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002831.SZ": {
+    "listing_date": "2016-12-16 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002837.SZ": {
+    "listing_date": "2016-12-29 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002850.SZ": {
+    "listing_date": "2017-03-02 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002851.SZ": {
+    "listing_date": "2017-03-06 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002916.SZ": {
+    "listing_date": "2017-12-13 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002920.SZ": {
+    "listing_date": "2017-12-26 00:00:00",
+    "industry": "C 制造业"
+  },
+  "002938.SZ": {
+    "listing_date": "2018-09-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "003021.SZ": {
+    "listing_date": "2020-12-04 00:00:00",
+    "industry": "C 制造业"
+  },
+  "003022.SZ": {
+    "listing_date": "2020-12-08 00:00:00",
+    "industry": "C 制造业"
+  },
+  "003816.SZ": {
+    "listing_date": "2019-08-26 00:00:00",
+    "industry": "D 水电煤气"
+  },
+  "300003.SZ": {
+    "listing_date": "2009-10-30 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300014.SZ": {
+    "listing_date": "2009-10-30 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300015.SZ": {
+    "listing_date": "2009-10-30 00:00:00",
+    "industry": "Q 卫生"
+  },
+  "300033.SZ": {
+    "listing_date": "2009-12-25 00:00:00",
+    "industry": "J 金融业"
+  },
+  "300037.SZ": {
+    "listing_date": "2010-01-08 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300054.SZ": {
+    "listing_date": "2010-02-11 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300059.SZ": {
+    "listing_date": "2010-03-19 00:00:00",
+    "industry": "J 金融业"
+  },
+  "300115.SZ": {
+    "listing_date": "2010-09-02 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300122.SZ": {
+    "listing_date": "2010-09-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300124.SZ": {
+    "listing_date": "2010-09-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300207.SZ": {
+    "listing_date": "2011-04-21 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300251.SZ": {
+    "listing_date": "2011-08-03 00:00:00",
+    "industry": "R 文化传播"
+  },
+  "300274.SZ": {
+    "listing_date": "2011-11-02 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300308.SZ": {
+    "listing_date": "2012-04-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300316.SZ": {
+    "listing_date": "2012-05-11 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300339.SZ": {
+    "listing_date": "2012-07-18 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "300347.SZ": {
+    "listing_date": "2012-08-17 00:00:00",
+    "industry": "M 科研服务"
+  },
+  "300383.SZ": {
+    "listing_date": "2014-01-29 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "300394.SZ": {
+    "listing_date": "2015-02-17 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300395.SZ": {
+    "listing_date": "2014-09-10 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300408.SZ": {
+    "listing_date": "2014-12-03 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300413.SZ": {
+    "listing_date": "2015-01-21 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "300418.SZ": {
+    "listing_date": "2015-01-21 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "300433.SZ": {
+    "listing_date": "2015-03-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300442.SZ": {
+    "listing_date": "2015-04-24 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "300450.SZ": {
+    "listing_date": "2015-05-18 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300454.SZ": {
+    "listing_date": "2018-05-16 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "300475.SZ": {
+    "listing_date": "2015-06-10 00:00:00",
+    "industry": "F 批发零售"
+  },
+  "300476.SZ": {
+    "listing_date": "2015-06-11 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300487.SZ": {
+    "listing_date": "2015-07-02 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300496.SZ": {
+    "listing_date": "2015-12-10 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "300498.SZ": {
+    "listing_date": "2015-11-02 00:00:00",
+    "industry": "A 农林牧渔"
+  },
+  "300502.SZ": {
+    "listing_date": "2016-03-03 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300628.SZ": {
+    "listing_date": "2017-03-17 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300661.SZ": {
+    "listing_date": "2017-06-06 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300699.SZ": {
+    "listing_date": "2017-09-01 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300718.SZ": {
+    "listing_date": "2017-11-06 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300750.SZ": {
+    "listing_date": "2018-06-11 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300751.SZ": {
+    "listing_date": "2018-11-09 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300759.SZ": {
+    "listing_date": "2019-01-28 00:00:00",
+    "industry": "M 科研服务"
+  },
+  "300760.SZ": {
+    "listing_date": "2018-10-16 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300803.SZ": {
+    "listing_date": "2019-11-18 00:00:00",
+    "industry": "J 金融业"
+  },
+  "300832.SZ": {
+    "listing_date": "2020-05-12 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300857.SZ": {
+    "listing_date": "2020-07-27 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300866.SZ": {
+    "listing_date": "2020-08-24 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300896.SZ": {
+    "listing_date": "2020-09-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300919.SZ": {
+    "listing_date": "2020-12-23 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300957.SZ": {
+    "listing_date": "2021-03-25 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300972.SZ": {
+    "listing_date": "2021-04-19 00:00:00",
+    "industry": "F 批发零售"
+  },
+  "300979.SZ": {
+    "listing_date": "2021-04-26 00:00:00",
+    "industry": "C 制造业"
+  },
+  "300999.SZ": {
+    "listing_date": "2020-10-15 00:00:00",
+    "industry": "C 制造业"
+  },
+  "301165.SZ": {
+    "listing_date": "2022-11-21 00:00:00",
+    "industry": "C 制造业"
+  },
+  "301200.SZ": {
+    "listing_date": "2022-02-28 00:00:00",
+    "industry": "C 制造业"
+  },
+  "301236.SZ": {
+    "listing_date": "2022-03-15 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "301269.SZ": {
+    "listing_date": "2022-07-29 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "301308.SZ": {
+    "listing_date": "2022-08-05 00:00:00",
+    "industry": "C 制造业"
+  },
+  "301358.SZ": {
+    "listing_date": "2023-02-09 00:00:00",
+    "industry": "C 制造业"
+  },
+  "301377.SZ": {
+    "listing_date": "2022-11-22 00:00:00",
+    "industry": "C 制造业"
+  },
+  "301638.SZ": {
+    "listing_date": "2025-11-18 00:00:00",
+    "industry": "I 信息技术"
+  },
+  "301656.SZ": {
+    "listing_date": "2025-09-25 00:00:00",
+    "industry": "C 制造业"
+  },
+  "302132.SZ": {
+    "listing_date": "2010-08-27 00:00:00",
+    "industry": "C 制造业"
+  },
+  "600000.SH": {
+    "listing_date": "1999-11-10 00:00:00",
+    "industry": null
+  },
+  "600009.SH": {
+    "listing_date": "1998-02-18 00:00:00",
+    "industry": null
+  },
+  "600010.SH": {
+    "listing_date": "2001-03-09 00:00:00",
+    "industry": null
+  },
+  "600011.SH": {
+    "listing_date": "2001-12-06 00:00:00",
+    "industry": null
+  },
+  "600015.SH": {
+    "listing_date": "2003-09-12 00:00:00",
+    "industry": null
+  },
+  "600016.SH": {
+    "listing_date": "2000-12-19 00:00:00",
+    "industry": null
+  },
+  "600018.SH": {
+    "listing_date": "2000-07-19 00:00:00",
+    "industry": null
+  },
+  "600019.SH": {
+    "listing_date": "2000-12-12 00:00:00",
+    "industry": null
+  },
+  "600023.SH": {
+    "listing_date": "2013-12-19 00:00:00",
+    "industry": null
+  },
+  "600025.SH": {
+    "listing_date": "2017-12-15 00:00:00",
+    "industry": null
+  },
+  "600026.SH": {
+    "listing_date": "2002-05-23 00:00:00",
+    "industry": null
+  },
+  "600027.SH": {
+    "listing_date": "2005-02-03 00:00:00",
+    "industry": null
+  },
+  "600028.SH": {
+    "listing_date": "2001-08-08 00:00:00",
+    "industry": null
+  },
+  "600029.SH": {
+    "listing_date": "2003-07-25 00:00:00",
+    "industry": null
+  },
+  "600030.SH": {
+    "listing_date": "2003-01-06 00:00:00",
+    "industry": null
+  },
+  "600031.SH": {
+    "listing_date": "2003-07-03 00:00:00",
+    "industry": null
+  },
+  "600036.SH": {
+    "listing_date": "2002-04-09 00:00:00",
+    "industry": null
+  },
+  "600039.SH": {
+    "listing_date": "2003-03-25 00:00:00",
+    "industry": null
+  },
+  "600048.SH": {
+    "listing_date": "2006-07-31 00:00:00",
+    "industry": null
+  },
+  "600050.SH": {
+    "listing_date": "2002-10-09 00:00:00",
+    "industry": null
+  },
+  "600061.SH": {
+    "listing_date": "1997-05-19 00:00:00",
+    "industry": null
+  },
+  "600066.SH": {
+    "listing_date": "1997-05-08 00:00:00",
+    "industry": null
+  },
+  "600085.SH": {
+    "listing_date": "1997-06-25 00:00:00",
+    "industry": null
+  },
+  "600089.SH": {
+    "listing_date": "1997-06-18 00:00:00",
+    "industry": null
+  },
+  "600096.SH": {
+    "listing_date": "1997-07-09 00:00:00",
+    "industry": null
+  },
+  "600104.SH": {
+    "listing_date": "1997-11-25 00:00:00",
+    "industry": null
+  },
+  "600111.SH": {
+    "listing_date": "1997-09-24 00:00:00",
+    "industry": null
+  },
+  "600115.SH": {
+    "listing_date": "1997-11-05 00:00:00",
+    "industry": null
+  },
+  "600118.SH": {
+    "listing_date": "1997-09-08 00:00:00",
+    "industry": null
+  },
+  "600141.SH": {
+    "listing_date": "1999-06-16 00:00:00",
+    "industry": null
+  },
+  "600143.SH": {
+    "listing_date": "2004-06-23 00:00:00",
+    "industry": null
+  },
+  "600150.SH": {
+    "listing_date": "1998-05-20 00:00:00",
+    "industry": null
+  },
+  "600160.SH": {
+    "listing_date": "1998-06-26 00:00:00",
+    "industry": null
+  },
+  "600176.SH": {
+    "listing_date": "1999-04-22 00:00:00",
+    "industry": null
+  },
+  "600177.SH": {
+    "listing_date": "1998-11-19 00:00:00",
+    "industry": null
+  },
+  "600183.SH": {
+    "listing_date": "1998-10-28 00:00:00",
+    "industry": null
+  },
+  "600188.SH": {
+    "listing_date": "1998-07-01 00:00:00",
+    "industry": null
+  },
+  "600196.SH": {
+    "listing_date": "1998-08-07 00:00:00",
+    "industry": null
+  },
+  "600219.SH": {
+    "listing_date": "1999-12-23 00:00:00",
+    "industry": null
+  },
+  "600221.SH": {
+    "listing_date": "1999-11-25 00:00:00",
+    "industry": null
+  },
+  "600233.SH": {
+    "listing_date": "2000-06-08 00:00:00",
+    "industry": null
+  },
+  "600276.SH": {
+    "listing_date": "2000-10-18 00:00:00",
+    "industry": null
+  },
+  "600282.SH": {
+    "listing_date": "2000-09-19 00:00:00",
+    "industry": null
+  },
+  "600299.SH": {
+    "listing_date": "2000-04-20 00:00:00",
+    "industry": null
+  },
+  "600309.SH": {
+    "listing_date": "2001-01-05 00:00:00",
+    "industry": null
+  },
+  "600323.SH": {
+    "listing_date": "2000-12-25 00:00:00",
+    "industry": null
+  },
+  "600332.SH": {
+    "listing_date": "2001-02-06 00:00:00",
+    "industry": null
+  },
+  "600346.SH": {
+    "listing_date": "2001-08-20 00:00:00",
+    "industry": null
+  },
+  "600352.SH": {
+    "listing_date": "2003-08-01 00:00:00",
+    "industry": null
+  },
+  "600362.SH": {
+    "listing_date": "2002-01-11 00:00:00",
+    "industry": null
+  },
+  "600372.SH": {
+    "listing_date": "2001-07-06 00:00:00",
+    "industry": null
+  },
+  "600378.SH": {
+    "listing_date": "2001-01-11 00:00:00",
+    "industry": null
+  },
+  "600398.SH": {
+    "listing_date": "2000-12-28 00:00:00",
+    "industry": null
+  },
+  "600406.SH": {
+    "listing_date": "2003-10-16 00:00:00",
+    "industry": null
+  },
+  "600415.SH": {
+    "listing_date": "2002-05-09 00:00:00",
+    "industry": null
+  },
+  "600418.SH": {
+    "listing_date": "2001-08-24 00:00:00",
+    "industry": null
+  },
+  "600426.SH": {
+    "listing_date": "2002-06-20 00:00:00",
+    "industry": null
+  },
+  "600436.SH": {
+    "listing_date": "2003-06-16 00:00:00",
+    "industry": null
+  },
+  "600438.SH": {
+    "listing_date": "2004-03-02 00:00:00",
+    "industry": null
+  },
+  "600460.SH": {
+    "listing_date": "2003-03-11 00:00:00",
+    "industry": null
+  },
+  "600482.SH": {
+    "listing_date": "2004-07-14 00:00:00",
+    "industry": null
+  },
+  "600486.SH": {
+    "listing_date": "2002-04-25 00:00:00",
+    "industry": null
+  },
+  "600487.SH": {
+    "listing_date": "2003-08-22 00:00:00",
+    "industry": null
+  },
+  "600489.SH": {
+    "listing_date": "2003-08-14 00:00:00",
+    "industry": null
+  },
+  "600498.SH": {
+    "listing_date": "2001-08-23 00:00:00",
+    "industry": null
+  },
+  "600499.SH": {
+    "listing_date": "2002-10-10 00:00:00",
+    "industry": null
+  },
+  "600515.SH": {
+    "listing_date": "2002-08-06 00:00:00",
+    "industry": null
+  },
+  "600519.SH": {
+    "listing_date": "2001-08-27 00:00:00",
+    "industry": null
+  },
+  "600522.SH": {
+    "listing_date": "2002-10-24 00:00:00",
+    "industry": null
+  },
+  "600536.SH": {
+    "listing_date": "2002-05-17 00:00:00",
+    "industry": null
+  },
+  "600547.SH": {
+    "listing_date": "2003-08-28 00:00:00",
+    "industry": null
+  },
+  "600549.SH": {
+    "listing_date": "2002-11-07 00:00:00",
+    "industry": null
+  },
+  "600570.SH": {
+    "listing_date": "2003-12-16 00:00:00",
+    "industry": null
+  },
+  "600580.SH": {
+    "listing_date": "2002-06-06 00:00:00",
+    "industry": null
+  },
+  "600582.SH": {
+    "listing_date": "2002-05-15 00:00:00",
+    "industry": null
+  },
+  "600584.SH": {
+    "listing_date": "2003-06-03 00:00:00",
+    "industry": null
+  },
+  "600585.SH": {
+    "listing_date": "2002-02-07 00:00:00",
+    "industry": null
+  },
+  "600588.SH": {
+    "listing_date": "2001-05-18 00:00:00",
+    "industry": null
+  },
+  "600600.SH": {
+    "listing_date": "1993-08-27 00:00:00",
+    "industry": null
+  },
+  "600660.SH": {
+    "listing_date": "1993-06-10 00:00:00",
+    "industry": null
+  },
+  "600674.SH": {
+    "listing_date": "1993-09-24 00:00:00",
+    "industry": null
+  },
+  "600685.SH": {
+    "listing_date": "1993-10-28 00:00:00",
+    "industry": null
+  },
+  "600690.SH": {
+    "listing_date": "1993-11-19 00:00:00",
+    "industry": null
+  },
+  "600699.SH": {
+    "listing_date": "1993-12-06 00:00:00",
+    "industry": null
+  },
+  "600703.SH": {
+    "listing_date": "1996-05-28 00:00:00",
+    "industry": null
+  },
+  "600741.SH": {
+    "listing_date": "1996-08-26 00:00:00",
+    "industry": null
+  },
+  "600760.SH": {
+    "listing_date": "1996-10-11 00:00:00",
+    "industry": null
+  },
+  "600795.SH": {
+    "listing_date": "1997-03-18 00:00:00",
+    "industry": null
+  },
+  "600801.SH": {
+    "listing_date": "1994-01-03 00:00:00",
+    "industry": null
+  },
+  "600803.SH": {
+    "listing_date": "1994-01-03 00:00:00",
+    "industry": null
+  },
+  "600809.SH": {
+    "listing_date": "1994-01-06 00:00:00",
+    "industry": null
+  },
+  "600839.SH": {
+    "listing_date": "1994-03-11 00:00:00",
+    "industry": null
+  },
+  "600845.SH": {
+    "listing_date": "1994-03-11 00:00:00",
+    "industry": null
+  },
+  "600873.SH": {
+    "listing_date": "1995-02-17 00:00:00",
+    "industry": null
+  },
+  "600875.SH": {
+    "listing_date": "1995-10-10 00:00:00",
+    "industry": null
+  },
+  "600879.SH": {
+    "listing_date": "1995-11-15 00:00:00",
+    "industry": null
+  },
+  "600885.SH": {
+    "listing_date": "1996-02-05 00:00:00",
+    "industry": null
+  },
+  "600886.SH": {
+    "listing_date": "1996-01-18 00:00:00",
+    "industry": null
+  },
+  "600887.SH": {
+    "listing_date": "1996-03-12 00:00:00",
+    "industry": null
+  },
+  "600893.SH": {
+    "listing_date": "1996-04-08 00:00:00",
+    "industry": null
+  },
+  "600895.SH": {
+    "listing_date": "1996-04-22 00:00:00",
+    "industry": null
+  },
+  "600900.SH": {
+    "listing_date": "2003-11-18 00:00:00",
+    "industry": null
+  },
+  "600905.SH": {
+    "listing_date": "2021-06-10 00:00:00",
+    "industry": null
+  },
+  "600918.SH": {
+    "listing_date": "2020-06-03 00:00:00",
+    "industry": null
+  },
+  "600919.SH": {
+    "listing_date": "2016-08-02 00:00:00",
+    "industry": null
+  },
+  "600926.SH": {
+    "listing_date": "2016-10-27 00:00:00",
+    "industry": null
+  },
+  "600930.SH": {
+    "listing_date": "2025-07-16 00:00:00",
+    "industry": null
+  },
+  "600938.SH": {
+    "listing_date": "2022-04-21 00:00:00",
+    "industry": null
+  },
+  "600941.SH": {
+    "listing_date": "2022-01-05 00:00:00",
+    "industry": null
+  },
+  "600958.SH": {
+    "listing_date": "2015-03-23 00:00:00",
+    "industry": null
+  },
+  "600989.SH": {
+    "listing_date": "2019-05-16 00:00:00",
+    "industry": null
+  },
+  "600998.SH": {
+    "listing_date": "2010-11-02 00:00:00",
+    "industry": null
+  },
+  "600999.SH": {
+    "listing_date": "2009-11-17 00:00:00",
+    "industry": null
+  },
+  "601006.SH": {
+    "listing_date": "2006-08-01 00:00:00",
+    "industry": null
+  },
+  "601009.SH": {
+    "listing_date": "2007-07-19 00:00:00",
+    "industry": null
+  },
+  "601012.SH": {
+    "listing_date": "2012-04-11 00:00:00",
+    "industry": null
+  },
+  "601018.SH": {
+    "listing_date": "2010-09-28 00:00:00",
+    "industry": null
+  },
+  "601021.SH": {
+    "listing_date": "2015-01-21 00:00:00",
+    "industry": null
+  },
+  "601058.SH": {
+    "listing_date": "2011-06-30 00:00:00",
+    "industry": null
+  },
+  "601061.SH": {
+    "listing_date": "2023-04-10 00:00:00",
+    "industry": null
+  },
+  "601066.SH": {
+    "listing_date": "2018-06-20 00:00:00",
+    "industry": null
+  },
+  "601077.SH": {
+    "listing_date": "2019-10-29 00:00:00",
+    "industry": null
+  },
+  "601088.SH": {
+    "listing_date": "2007-10-09 00:00:00",
+    "industry": null
+  },
+  "601100.SH": {
+    "listing_date": "2011-10-28 00:00:00",
+    "industry": null
+  },
+  "601111.SH": {
+    "listing_date": "2006-08-18 00:00:00",
+    "industry": null
+  },
+  "601117.SH": {
+    "listing_date": "2010-01-07 00:00:00",
+    "industry": null
+  },
+  "601127.SH": {
+    "listing_date": "2016-06-15 00:00:00",
+    "industry": null
+  },
+  "601136.SH": {
+    "listing_date": "2022-12-22 00:00:00",
+    "industry": null
+  },
+  "601138.SH": {
+    "listing_date": "2018-06-08 00:00:00",
+    "industry": null
+  },
+  "601166.SH": {
+    "listing_date": "2007-02-05 00:00:00",
+    "industry": null
+  },
+  "601169.SH": {
+    "listing_date": "2007-09-19 00:00:00",
+    "industry": null
+  },
+  "601179.SH": {
+    "listing_date": "2010-01-28 00:00:00",
+    "industry": null
+  },
+  "601186.SH": {
+    "listing_date": "2008-03-10 00:00:00",
+    "industry": null
+  },
+  "601211.SH": {
+    "listing_date": "2015-06-26 00:00:00",
+    "industry": null
+  },
+  "601216.SH": {
+    "listing_date": "2011-02-22 00:00:00",
+    "industry": null
+  },
+  "601225.SH": {
+    "listing_date": "2014-01-28 00:00:00",
+    "industry": null
+  },
+  "601229.SH": {
+    "listing_date": "2016-11-16 00:00:00",
+    "industry": null
+  },
+  "601231.SH": {
+    "listing_date": "2012-02-20 00:00:00",
+    "industry": null
+  },
+  "601233.SH": {
+    "listing_date": "2011-05-18 00:00:00",
+    "industry": null
+  },
+  "601238.SH": {
+    "listing_date": "2012-03-29 00:00:00",
+    "industry": null
+  },
+  "601288.SH": {
+    "listing_date": "2010-07-15 00:00:00",
+    "industry": null
+  },
+  "601318.SH": {
+    "listing_date": "2007-03-01 00:00:00",
+    "industry": null
+  },
+  "601319.SH": {
+    "listing_date": "2018-11-16 00:00:00",
+    "industry": null
+  },
+  "601328.SH": {
+    "listing_date": "2007-05-15 00:00:00",
+    "industry": null
+  },
+  "601336.SH": {
+    "listing_date": "2011-12-16 00:00:00",
+    "industry": null
+  },
+  "601360.SH": {
+    "listing_date": "2012-01-16 00:00:00",
+    "industry": null
+  },
+  "601377.SH": {
+    "listing_date": "2010-10-13 00:00:00",
+    "industry": null
+  },
+  "601390.SH": {
+    "listing_date": "2007-12-03 00:00:00",
+    "industry": null
+  },
+  "601398.SH": {
+    "listing_date": "2006-10-27 00:00:00",
+    "industry": null
+  },
+  "601399.SH": {
+    "listing_date": "2020-06-08 00:00:00",
+    "industry": null
+  },
+  "601456.SH": {
+    "listing_date": "2020-07-31 00:00:00",
+    "industry": null
+  },
+  "601567.SH": {
+    "listing_date": "2011-06-15 00:00:00",
+    "industry": null
+  },
+  "601600.SH": {
+    "listing_date": "2007-04-30 00:00:00",
+    "industry": null
+  },
+  "601601.SH": {
+    "listing_date": "2007-12-25 00:00:00",
+    "industry": null
+  },
+  "601607.SH": {
+    "listing_date": "1994-03-24 00:00:00",
+    "industry": null
+  },
+  "601608.SH": {
+    "listing_date": "2012-07-06 00:00:00",
+    "industry": null
+  },
+  "601611.SH": {
+    "listing_date": "2016-06-06 00:00:00",
+    "industry": null
+  },
+  "601618.SH": {
+    "listing_date": "2009-09-21 00:00:00",
+    "industry": null
+  },
+  "601628.SH": {
+    "listing_date": "2007-01-09 00:00:00",
+    "industry": null
+  },
+  "601633.SH": {
+    "listing_date": "2011-09-28 00:00:00",
+    "industry": null
+  },
+  "601658.SH": {
+    "listing_date": "2019-12-10 00:00:00",
+    "industry": null
+  },
+  "601668.SH": {
+    "listing_date": "2009-07-29 00:00:00",
+    "industry": null
+  },
+  "601669.SH": {
+    "listing_date": "2011-10-18 00:00:00",
+    "industry": null
+  },
+  "601688.SH": {
+    "listing_date": "2010-02-26 00:00:00",
+    "industry": null
+  },
+  "601689.SH": {
+    "listing_date": "2015-03-19 00:00:00",
+    "industry": null
+  },
+  "601698.SH": {
+    "listing_date": "2019-06-28 00:00:00",
+    "industry": null
+  },
+  "601717.SH": {
+    "listing_date": "2010-08-03 00:00:00",
+    "industry": null
+  },
+  "601727.SH": {
+    "listing_date": "2008-12-05 00:00:00",
+    "industry": null
+  },
+  "601728.SH": {
+    "listing_date": "2021-08-20 00:00:00",
+    "industry": null
+  },
+  "601766.SH": {
+    "listing_date": "2008-08-18 00:00:00",
+    "industry": null
+  },
+  "601788.SH": {
+    "listing_date": "2009-08-18 00:00:00",
+    "industry": null
+  },
+  "601799.SH": {
+    "listing_date": "2011-02-01 00:00:00",
+    "industry": null
+  },
+  "601800.SH": {
+    "listing_date": "2012-03-09 00:00:00",
+    "industry": null
+  },
+  "601816.SH": {
+    "listing_date": "2020-01-16 00:00:00",
+    "industry": null
+  },
+  "601818.SH": {
+    "listing_date": "2010-08-18 00:00:00",
+    "industry": null
+  },
+  "601825.SH": {
+    "listing_date": "2021-08-19 00:00:00",
+    "industry": null
+  },
+  "601838.SH": {
+    "listing_date": "2018-01-31 00:00:00",
+    "industry": null
+  },
+  "601857.SH": {
+    "listing_date": "2007-11-05 00:00:00",
+    "industry": null
+  },
+  "601865.SH": {
+    "listing_date": "2019-02-15 00:00:00",
+    "industry": null
+  },
+  "601866.SH": {
+    "listing_date": "2007-12-12 00:00:00",
+    "industry": null
+  },
+  "601868.SH": {
+    "listing_date": "2021-09-28 00:00:00",
+    "industry": null
+  },
+  "601869.SH": {
+    "listing_date": "2018-07-20 00:00:00",
+    "industry": null
+  },
+  "601872.SH": {
+    "listing_date": "2006-12-01 00:00:00",
+    "industry": null
+  },
+  "601877.SH": {
+    "listing_date": "2010-01-21 00:00:00",
+    "industry": null
+  },
+  "601878.SH": {
+    "listing_date": "2017-06-26 00:00:00",
+    "industry": null
+  },
+  "601881.SH": {
+    "listing_date": "2017-01-23 00:00:00",
+    "industry": null
+  },
+  "601888.SH": {
+    "listing_date": "2009-10-15 00:00:00",
+    "industry": null
+  },
+  "601898.SH": {
+    "listing_date": "2008-02-01 00:00:00",
+    "industry": null
+  },
+  "601899.SH": {
+    "listing_date": "2008-04-25 00:00:00",
+    "industry": null
+  },
+  "601901.SH": {
+    "listing_date": "2011-08-10 00:00:00",
+    "industry": null
+  },
+  "601916.SH": {
+    "listing_date": "2019-11-26 00:00:00",
+    "industry": null
+  },
+  "601919.SH": {
+    "listing_date": "2007-06-26 00:00:00",
+    "industry": null
+  },
+  "601933.SH": {
+    "listing_date": "2010-12-15 00:00:00",
+    "industry": null
+  },
+  "601939.SH": {
+    "listing_date": "2007-09-25 00:00:00",
+    "industry": null
+  },
+  "601985.SH": {
+    "listing_date": "2015-06-10 00:00:00",
+    "industry": null
+  },
+  "601988.SH": {
+    "listing_date": "2006-07-05 00:00:00",
+    "industry": null
+  },
+  "601995.SH": {
+    "listing_date": "2020-11-02 00:00:00",
+    "industry": null
+  },
+  "601998.SH": {
+    "listing_date": "2007-04-27 00:00:00",
+    "industry": null
+  },
+  "603019.SH": {
+    "listing_date": "2014-11-06 00:00:00",
+    "industry": null
+  },
+  "603049.SH": {
+    "listing_date": "2025-06-05 00:00:00",
+    "industry": null
+  },
+  "603129.SH": {
+    "listing_date": "2017-08-18 00:00:00",
+    "industry": null
+  },
+  "603195.SH": {
+    "listing_date": "2020-02-06 00:00:00",
+    "industry": null
+  },
+  "603228.SH": {
+    "listing_date": "2017-01-06 00:00:00",
+    "industry": null
+  },
+  "603259.SH": {
+    "listing_date": "2018-05-08 00:00:00",
+    "industry": null
+  },
+  "603260.SH": {
+    "listing_date": "2017-10-30 00:00:00",
+    "industry": null
+  },
+  "603288.SH": {
+    "listing_date": "2014-02-11 00:00:00",
+    "industry": null
+  },
+  "603296.SH": {
+    "listing_date": "2023-08-08 00:00:00",
+    "industry": null
+  },
+  "603298.SH": {
+    "listing_date": "2016-12-27 00:00:00",
+    "industry": null
+  },
+  "603308.SH": {
+    "listing_date": "2014-01-22 00:00:00",
+    "industry": null
+  },
+  "603338.SH": {
+    "listing_date": "2015-03-25 00:00:00",
+    "industry": null
+  },
+  "603369.SH": {
+    "listing_date": "2014-07-03 00:00:00",
+    "industry": null
+  },
+  "603379.SH": {
+    "listing_date": "2019-04-02 00:00:00",
+    "industry": null
+  },
+  "603392.SH": {
+    "listing_date": "2020-04-29 00:00:00",
+    "industry": null
+  },
+  "603486.SH": {
+    "listing_date": "2018-05-28 00:00:00",
+    "industry": null
+  },
+  "603501.SH": {
+    "listing_date": "2017-05-04 00:00:00",
+    "industry": null
+  },
+  "603568.SH": {
+    "listing_date": "2015-05-28 00:00:00",
+    "industry": null
+  },
+  "603606.SH": {
+    "listing_date": "2014-10-15 00:00:00",
+    "industry": null
+  },
+  "603650.SH": {
+    "listing_date": "2018-06-27 00:00:00",
+    "industry": null
+  },
+  "603659.SH": {
+    "listing_date": "2017-11-03 00:00:00",
+    "industry": null
+  },
+  "603699.SH": {
+    "listing_date": "2014-01-17 00:00:00",
+    "industry": null
+  },
+  "603728.SH": {
+    "listing_date": "2017-05-09 00:00:00",
+    "industry": null
+  },
+  "603737.SH": {
+    "listing_date": "2016-06-03 00:00:00",
+    "industry": null
+  },
+  "603799.SH": {
+    "listing_date": "2015-01-29 00:00:00",
+    "industry": null
+  },
+  "603806.SH": {
+    "listing_date": "2014-09-05 00:00:00",
+    "industry": null
+  },
+  "603833.SH": {
+    "listing_date": "2017-03-28 00:00:00",
+    "industry": null
+  },
+  "603893.SH": {
+    "listing_date": "2020-02-07 00:00:00",
+    "industry": null
+  },
+  "603899.SH": {
+    "listing_date": "2015-01-27 00:00:00",
+    "industry": null
+  },
+  "603939.SH": {
+    "listing_date": "2015-02-17 00:00:00",
+    "industry": null
+  },
+  "603979.SH": {
+    "listing_date": "2015-06-30 00:00:00",
+    "industry": null
+  },
+  "603986.SH": {
+    "listing_date": "2016-08-18 00:00:00",
+    "industry": null
+  },
+  "603993.SH": {
+    "listing_date": "2012-10-09 00:00:00",
+    "industry": null
+  },
+  "605117.SH": {
+    "listing_date": "2021-04-20 00:00:00",
+    "industry": null
+  },
+  "605499.SH": {
+    "listing_date": "2021-05-27 00:00:00",
+    "industry": null
+  }
+}

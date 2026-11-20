@@ -1,0 +1,27 @@
+{
+  "market": "cn",
+  "stage": "readiness",
+  "strategies": {
+    "MOM": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    },
+    "ATO": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    },
+    "QV": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    },
+    "FAR": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    },
+    "VPA": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    }
+  },
+  "promotion_allowed": false
+}

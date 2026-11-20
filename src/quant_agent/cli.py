@@ -213,12 +213,12 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.cmd == "report":
-        from .agent.report import build_markdown_report
+        from .reporting.research import build_markdown_report
         print(build_markdown_report(args.run))
         return 0
 
     if args.cmd == "health":
-        from .agent.tools import get_health
+        from .storage.run_history import get_health
         print(json.dumps(get_health(args.run), indent=2, ensure_ascii=False))
         return 0
 

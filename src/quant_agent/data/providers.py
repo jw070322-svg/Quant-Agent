@@ -20,7 +20,14 @@ Provenance rules:
 from __future__ import annotations
 
 import os
+import socket
 import time
+
+# Bound every un-timed HTTP request: sina/akshare calls have no timeout of
+# their own, and a dead connection previously hung the snapshot build
+# indefinitely (observed 2026-11-18). The _retry wrapper converts the raised
+# timeout into a retry; failures are disclosed per symbol.
+socket.setdefaulttimeout(30)
 from dataclasses import dataclass
 
 import numpy as np
@@ -358,7 +365,8 @@ def fetch_cn_daily_pair(symbol: str, *, start: str,
     end_s = (pd.Timestamp(end) if end else pd.Timestamp.today()).strftime("%Y%m%d")
 
     def _call(adjust):
-        return ak.stock_zh_a_daily(stock=stock, start_date=start_s,
+        # akshare's parameter is named `symbol` (not `stock`)
+        return ak.stock_zh_a_daily(symbol=stock, start_date=start_s,
                                    end_date=end_s, adjust=adjust)
 
     raw = _retry(lambda: _call(""), what=f"raw {symbol}")

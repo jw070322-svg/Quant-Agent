@@ -528,3 +528,18 @@ with announcement dates (no as-originally-reported vintages); equity_issued
 is approximated as the increase in share capital at par; historical universe
 membership and delisting records are absent; industry classifications may
 fall back to UNKNOWN.
+
+
+### 2.10 Hypothesis H7: five frozen bundle strategies on CN canonical snapshot
+(pre-registered 2026-11-18, adjudicated 2026-11-20)
+
+**Adjudication**: **H7 rejected — no strategy passes the family-corrected
+gate.** MOM shows positive net active return surviving costs ×2 (economic
+promise) but Holm p = 1.0 — far from significance. ATO is negative. QV/FAR/VPA
+are blocked on financials coverage (insufficient complete annual triples for
+the 80% gate). The US slots remain blocked (no US snapshot). The bundle
+infrastructure works correctly (the engineering deliverable); the factor
+strategies do not pass pre-registered gates on this data. Reviving any
+strategy requires: (a) Tushare or equivalent financial data with true
+original vintages, (b) historical universe membership, and (c) a new
+pre-registration.

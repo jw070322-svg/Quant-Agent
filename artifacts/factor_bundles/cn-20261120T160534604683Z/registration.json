@@ -1,0 +1,230 @@
+{
+  "market": "cn",
+  "catalog": {
+    "MOM": {
+      "formula": "mean(z(TRI/lag(TRI,L)-1)), L=63,126,252",
+      "benchmark": "MOM252",
+      "stage": "A"
+    },
+    "ATO": {
+      "formula": "-z(mean(turnover,21)/mean(turnover,252))",
+      "benchmark": "UNIVERSE",
+      "stage": "B"
+    },
+    "QV": {
+      "formula": "top_third(BM) intersect F_SCORE>=7",
+      "benchmark": "VALUE",
+      "stage": "C"
+    },
+    "FAR": {
+      "formula": "bottom_third(return21) intersect F_SCORE>=7",
+      "benchmark": "REVERSAL",
+      "stage": "C"
+    },
+    "VPA": {
+      "formula": "(z(BM)+z(ROE)-z(ATO))/3",
+      "benchmark": "UNIVERSE",
+      "stage": "C"
+    }
+  },
+  "config": {
+    "version": 1,
+    "start": "2010-01-01",
+    "warmup_sessions": 252,
+    "development_months": 36,
+    "minimum_evaluation_months": 36,
+    "minimum_universe": 300,
+    "maximum_universe": 1000,
+    "minimum_coverage": 0.8,
+    "gross": 0.8,
+    "name_cap": 0.05,
+    "initial_equity": 1000000.0,
+    "bootstrap_samples": 10000,
+    "block_months": 3,
+    "seed": 42,
+    "market": "cn",
+    "snapshot": "../../datasets/factor_snapshots/cn_v1"
+  },
+  "config_sha256": "e0c73088600292ac0213ecad3a17ae05c92923ffdff13f83c90e64b862e5eceb",
+  "source_sha256": "3abd97c65e6a9ca46c568eeeba532a3a5d3610e9fdf813a0a9cb731e6f260a7e",
+  "code_commit": "c50835fcdf9cdab10594ac461fd5c53451034c20",
+  "dirty_patch_sha256": "463f7ff723e2e111c8915e19888880771f613be0207fd2917403c1b336d8a0ea",
+  "snapshot": {
+    "market": "cn",
+    "schema_version": 1,
+    "price_basis": "raw",
+    "quantity_unit": "shares",
+    "amount_unit": "local_currency",
+    "generated_utc": "2026-11-20T16:05:01Z",
+    "start": "2018-01-01",
+    "end": "2026-11-20",
+    "indices": [
+      "000300",
+      "000500"
+    ],
+    "files": {
+      "sessions": {
+        "path": "sessions.csv",
+        "sha256": "5986cd50dc6157376e72bd4c6eb59fde7f1b609d0793b28daee872e368940c7c"
+      },
+      "bars": {
+        "path": "bars.csv",
+        "sha256": "086f2dee3f944b8b4002dfae6a4c8c716361e2d36ffd52130cba4d8925911e42"
+      },
+      "universe": {
+        "path": "universe.csv",
+        "sha256": "423edb490888a59fd5e4bbcb302e8cc03435fedf6daa6cc3e3005b9ae34e07dc"
+      },
+      "actions": {
+        "path": "actions.csv",
+        "sha256": "3f70d8ac805e91b9b81fca2b5930cd5107b293a028298d649e563ffc0e2af831"
+      },
+      "costs": {
+        "path": "costs.csv",
+        "sha256": "8308deea4609df043619d0bdbb9c3d8990be310cddfdb4241bad33ac03814fc5"
+      },
+      "float": {
+        "path": "float.csv",
+        "sha256": "936e9335812fe9feb0ee1a8244a6cf9be1e13a4f76733f8bc8be0b4e7731ea0b"
+      },
+      "financials": {
+        "path": "financials.csv",
+        "sha256": "5518da16e42d408feb0822ada3c26923895a6986be25ed4f1276a190f83aa4e0"
+      }
+    },
+    "limitations": [
+      "SURVIVORSHIP BIAS: universe is current index membership; historical constituents are unavailable token-free \u2014 results are exploratory with a research_only ceiling.",
+      "Financial statement values are the CURRENT VINTAGE (latest restatement) with original announcement dates; as-originally-reported vintages are unavailable from the token-free feed.",
+      "equity_issued is approximated as the increase in share capital at par (~1 CNY/share) between consecutive annual periods.",
+      "tri/tri_open use the qfq wealth index anchored to the latest bar (dividend reinvestment at ex-date close assumed).",
+      "buyable/sellable are 1 for every observed bar; suspensions appear as missing bars and are handled by the stale-mark/order-expiry machinery.",
+      "No delisting events: delisting proceeds are unknown in this universe.",
+      "Bars rows dropped by pre-validation: 1 (1 symbols affected).",
+      "Fetch failures disclosed: bars ok=466/467, listing failures=42, financial failures=47, action-batch failures=2."
+    ],
+    "evidence": {
+      "survivorship_bias": true,
+      "financial_vintages": "current_only_with_announcement_dates",
+      "tri_convention": "qfq wealth index anchored to latest bar",
+      "providers": [
+        "sina daily (raw+qfq)",
+        "sina financial reports",
+        "eastmoney fhps batch",
+        "csindex constituents",
+        "eastmoney individual info"
+      ]
+    },
+    "failures": {
+      "listing": {
+        "688008.SH": "not found in exchange listing batch",
+        "688009.SH": "not found in exchange listing batch",
+        "688012.SH": "not found in exchange listing batch",
+        "688017.SH": "not found in exchange listing batch",
+        "688027.SH": "not found in exchange listing batch",
+        "688036.SH": "not found in exchange listing batch",
+        "688041.SH": "not found in exchange listing batch",
+        "688047.SH": "not found in exchange listing batch",
+        "688065.SH": "not found in exchange listing batch",
+        "688072.SH": "not found in exchange listing batch",
+        "688082.SH": "not found in exchange listing batch",
+        "688111.SH": "not found in exchange listing batch",
+        "688126.SH": "not found in exchange listing batch",
+        "688169.SH": "not found in exchange listing batch",
+        "688183.SH": "not found in exchange listing batch",
+        "688187.SH": "not found in exchange listing batch",
+        "688188.SH": "not found in exchange listing batch",
+        "688223.SH": "not found in exchange listing batch",
+        "688256.SH": "not found in exchange listing batch",
+        "688271.SH": "not found in exchange listing batch",
+        "688295.SH": "not found in exchange listing batch",
+        "688303.SH": "not found in exchange listing batch",
+        "688318.SH": "not found in exchange listing batch",
+        "688331.SH": "not found in exchange listing batch",
+        "688347.SH": "not found in exchange listing batch",
+        "688363.SH": "not found in exchange listing batch",
+        "688375.SH": "not found in exchange listing batch",
+        "688396.SH": "not found in exchange listing batch",
+        "688425.SH": "not found in exchange listing batch",
+        "688472.SH": "not found in exchange listing batch",
+        "688498.SH": "not found in exchange listing batch",
+        "688506.SH": "not found in exchange listing batch",
+        "688521.SH": "not found in exchange listing batch",
+        "688568.SH": "not found in exchange listing batch",
+        "688599.SH": "not found in exchange listing batch",
+        "688615.SH": "not found in exchange listing batch",
+        "688617.SH": "not found in exchange listing batch",
+        "688629.SH": "not found in exchange listing batch",
+        "688692.SH": "not found in exchange listing batch",
+        "688777.SH": "not found in exchange listing batch",
+        "688981.SH": "not found in exchange listing batch",
+        "689009.SH": "not found in exchange listing batch"
+      },
+      "financials": {
+        "000001.SZ": "bounded fetch failed or timed out",
+        "000166.SZ": "bounded fetch failed or timed out",
+        "000776.SZ": "bounded fetch failed or timed out",
+        "002142.SZ": "bounded fetch failed or timed out",
+        "002736.SZ": "bounded fetch failed or timed out",
+        "600000.SH": "bounded fetch failed or timed out",
+        "600015.SH": "bounded fetch failed or timed out",
+        "600016.SH": "bounded fetch failed or timed out",
+        "600030.SH": "bounded fetch failed or timed out",
+        "600036.SH": "bounded fetch failed or timed out",
+        "600918.SH": "bounded fetch failed or timed out",
+        "600919.SH": "bounded fetch failed or timed out",
+        "600926.SH": "bounded fetch failed or timed out",
+        "600958.SH": "bounded fetch failed or timed out",
+        "600999.SH": "bounded fetch failed or timed out",
+        "601009.SH": "bounded fetch failed or timed out",
+        "601066.SH": "bounded fetch failed or timed out",
+        "601077.SH": "bounded fetch failed or timed out",
+        "601136.SH": "bounded fetch failed or timed out",
+        "601166.SH": "bounded fetch failed or timed out",
+        "601169.SH": "bounded fetch failed or timed out",
+        "601211.SH": "bounded fetch failed or timed out",
+        "601229.SH": "bounded fetch failed or timed out",
+        "601288.SH": "bounded fetch failed or timed out",
+        "601318.SH": "bounded fetch failed or timed out",
+        "601319.SH": "bounded fetch failed or timed out",
+        "601328.SH": "bounded fetch failed or timed out",
+        "601336.SH": "bounded fetch failed or timed out",
+        "601377.SH": "bounded fetch failed or timed out",
+        "601398.SH": "bounded fetch failed or timed out",
+        "601456.SH": "bounded fetch failed or timed out",
+        "601601.SH": "bounded fetch failed or timed out",
+        "601628.SH": "bounded fetch failed or timed out",
+        "601658.SH": "bounded fetch failed or timed out",
+        "601688.SH": "bounded fetch failed or timed out",
+        "601788.SH": "bounded fetch failed or timed out",
+        "601818.SH": "bounded fetch failed or timed out",
+        "601825.SH": "bounded fetch failed or timed out",
+        "601838.SH": "bounded fetch failed or timed out",
+        "601878.SH": "bounded fetch failed or timed out",
+        "601881.SH": "bounded fetch failed or timed out",
+        "601901.SH": "bounded fetch failed or timed out",
+        "601916.SH": "bounded fetch failed or timed out",
+        "601939.SH": "bounded fetch failed or timed out",
+        "601988.SH": "bounded fetch failed or timed out",
+        "601995.SH": "bounded fetch failed or timed out",
+        "601998.SH": "bounded fetch failed or timed out"
+      },
+      "actions": {
+        "20270630": "bounded fetch failed or timed out",
+        "20271231": "bounded fetch failed or timed out"
+      }
+    }
+  },
+  "registered_at": "2026-11-20T16:05:36.511025+00:00",
+  "python": "3.13.9",
+  "numpy": "2.4.4",
+  "pandas": "2.3.3",
+  "family_size": 10,
+  "parent_studies": [
+    "H2",
+    "H3",
+    "H4",
+    "market_backtest_20261117"
+  ],
+  "evidence_kind": "historical_diagnostic",
+  "promotion_allowed": false
+}

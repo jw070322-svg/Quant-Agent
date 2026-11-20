@@ -6,6 +6,21 @@ handover §8). Status: Phases 0-3 completed and verified; Phases 4-5 not entered
 
 ## 1. Module map and contracts
 
+| Layer | Modules | Responsibility |
+|---|---|---|
+| Interfaces | `cli.py`, `agent/toolkit.py` | Dispatch CLI commands and expose read-only research tools, respectively. |
+| Presentation | `reporting/` | Render reports from recorded evidence. |
+| Research workflows | `research/` | Coordinate experiments, validation, and gated paper decisions. |
+| Quant domain | `features/`, `labels/`, `alpha/`, `portfolio/`, `risk/` | Compute features, outcomes, expected returns, target weights, and risk checks. |
+| Paper execution and accounting | `execution/`, `ledger/` | Simulate fills and reconstruct account state from events. |
+| Data and persistence | `data/`, `storage/`, `registry/` | Ingest market data, read historical run artifacts, and manage model bundle approvals. |
+| Shared support | `config.py`, `util.py`, `monitoring/` | Load configuration, provide file and hashing helpers, and validate run health. |
+
+CLI commands dispatch to workflow, reporting, and storage modules. The toolkit
+and reporting both read through `storage/run_history.py`. Research workflows
+use reporting directly, so generating a report does not require the agent
+interface.
+
 ```text
 src/quant_agent/
   data/        Ingestion and validation: schema normalization, OHLC quarantine,
@@ -58,8 +73,11 @@ src/quant_agent/
                at decision time; dataset drift is rejected.
   monitoring/  Health checks (data, ledger reconciliation, OOS uniqueness,
                calibration); a fail blocks any complete-run claim.
-  agent/       Read-only typed tools and reports (no trading authority;
-               unsupported symbols fail explicitly).
+  storage/     Read-only run history: list recorded runs and look up
+               provenance, metrics, signals, orders, and health.
+  reporting/   Markdown research reports rendered from run history.
+  agent/       toolkit.py exposes typed evidence lookup for agent callers.
+               tools.py and report.py preserve the original import paths.
   cli.py       qa update|ingest|research|report|health|bundles|decide|
                fallback-stress|xs|multifactor|infomonitor|eventstudy
 ```
@@ -94,12 +112,13 @@ Per-session simulator loop:
 
 ## 3. Agent boundary
 
-- `agent/tools.py` provides read-only access to immutable run artifacts;
-  unknown run/symbol/date inputs fail explicitly and are never substituted.
-- No code path in the agent layer can place orders, change risk limits, or
-  write to run directories.
-- Any future LLM narration may only consume verified report text and is
-  treated as untrusted input.
+- `agent/toolkit.py` exposes read-only run history. Unknown runs, symbols, and
+  dates raise explicit errors.
+- The agent layer has read-only access. Order handling belongs to
+  `execution/`, and risk checks belong to `risk/`.
+- Run history covers quant research artifacts. The supported package has no
+  conversation history manager or retrieval-augmented generation (RAG)
+  pipeline.
 
 ## 4. Research studies registry (pre-registered, adjudicated)
 

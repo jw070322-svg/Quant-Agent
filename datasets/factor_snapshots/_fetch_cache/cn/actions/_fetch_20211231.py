@@ -1,0 +1,1 @@
+import sys; sys.path.insert(0, 'F:\\quant agent\\quant_project\\src'); from quant_agent.data.providers_fundamental import fetch_cn_actions_batch; f = fetch_cn_actions_batch('20211231'); f.to_csv('F:\\quant agent\\quant_project\\datasets\\factor_snapshots\\_fetch_cache\\cn\\actions\\20211231.csv', index=False)

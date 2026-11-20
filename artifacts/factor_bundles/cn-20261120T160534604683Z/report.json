@@ -1,0 +1,277 @@
+{
+  "market": "cn",
+  "stage": "evaluate",
+  "strategies": {
+    "MOM": {
+      "status": "family_review_pending",
+      "scenarios": {
+        "base": {
+          "strategy": {
+            "total_return": 0.1680345214262826,
+            "cagr": 0.033219285332110715,
+            "max_drawdown": -0.2313677850857615,
+            "sharpe_zero_cash": 0.28001420690351364,
+            "mean_exposure": 0.6577091524018792,
+            "annual_turnover": 4.808885061374538,
+            "stale_position_days": 68
+          },
+          "benchmark": {
+            "total_return": 0.13734613630238224,
+            "cagr": 0.027447579334091587,
+            "max_drawdown": -0.27309881754036947,
+            "sharpe_zero_cash": 0.2473589902110006,
+            "mean_exposure": 0.6625800128359102,
+            "annual_turnover": 3.766827099790309,
+            "stale_position_days": 62
+          },
+          "mean_active": 0.0003434244766769597,
+          "months": 57
+        },
+        "cost2": {
+          "strategy": {
+            "total_return": 0.12717014897493595,
+            "cagr": 0.0255065877134224,
+            "max_drawdown": -0.23159410942091896,
+            "sharpe_zero_cash": 0.23484907875128325,
+            "mean_exposure": 0.6571580432106792,
+            "annual_turnover": 4.797364936011329,
+            "stale_position_days": 68
+          },
+          "benchmark": {
+            "total_return": 0.0912997035856955,
+            "cagr": 0.018552289371630337,
+            "max_drawdown": -0.2685069750057206,
+            "sharpe_zero_cash": 0.19468256346784224,
+            "mean_exposure": 0.6571963786682345,
+            "annual_turnover": 3.72963891906971,
+            "stale_position_days": 62
+          },
+          "mean_active": 0.0004842486823350666,
+          "months": 57
+        },
+        "cost4": {
+          "strategy": {
+            "total_return": 0.03276529473683687,
+            "cagr": 0.006806263261192269,
+            "max_drawdown": -0.2542521022142247,
+            "sharpe_zero_cash": 0.123000023406154,
+            "mean_exposure": 0.6492793099288893,
+            "annual_turnover": 4.742549478453495,
+            "stale_position_days": 68
+          },
+          "benchmark": {
+            "total_return": 0.023674820968834,
+            "cagr": 0.004935211389900607,
+            "max_drawdown": -0.27295677993851986,
+            "sharpe_zero_cash": 0.1109771655124287,
+            "mean_exposure": 0.6545138166753967,
+            "annual_turnover": 3.7036219548615903,
+            "stale_position_days": 62
+          },
+          "mean_active": 3.1891918665288355e-05,
+          "months": 57
+        },
+        "delay1": {
+          "strategy": {
+            "total_return": 0.17497932779791636,
+            "cagr": 0.03450878260603152,
+            "max_drawdown": -0.239316471701168,
+            "sharpe_zero_cash": 0.2878954552268826,
+            "mean_exposure": 0.6560897233901944,
+            "annual_turnover": 4.810106174127929,
+            "stale_position_days": 68
+          },
+          "benchmark": {
+            "total_return": 0.13734613630238224,
+            "cagr": 0.027447579334091587,
+            "max_drawdown": -0.27309881754036947,
+            "sharpe_zero_cash": 0.2473589902110006,
+            "mean_exposure": 0.6625800128359102,
+            "annual_turnover": 3.766827099790309,
+            "stale_position_days": 62
+          },
+          "mean_active": 0.0005065171812050165,
+          "months": 57
+        },
+        "delay2": {
+          "strategy": {
+            "total_return": 0.15361198091189832,
+            "cagr": 0.030521876698627937,
+            "max_drawdown": -0.22888357651300073,
+            "sharpe_zero_cash": 0.2660539649343656,
+            "mean_exposure": 0.6507094603447199,
+            "annual_turnover": 4.789443948878612,
+            "stale_position_days": 58
+          },
+          "benchmark": {
+            "total_return": 0.13734613630238224,
+            "cagr": 0.027447579334091587,
+            "max_drawdown": -0.27309881754036947,
+            "sharpe_zero_cash": 0.2473589902110006,
+            "mean_exposure": 0.6625800128359102,
+            "annual_turnover": 3.766827099790309,
+            "stale_position_days": 62
+          },
+          "mean_active": 0.0001234298325158861,
+          "months": 57
+        }
+      },
+      "rank_ic": -0.023313732184905442,
+      "icir": -0.0964768670128082,
+      "nw_t": -0.8958040501287351,
+      "mean_annual_active": 0.004121093720123516,
+      "ci95": [
+        -0.03506091976203991,
+        0.042060131654347674
+      ],
+      "p": 0.42525747425257476,
+      "months": 57,
+      "economic_pass": true
+    },
+    "ATO": {
+      "status": "family_review_pending",
+      "scenarios": {
+        "base": {
+          "strategy": {
+            "total_return": 0.20194124807326763,
+            "cagr": 0.039458682273719736,
+            "max_drawdown": -0.21259259999592484,
+            "sharpe_zero_cash": 0.3410311419457994,
+            "mean_exposure": 0.6973702895152891,
+            "annual_turnover": 7.126069081519648,
+            "stale_position_days": 119
+          },
+          "benchmark": {
+            "total_return": 0.3011921928155519,
+            "cagr": 0.056956590381921135,
+            "max_drawdown": -0.08929066564230725,
+            "sharpe_zero_cash": 0.7409984150594895,
+            "mean_exposure": 0.4396541082616116,
+            "annual_turnover": 0.26302748823945776,
+            "stale_position_days": 286
+          },
+          "mean_active": -0.0005276134462589896,
+          "months": 57
+        },
+        "cost2": {
+          "strategy": {
+            "total_return": 0.14855138956881553,
+            "cagr": 0.02956909654971307,
+            "max_drawdown": -0.21951734677807888,
+            "sharpe_zero_cash": 0.27453080280140385,
+            "mean_exposure": 0.6960500475652075,
+            "annual_turnover": 7.100663358632197,
+            "stale_position_days": 119
+          },
+          "benchmark": {
+            "total_return": 0.28266177525577474,
+            "cagr": 0.05377168021158574,
+            "max_drawdown": -0.09103365397191521,
+            "sharpe_zero_cash": 0.7046520241322927,
+            "mean_exposure": 0.43850591713049114,
+            "annual_turnover": 0.2622352851951686,
+            "stale_position_days": 286
+          },
+          "mean_active": -0.0010763755867477583,
+          "months": 57
+        },
+        "cost4": {
+          "strategy": {
+            "total_return": 0.038908552347762804,
+            "cagr": 0.008063352219990216,
+            "max_drawdown": -0.23737039812141558,
+            "sharpe_zero_cash": 0.12734675592809624,
+            "mean_exposure": 0.6912289762824594,
+            "annual_turnover": 7.049388328949299,
+            "stale_position_days": 119
+          },
+          "benchmark": {
+            "total_return": 0.24019011384842082,
+            "cagr": 0.04633244921608326,
+            "max_drawdown": -0.09201192300802619,
+            "sharpe_zero_cash": 0.6219056871548413,
+            "mean_exposure": 0.4339926186122183,
+            "annual_turnover": 0.25673409162507843,
+            "stale_position_days": 286
+          },
+          "mean_active": -0.002254766111643884,
+          "months": 57
+        },
+        "delay1": {
+          "strategy": {
+            "total_return": 0.21102822074593197,
+            "cagr": 0.041107191309013746,
+            "max_drawdown": -0.21769386078294273,
+            "sharpe_zero_cash": 0.35240264823604517,
+            "mean_exposure": 0.6957989060511501,
+            "annual_turnover": 7.128684449638805,
+            "stale_position_days": 119
+          },
+          "benchmark": {
+            "total_return": 0.3011921928155519,
+            "cagr": 0.056956590381921135,
+            "max_drawdown": -0.08929066564230725,
+            "sharpe_zero_cash": 0.7409984150594895,
+            "mean_exposure": 0.4396541082616116,
+            "annual_turnover": 0.26302748823945776,
+            "stale_position_days": 286
+          },
+          "mean_active": -0.0004177557362710803,
+          "months": 57
+        },
+        "delay2": {
+          "strategy": {
+            "total_return": 0.22465549707036292,
+            "cagr": 0.04356116542952093,
+            "max_drawdown": -0.2042724006262806,
+            "sharpe_zero_cash": 0.3678247351164923,
+            "mean_exposure": 0.6956565298926572,
+            "annual_turnover": 7.124774824681278,
+            "stale_position_days": 120
+          },
+          "benchmark": {
+            "total_return": 0.3011921928155519,
+            "cagr": 0.056956590381921135,
+            "max_drawdown": -0.08929066564230725,
+            "sharpe_zero_cash": 0.7409984150594895,
+            "mean_exposure": 0.4396541082616116,
+            "annual_turnover": 0.26302748823945776,
+            "stale_position_days": 286
+          },
+          "mean_active": -0.0002249110237409158,
+          "months": 57
+        }
+      },
+      "rank_ic": 0.027660098042827277,
+      "icir": 0.18692217377507908,
+      "nw_t": 1.4643894709081957,
+      "mean_annual_active": -0.006331361355107876,
+      "ci95": [
+        -0.08794743670687068,
+        0.0809948686887021
+      ],
+      "p": 0.5549445055494451,
+      "months": 57,
+      "economic_pass": false
+    },
+    "QV": {
+      "status": "blocked_data",
+      "reasons": [
+        "inadequate universe, coverage or dispersion in evaluation months"
+      ]
+    },
+    "FAR": {
+      "status": "blocked_data",
+      "reasons": [
+        "inadequate universe, coverage or dispersion in evaluation months"
+      ]
+    },
+    "VPA": {
+      "status": "blocked_data",
+      "reasons": [
+        "inadequate universe, coverage or dispersion in evaluation months"
+      ]
+    }
+  },
+  "promotion_allowed": false
+}

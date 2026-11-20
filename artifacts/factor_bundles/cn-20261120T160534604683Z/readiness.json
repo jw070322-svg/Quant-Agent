@@ -1,0 +1,56 @@
+{
+  "market": "cn",
+  "strategies": {
+    "MOM": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    },
+    "ATO": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    },
+    "QV": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    },
+    "FAR": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    },
+    "VPA": {
+      "status": "ready_for_diagnostics",
+      "reasons": []
+    }
+  },
+  "tushare_token_present": false,
+  "required_endpoints": [
+    "stock_basic",
+    "trade_cal",
+    "daily",
+    "adj_factor",
+    "daily_basic",
+    "income",
+    "balancesheet",
+    "cashflow",
+    "dividend",
+    "suspend_d",
+    "stk_limit"
+  ],
+  "permissions": "not_verified",
+  "limitations": [
+    "Daily bars cannot establish opening-auction capacity.",
+    "US financial coverage and historical free-float require verification."
+  ],
+  "evidence": {
+    "survivorship_bias": true,
+    "financial_vintages": "current_only_with_announcement_dates",
+    "tri_convention": "qfq wealth index anchored to latest bar",
+    "providers": [
+      "sina daily (raw+qfq)",
+      "sina financial reports",
+      "eastmoney fhps batch",
+      "csindex constituents",
+      "eastmoney individual info"
+    ]
+  }
+}

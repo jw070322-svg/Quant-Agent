@@ -31,7 +31,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from ..agent.report import build_markdown_report
 from ..alpha.expected_return import PayoffModel, net_edge, round_trip_cost_bps
 from ..config import (PROJECT_ROOT, load_market_config, load_risk_config,
                       load_strategy_config)
@@ -43,6 +42,7 @@ from ..labels.forward import LabelSpec, add_labels, training_eligible
 from ..monitoring.health import run_health_checks
 from ..portfolio.optimizer import PortfolioConfig, target_weights
 from ..registry.store import new_run_dir, save_bundle
+from ..reporting.research import build_markdown_report
 from ..research.metrics import (block_bootstrap_sharpe_ci, calibration,
                                 completed_trade_stats, reliability_bins,
                                 summarize)

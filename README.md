@@ -75,13 +75,15 @@ path for other machines.
 
 ## Layout
 
-- `src/quant_agent/` — the supported package (see docs/ARCHITECTURE.md).
-- `configs/` — market, risk, and strategy configurations.
-- `datasets/` — raw snapshots, normalized data, update layer, manifests.
-- `artifacts/runs/` — immutable research runs (one directory per run).
-- `artifacts/models/` — registry bundles (approval-gated).
-- `docs/` — architecture, decisions, validation evidence.
-- `handover/` — handover history and the original audit documents.
+| Location | Responsibility |
+|---|---|
+| `src/quant_agent/` | Supported Python package. See the [layer map](docs/ARCHITECTURE.md#1-module-map-and-contracts). |
+| `configs/` | Market, strategy, risk, and factor-bundle settings. |
+| `data/`, `datasets/` | Legacy source data, plus research snapshots, normalized data, updates, and manifests. |
+| `artifacts/` | Research evidence, including immutable runs under `runs/` and approval-gated bundles under `models/`. |
+| `tests/` | Unit, integration, and replay checks. |
+| `scripts/`, root training scripts | Standalone research scripts and the legacy prototype. |
+| `docs/`, `handover/` | Current architecture and validation, plus historical plans and audit evidence. |
 
 ## Documentation
 

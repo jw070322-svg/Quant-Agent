@@ -184,6 +184,46 @@ def fetch_cn_actions_batch(report_date: str) -> pd.DataFrame:
     return out.reset_index(drop=True)
 
 
+
+
+def fetch_cn_listing_batch() -> dict[str, dict]:
+    """Listing dates for ALL A-share symbols in two batch calls (SZSE + SSE
+    exchange official lists). Returns {code6: {"listing_date": Timestamp,
+    "exchange": "SZ"|"SH", "industry": str|None}}.
+
+    SZSE includes 所属行业; SSE does not — SSE industries fall back to
+    UNKNOWN (disclosed in the manifest)."""
+    ak = _akshare()
+    out: dict[str, dict] = {}
+    try:
+        sz = _retry(lambda: ak.stock_info_sz_name_code(symbol="A股列表"),
+                    what="szse listing")
+        for _, r in sz.iterrows():
+            code = str(r.get("A股代码") or r.get("证券代码")).zfill(6)
+            date = pd.to_datetime(str(r.get("A股上市日期") or r.get("上市日期")),
+                                  errors="coerce")
+            if pd.isna(date):
+                continue
+            out[code] = {"listing_date": date, "exchange": "SZ",
+                         "industry": str(r.get("所属行业") or "UNKNOWN")}
+    except Exception as exc:  # noqa: BLE001 - disclosed
+        out["_szse_error"] = {"listing_date": None, "exchange": "SZ",
+                              "industry": f"{type(exc).__name__}: {str(exc)[:100]}"}
+    try:
+        sh = _retry(lambda: ak.stock_info_sh_name_code(symbol="主板A股"),
+                    what="sse listing")
+        for _, r in sh.iterrows():
+            code = str(r.get("证券代码")).zfill(6)
+            date = pd.to_datetime(str(r.get("上市日期")), errors="coerce")
+            if pd.isna(date):
+                continue
+            out[code] = {"listing_date": date, "exchange": "SH",
+                         "industry": None}
+    except Exception as exc:  # noqa: BLE001 - disclosed
+        out["_sse_error"] = {"listing_date": None, "exchange": "SH",
+                             "industry": f"{type(exc).__name__}: {str(exc)[:100]}"}
+    return out
+
 def fetch_cn_listing_info(symbol: str) -> dict:
     """Listing date (上市时间) and industry (行业) for one symbol — current
     snapshot from Eastmoney (direct connection, NO_PROXY bypass)."""

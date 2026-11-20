@@ -30,6 +30,7 @@ only. Everything regenerable — datasets/factor_snapshots/ is gitignored.
 """
 from __future__ import annotations
 
+import json
 import time
 from pathlib import Path
 
@@ -65,33 +66,85 @@ EVENT_PRIORITY = {"dividend": 0, "split": 1}  # dividend before split on the
 
 
 # ------------------------------------------------------------------ fetchers
-def _fetch_cached(path: Path, fetch, *, refresh: bool = False):
-    """Resumable fetch: skip when the cache file exists unless refreshed."""
-    if path.exists() and not refresh:
-        return pd.read_csv(path)
-    df = fetch()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(path, index=False)
-    return df
+def _run_bounded_worker(code: str, *, timeout_s: int = 120) -> bool:
+    """Run a fetch in an isolated subprocess with a hard timeout: a hanging
+    connection cannot block the build — the failure is disclosed and the
+    symbol skipped. Returns True on success."""
+    import subprocess
+    import sys
+    try:
+        result = subprocess.run([sys.executable, "-c", code], timeout=timeout_s,
+                                capture_output=True, text=True)
+        return result.returncode == 0
+    except subprocess.TimeoutExpired:
+        return False
 
 
 def fetch_bars_cached(symbols: list[str], *, start: str, end: str | None,
                       cache_dir: Path, refresh: bool = False) -> dict[str, dict]:
-    """Raw + qfq daily bars per symbol (Sina), resumable. Values:
-    {"raw": DataFrame(date, open, high, low, close, volume, amount,
-    outstanding_share, ...), "qfq": DataFrame(date, open, close, ...)}."""
+    """Raw + qfq daily bars per symbol (Sina), resumable and hang-proof:
+    each symbol fetch runs in a bounded subprocess (90s)."""
     out = {}
     cache_dir.mkdir(parents=True, exist_ok=True)
     for symbol in symbols:
         raw_path = cache_dir / f"{symbol}_raw.csv"
         qfq_path = cache_dir / f"{symbol}_qfq.csv"
         if not (raw_path.exists() and qfq_path.exists()) or refresh:
-            raw, qfq = fetch_cn_daily_pair(symbol, start=start, end=end)
-            raw.to_csv(raw_path, index=False)
-            qfq.to_csv(qfq_path, index=False)
+            worker = (
+                "import sys; sys.path.insert(0, {src!r}); "
+                "from quant_agent.data.providers import fetch_cn_daily_pair; "
+                "raw, qfq = fetch_cn_daily_pair({sym!r}, start={start!r}, end={end!r}); "
+                "raw.to_csv({raw!r}, index=False); "
+                "qfq.to_csv({qfq!r}, index=False)"
+            ).format(src=str(PROJECT_ROOT / "src"), sym=symbol, start=start,
+                     end=end or "", raw=str(raw_path), qfq=str(qfq_path))
+            if not _run_bounded_worker(worker, timeout_s=90):
+                continue  # disclosed by the caller's failures dict
         out[symbol] = {"raw": pd.read_csv(raw_path, parse_dates=["date"]),
                        "qfq": pd.read_csv(qfq_path, parse_dates=["date"])}
     return out
+
+
+def fetch_financials_bounded(symbol: str, *, cache_dir: Path,
+                             timeout_s: int = 150) -> pd.DataFrame | None:
+    """Bounded subprocess fetch of one symbol's annual financials; None on
+    failure/timeout (disclosed by the caller)."""
+    # worker writes to cache_dir directly (fetch_cn_financial_statements
+    # uses the flat cache layout), matching the read path below
+    target = cache_dir / f"{symbol}.csv"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    worker = (
+        "import sys; sys.path.insert(0, {src!r}); "
+        "from quant_agent.data.providers_fundamental import "
+        "fetch_cn_financial_statements; "
+        "f = fetch_cn_financial_statements({sym!r}, cache_dir={cache!r}); "
+        "assert len(f) > 0"
+    ).format(src=str(PROJECT_ROOT / "src"), sym=symbol, cache=str(cache_dir))
+    if not _run_bounded_worker(worker, timeout_s=timeout_s):
+        return None
+    return pd.read_csv(target, parse_dates=["period", "available_at"])
+
+
+def fetch_listing_batch_bounded(*, cache_dir: Path,
+                                timeout_s: int = 120) -> dict[str, dict] | None:
+    """Bounded subprocess fetch of the FULL exchange listing batch (SZSE+SSE,
+    2 calls, ~4600 symbols); None on failure/timeout."""
+    out_path = cache_dir / "listing_batch.json"
+    src_repr = repr(str(PROJECT_ROOT / "src"))
+    out_repr = repr(str(out_path))
+    worker = (
+        "import sys, json; sys.path.insert(0, " + src_repr + "); "
+        "from quant_agent.data.providers_fundamental import fetch_cn_listing_batch; "
+        "out = fetch_cn_listing_batch(); "
+        "json.dump({k: {'listing_date': str(v['listing_date']) if "
+        "v['listing_date'] is not None else None, 'exchange': v['exchange'], "
+        "'industry': v['industry']} for k, v in out.items()}, "
+        "open(" + out_repr + ", 'w'))"
+    )
+    if not _run_bounded_worker(worker, timeout_s=timeout_s):
+        return None
+    out = json.loads(out_path.read_text(encoding="utf-8"))
+    return {k: v for k, v in out.items() if not k.startswith("_")}
 
 
 # ------------------------------------------------------------- table builders
@@ -256,42 +309,45 @@ def build_cn_snapshot(*, output: str | Path, indices: list[str],
     report(f"universe: {len(universe_symbols)} symbols from {indices}")
 
     # ---- bars --------------------------------------------------------------
-    report(f"fetching bars for {len(universe_symbols)} symbols (resumable)")
-    raw_by_symbol, qfq_by_symbol = {}, {}
-    for i, symbol in enumerate(universe_symbols):
-        pair = fetch_bars_cached([symbol], start=start, end=end,
-                                 cache_dir=cache_dir / "bars", refresh=refresh)
-        raw_by_symbol[symbol] = pair[symbol]["raw"]
-        qfq_by_symbol[symbol] = pair[symbol]["qfq"]
-        if progress_cb and (i + 1) % 25 == 0:
-            report(f"bars fetched: {i + 1}/{len(universe_symbols)}")
-    report(f"bars fetched for {len(raw_by_symbol)} symbols")
+    report(f"fetching bars for {len(universe_symbols)} symbols (resumable, bounded)")
+    bars_pairs = fetch_bars_cached(universe_symbols, start=start, end=end,
+                                   cache_dir=cache_dir / "bars", refresh=refresh)
+    raw_by_symbol = {s: pair["raw"] for s, pair in bars_pairs.items()}
+    qfq_by_symbol = {s: pair["qfq"] for s, pair in bars_pairs.items()}
+    bars_failures = sorted(set(universe_symbols) - set(raw_by_symbol))
+    report(f"bars fetched for {len(raw_by_symbol)} symbols; "
+           f"failed/disclosed: {bars_failures}")
 
     # ---- listing info --------------------------------------------------------
-    report("fetching listing dates and industries")
+    report("fetching listing dates and industries (batch SZSE+SSE)")
     listing_info: dict[str, dict] = {}
     listing_failures: dict[str, str] = {}
-    info_cache = cache_dir / "listing.json"
-    if info_cache.exists() and not refresh:
+    listing_summary = cache_dir / "listing_summary.json"
+    if listing_summary.exists() and not refresh:
         listing_info = {k: {"listing_date": pd.Timestamp(v["listing_date"])
                             if v["listing_date"] else None,
                             "industry": v["industry"]}
-                        for k, v in read_json(info_cache).items()}
+                        for k, v in read_json(listing_summary).items()}
     else:
-        for i, symbol in enumerate(universe_symbols):
-            try:
-                listing_info[symbol] = fetch_cn_listing_info(symbol)
-            except Exception as exc:  # noqa: BLE001 - disclosed
-                listing_failures[symbol] = f"{type(exc).__name__}: {str(exc)[:100]}"
-            if progress_cb and (i + 1) % 50 == 0:
-                report(f"listing info fetched: {i + 1}/{len(universe_symbols)}")
-        write_json(info_cache, {k: {"listing_date": str(v["listing_date"]) if v["listing_date"] is not None else None,
-                                    "industry": v["industry"]}
-                                for k, v in listing_info.items()})
-    first_bar = {sym: frames["raw"]["date"].min()
+        batch = fetch_listing_batch_bounded(cache_dir=cache_dir)
+        if batch is None:
+            listing_failures["batch"] = "bounded listing fetch failed or timed out"
+        else:
+            code_map = {s.split(".")[0]: s for s in universe_symbols}
+            for code6, info in batch.items():
+                sym = code_map.get(code6)
+                if sym is not None:
+                    listing_info[sym] = info
+        write_json(listing_summary, {k: {"listing_date": str(v["listing_date"]) if v["listing_date"] is not None else None,
+                                         "industry": v["industry"]}
+                                     for k, v in listing_info.items()})
+    first_bar = {sym: frames["date"].min()
                  for sym, frames in raw_by_symbol.items()}
-    report(f"listing info: {len(listing_info)} symbols, "
-           f"{len(listing_failures)} failures (fallback to first bar)")
+    missing_listing = [s for s in universe_symbols if s not in listing_info]
+    for s in missing_listing:
+        listing_failures[s] = "not found in exchange listing batch"
+    report(f"listing info: {len(listing_info)} of {len(universe_symbols)} symbols, "
+           f"{len(missing_listing)} missing (fallback to first bar)")
 
     # ---- actions ---------------------------------------------------------------
     report("fetching corporate-action batches")
@@ -304,22 +360,33 @@ def build_cn_snapshot(*, output: str | Path, indices: list[str],
     batch_frames, action_failures = [], {}
     for period in periods:
         ppath = cache_dir / "actions" / f"{period}.csv"
-        try:
-            batch_frames.append(_fetch_cached(
-                ppath, lambda p=period: fetch_cn_actions_batch(p), refresh=refresh))
-        except Exception as exc:  # noqa: BLE001 - disclosed
-            action_failures[period] = f"{type(exc).__name__}: {str(exc)[:100]}"
+        ppath.parent.mkdir(parents=True, exist_ok=True)
+        script = ppath.parent / f"_fetch_{period}.py"
+        script.write_text(
+            "import sys; sys.path.insert(0, {src!r}); "
+            "from quant_agent.data.providers_fundamental import "
+            "fetch_cn_actions_batch; "
+            "f = fetch_cn_actions_batch({period!r}); "
+            "f.to_csv({out!r}, index=False)".format(
+                src=str(PROJECT_ROOT / "src"), period=period, out=str(ppath)),
+            encoding="utf-8")
+        if _run_bounded_worker(script.read_text(encoding="utf-8"), timeout_s=180) \
+                and ppath.exists():
+            batch_frames.append(pd.read_csv(ppath))
+        else:
+            action_failures[period] = "bounded fetch failed or timed out"
     report(f"action batches fetched: {len(batch_frames)}/{len(periods)} periods")
 
     # ---- financials ---------------------------------------------------------
-    report(f"fetching annual financial statements for {len(universe_symbols)} symbols (resumable)")
+    report(f"fetching annual financial statements for {len(universe_symbols)} "
+           f"symbols (resumable, bounded)")
     statements, fin_failures = {}, {}
     for i, symbol in enumerate(universe_symbols):
-        try:
-            statements[symbol] = fetch_cn_financial_statements(
-                symbol, cache_dir=cache_dir / "financials", refresh=refresh)
-        except Exception as exc:  # noqa: BLE001
-            fin_failures[symbol] = f"{type(exc).__name__}: {str(exc)[:100]}"
+        frame = fetch_financials_bounded(symbol, cache_dir=cache_dir)
+        if frame is None:
+            fin_failures[symbol] = "bounded fetch failed or timed out"
+        else:
+            statements[symbol] = frame
         if progress_cb and (i + 1) % 25 == 0:
             report(f"financials fetched: {i + 1}/{len(universe_symbols)}")
     report(f"financials: {len(statements)} symbols, {len(fin_failures)} failures")
